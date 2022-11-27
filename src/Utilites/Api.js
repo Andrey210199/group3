@@ -21,16 +21,27 @@ class Api{
         return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
     }
 
-    Posts(method ="GET",postId, postData){
-        return fetch(`${this.postsUrl}${postId && `/${postId}`}`,{
-            method: method === "POST" || method ==="PATCH" || method ==="DELETE" ? method : "GET",
+    _ReqestSwith = (method, data)=>{
+       return( method === "POST" || method ==="PATCH" || method ==="DELETE" 
+        ? {
+            method: method,
             headers: this.headers,
-            body: method==="DELETE" || method==="GET" ? JSON.stringify(postData) : ""
-        }).then(this._OnResponse);
+            body: method==="DELETE" ? JSON.stringify(data) : ""
+        }
+        :{
+            method: "GET",
+            headers: this.headers
+        })
 
     }
 
-    getTitle(title){
+    actionPosts(method,postId, postData){
+        return fetch(`${this.postsUrl}${!!postId ? `/${postId}`: ""}`, this._ReqestSwith(method, postData))
+        .then(this._OnResponse);
+
+    }
+
+    getSearchOnTitle(title){
         return fetch(`${this.postsUrl}/search/?query=${title}`,{
             method: "GET",
             headers: this.headers
@@ -45,37 +56,32 @@ class Api{
     }
 
     setDeleteLike(postId ,islike){
-        return fetch(`${this.postsUrl}/likes${postId && `/${postId}`}`,
+        return fetch(`${this.postsUrl}/likes${!!postId ? `/${postId}` : ""}`,
         {
             method: islike? "DELETE": "PUT",
             headers: this.headers
         }).then(this._OnResponse);
     }
     
-    comment(method, postId, commentId, commetData){
-        return fetch(`${this.postsUrl}/comments${postId && `/${postId}`}${commentId && `/${commentId}`}`,{
-            method: method === "POST" || method ==="DELETE" ? method : "GET",
-            headers: this.headers,
-            body: method==="DELETE" || method==="GET" ? JSON.stringify(commetData) : ""
-        }).then(this._OnResponse);
+    actionComments(method, postId, commentId, commetData){
+        return fetch(`${this.postsUrl}/comments${!!postId ? `/${postId}` : ""}${commentId && `/${commentId}`}`,
+        this._ReqestSwith(method, commetData))
+        .then(this._OnResponse);
     }
 
     getUsersUser(userId){
-        return fetch(`${this.userUrl}${userId && `/${userId}`}`,{
+        return fetch(`${this.userUrl}${!!userId ?`/${userId}`: ""}`,{
             method: "GET",
             headers: this.headers
         }).then(this._OnResponse);
     }
 
-    getParchUser(method, userData=""){
-        return fetch(`${this.userUrl}/me`,{
-            method: method==="PATH" ? "PATH" : "GET",
-            headers: this.headers,
-            body: method === "PATH" && userData!=="" ? JSON.stringify(userData) : ""
-        }).then(this._OnResponse);
+    getPathUser(method, userData=""){
+        return fetch(`${this.userUrl}/me`,this._ReqestSwith(method, userData))
+        .then(this._OnResponse);
     }
 
-    chengeAvatar(avatar){
+    changeAvatar(avatar){
         return fetch(`${this.userUrl}/me/avatar`,{
             method: "PATH",
             headers: this.headers,
@@ -100,7 +106,7 @@ class Api{
     }
 
     resetPass(newPass, user, token){
-        return fetch(`${this.registerUrl}/password-reset${user && `/${user}/${token}`}`,{
+        return fetch(`${this.registerUrl}/password-reset${!!user ? `/${user}/${token}` : ""}`,{
             method: "POST",
             headers: this.headers,
             body: JSON.stringify(newPass)
