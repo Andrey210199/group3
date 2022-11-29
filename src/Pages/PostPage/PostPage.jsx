@@ -7,7 +7,21 @@ const data =
             "622bd81b06c7d323b8ae4614"
         ],
         "comments": [
-            "622c6c4f1bd0d37edc594b21"
+            {   "_id": 0,
+                "author": {
+                "name": "Максим Иванов",
+                "about": "Наставник",
+                "avatar": "https://u.kanobu.ru/articles/pics/7e6dc974-43f4-4ad0-9a55-2465566e9662.jpg",
+                "_id": "622bd81b06c7d323b8ae4614",
+                "email": "maxim_91@inbox.ru",
+                "__v": 0
+            },
+            "comment": "Комментарий",
+            "created_at": "2022-03-11T23:23:20.891Z",
+            "updated_at": "2022-03-12T09:51:45.683Z"
+
+        }
+
         ],
         "tags": [
             "legendary"
