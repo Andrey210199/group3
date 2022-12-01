@@ -21,63 +21,72 @@ class Api{
         return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
     }
 
-    _ReqestSwith = (method, data)=>{
+    _getRequest(){
+       return( {
+            method: "GET",
+            headers: this.headers
+        });
+    }
+
+    _postRequest(data){
+        return (
+            {
+                method: "POST",
+                headers: this.headers,
+                body: JSON.stringify(data)
+            }
+        )
+
+    }
+
+    _RequestSwitch = (method, data)=>{
        return( method === "POST" || method ==="PATCH" || method ==="DELETE" 
         ? {
             method: method,
             headers: this.headers,
             body: method==="DELETE" ? JSON.stringify(data) : ""
         }
-        :{
-            method: "GET",
-            headers: this.headers
-        })
+        : this._getRequest())
 
     }
 
-    actionPosts(method,postId, postData){
-        return fetch(`${this.postsUrl}${!!postId ? `/${postId}`: ""}`, this._ReqestSwith(method, postData))
+    actionPosts(method,postId="", postData){
+        return fetch(`${this.postsUrl}${postId && `/${postId}`}`, this._ReqestSwith(method, postData))
         .then(this._OnResponse);
 
     }
 
     getSearchOnTitle(title){
-        return fetch(`${this.postsUrl}/search/?query=${title}`,{
-            method: "GET",
-            headers: this.headers
-        }).then(this._OnResponse);
+        return fetch(`${this.postsUrl}/search/?query=${title}`,this._getRequest())
+        .then(this._OnResponse);
     }
 
     getPaginate(pageNumber, limit, titleSearch){
-        return fetch(`${this.postsUrl}/paginate?page=${pageNumber}&limit=${limit}&query=${titleSearch}`,{
-            method: "GET",
-            headers: this.headers
-        }).then(this._OnResponse);
+        return fetch(`${this.postsUrl}/paginate?page=${pageNumber}&limit=${limit}&query=${titleSearch}`,this._getRequest())
+        .then(this._OnResponse);
     }
 
-    setDeleteLike(postId ,islike){
-        return fetch(`${this.postsUrl}/likes${!!postId ? `/${postId}` : ""}`,
+    changeLike(postId="" ,islike){
+        return fetch(`${this.postsUrl}/likes${postId && `/${postId}`}`,
         {
             method: islike? "DELETE": "PUT",
             headers: this.headers
         }).then(this._OnResponse);
     }
     
-    actionComments(method, postId, commentId, commetData){
-        return fetch(`${this.postsUrl}/comments${!!postId ? `/${postId}` : ""}${commentId && `/${commentId}`}`,
-        this._ReqestSwith(method, commetData))
+    actionComments(method, postId="", commentId="", commentData){
+        return fetch(`${this.postsUrl}/comments${postId && `/${postId}`}${commentId && `/${commentId}`}`,
+        this._RequestSwitch(method, commentData))
         .then(this._OnResponse);
     }
 
-    getUsersUser(userId){
-        return fetch(`${this.userUrl}${!!userId ?`/${userId}`: ""}`,{
-            method: "GET",
-            headers: this.headers
-        }).then(this._OnResponse);
+    getUsersUser(userId=""){
+        return fetch(`${this.userUrl}${userId &&`/${userId}`}`,this._getRequest())
+        .then(this._OnResponse);
     }
 
     getPathUser(method, userData=""){
-        return fetch(`${this.userUrl}/me`,this._ReqestSwith(method, userData))
+        return fetch(`${this.userUrl}/me`,this._RequestSwitch(method, userData))
         .then(this._OnResponse);
     }
 
@@ -90,27 +99,18 @@ class Api{
     }
 
     register(regData){
-        return fetch(`${this.registerUrl}/signup`,{
-            method: "POST",
-            headers: this.headers,
-            body: JSON.stringify(regData)
-        }).then(this._OnResponse);
+        return fetch(`${this.registerUrl}/signup`,this._postRequest(regData))
+        .then(this._OnResponse);
     }
 
     authorization(authData){
-        return fetch(`${this.registerUrl}/signin`,{
-            method: "POST",
-            headers: this.headers,
-            body: JSON.stringify(authData)
-        }).then(this._OnResponse);
+        return fetch(`${this.registerUrl}/signin`,this._postRequest(authData))
+        .then(this._OnResponse);
     }
 
-    resetPass(newPass, user, token){
-        return fetch(`${this.registerUrl}/password-reset${!!user ? `/${user}/${token}` : ""}`,{
-            method: "POST",
-            headers: this.headers,
-            body: JSON.stringify(newPass)
-        }).then(this._OnResponse);
+    resetPass(newPass, user="", token){
+        return fetch(`${this.registerUrl}/password-reset${user && `/${user}/${token}`}`,this._postRequest(newPass))
+        .then(this._OnResponse);
     }
 
 }

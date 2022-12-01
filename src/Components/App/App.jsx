@@ -1,7 +1,9 @@
+import api from '../../Utilites/Api';
 import './App.css';
 
 function App() {
-
+  
+  console.log(api.getUsersUser())
   return (
     <div className="App">
       <header className="App-header">
