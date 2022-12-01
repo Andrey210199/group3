@@ -16,7 +16,7 @@ export default function AvatarInfo({avatar, name, s, created, updated}) {
     return (
         <>
             
-            <Avatar src={avatar} alt="creater avatar" className={s.avatar /*s не может переопределить css свойства без !important */} loading="lazy" decoding="async">{!!avatar ? "" : firstLetter()}</Avatar>
+            <Avatar src={avatar} alt="creater avatar" className={s.root /*s не может переопределить css свойства без !important */} loading="lazy" decoding="async">{!!avatar ? "" : firstLetter()}</Avatar>
             <span className={s.name}>{name}</span>
            {!!updated && <span>{dayjs(updated).fromNow()}</span> }
         </>
