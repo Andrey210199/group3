@@ -1,24 +1,28 @@
+import { useEffect, useState } from "react";
+import PostPage from "../../Pages/PostPage/PostPage"
+import api from "../../Utilites/Api";
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src="" className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export default function App() {
 
-export default App;
+  const [currentUser, setCurrentUser]= useState();
+  const [currentPost, setCurrentPost] = useState();
+
+  //Получение текущего пользователя и поста (временное)
+  useEffect(()=>{
+    api.getUsersUser("636a510659b98b038f779d09")
+    .then((user)=> setCurrentUser(user));
+
+    api.actionPosts("GET","638251d259b98b038f779d52")
+    .then((post)=> setCurrentPost(post));
+  },[])
+
+  return (
+
+    <>
+    <PostPage {...currentPost} currentUser={currentUser}/>
+        </>
+  );
+
+}

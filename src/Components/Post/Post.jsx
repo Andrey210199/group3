@@ -16,7 +16,7 @@ export default function Post({ _id,image, likes, tags, title, text,}){
 
            <div className={s.like}>
 
-            {!!likes.length && likes.length}
+            {!!likes?.length && likes.length}
             <button className={s.like__btn}>♥</button>
 
             </div>
