@@ -18,25 +18,29 @@ import { useState } from "react";
 import s from "./index.module.css";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
+import { useContext } from "react";
+import { PostContext } from "../../context/postContext";
+import { isLiked } from "../../Utilites/total";
+import { UserContext } from "../../context/userContext";
 
 dayjs.locale("ru");
 
-const Post = ({  _id, author, created_at, image, text, title, likes,}) => {
-  console.log(author, created_at, image, text, title, likes);
+const PostCard = ({  _id, author, created_at, image, text, title, likes,}) => {
+  const {deletePost, handleLiked :onLiked} = useContext(PostContext);
+  const {currentUser} = useContext(UserContext);
 
-  const ExpandMoreStyle = styled((props) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-  })(({ expand }) => ({
-    transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-    marginLeft: "auto",
-  }));
+  const liked = isLiked(likes, currentUser._id);
 
-  const [expanded, setExpanded] = useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  const handleLike = () => {
+    onLiked(_id, liked);
   };
+  const handleClickDel = () => {
+    if (window.confirm("Вы уверены, что хотите удалить пост?")) deletePost(_id);
+  };
+
+ 
+
+
  
   return (
    
@@ -68,43 +72,34 @@ const Post = ({  _id, author, created_at, image, text, title, likes,}) => {
             <Tooltip title={"Liked"}>
               <IconButton
                 aria-label="add to favorites"
-              
+                onClick ={handleLike}
+                sx={[liked && { color: "#942a00" }]}
           
               >
                 <Badge
-                  badgeContent={"likes.length"}
+                  badgeContent={likes.length}
                   color="error"
                   anchorOrigin={{
                     vertical: "top",
                     horizontal: "right",
                   }}
                 >
-                  <Favorite />
+                  <Favorite/>
                 </Badge>
               </IconButton>
             </Tooltip>
-            <Tooltip title="Delete">
+            <Tooltip title="Delete" onClick={handleClickDel}>
               <IconButton>
                 <Delete />
               </IconButton>
             </Tooltip>
-            <ExpandMoreStyle
-              expand={expanded}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMore />
-            </ExpandMoreStyle>
+            {/* Роутинг на страницу с Подробной карточкой */}
+            <button>Подробнее</button> 
           </CardActions>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph>{text}</Typography>
-            </CardContent>
-          </Collapse>
+
         </Card>
 
   );
 };
 
-export default Post;
+export default PostCard;
