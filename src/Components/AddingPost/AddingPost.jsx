@@ -2,10 +2,6 @@ import Image from "@tiptap/extension-image";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
-import { useEffect } from "react";
-import { useState } from "react";
-import MenuBar from "../MenuBar/MenuBar";
-import s from "./index.module.css";
 import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
 import TextStyle from "@tiptap/extension-text-style";
@@ -14,9 +10,22 @@ import Underline from "@tiptap/extension-underline";
 import Placeholder from "@tiptap/extension-placeholder";
 import CharacterCount from "@tiptap/extension-character-count";
 
+import { useEffect } from "react";
+import { useState } from "react";
+import MenuBar from "../MenuBar/MenuBar";
+
+import s from "./index.module.css";
+
+
 const limit = 1000;
 
 export default function AddingPost(){
+
+  function handleSubmit(e){
+    e.preventDefault();
+    console.log(editor?.getJSON());
+  }
+
     const editor = useEditor({
         extensions: [
           StarterKit,
@@ -76,11 +85,13 @@ export default function AddingPost(){
             <input type="text"/>
             <MenuBar editor={editor}/>
             <EditorContent editor={editor}/>
-            <div className="character-count">
+            <div className={s.characterCount}>
                 {editor?.storage?.characterCount?.characters()}/{limit} characters
                 <br />
                 {editor?.storage?.characterCount?.words()} words
             </div>
+
+            <button onClick={handleSubmit}>Опубликовать</button>
         </form>
     )
 }

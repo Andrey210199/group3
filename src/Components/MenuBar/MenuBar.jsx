@@ -1,8 +1,11 @@
 import { useState } from "react";
+import ButtonWithPopup from "../ButtonWithPopup/ButtonWithPopup";
 
 export default function MenuBar({editor}){
     
     const [color, setColor] = useState("#000000");
+    const [activeModalLink, setActiveModalLink] = useState(false);
+    const [activeModalImg, setActiveModalImg] = useState(false);
 
     function selectHeader(val){
        return editor.chain().focus().toggleHeading({ level: Number(val.target.value)}).run();
@@ -10,6 +13,14 @@ export default function MenuBar({editor}){
 
     function selectAlign(val){
         return editor.chain().focus().setTextAlign(val.target.value).run();
+    }
+
+    function changeLink(value){
+     return editor.chain().focus().extendMarkRange("link").toggleLink({ href: value }).run();
+    }
+
+    function changeImg(value){
+      return editor.chain().focus().setImage({src: value}).run();
     }
 
     if(!editor){
@@ -131,8 +142,9 @@ export default function MenuBar({editor}){
       <button onClick={() => editor.chain().focus().toggleUnderline().run()}
         className={editor.isActive('underline') ? 'is-active' : ''}>underline</button>
 
-      <button onClick={()=>editor.chain().focus().setImage({src: "https://avatars.dzeninfra.ru/get-zen_doc/5097825/pub_635b40ebcd00240d96e5da7c_635b5a5dbc41a6060113be86/scale_1200"}).run()}>Image</button>
-      <button onClick={()=> editor.chain().focus().extendMarkRange("link").toggleLink({ href: "https://tiptap.dev/" }).run()}>link</button>
+  
+  <ButtonWithPopup editor={editor} active={activeModalImg} setActive={setActiveModalImg} event ={changeImg} text="image"/>
+  <ButtonWithPopup editor={editor} active={activeModalLink} setActive={setActiveModalLink} event ={changeLink} text="link"/>
 
       <button onClick={()=> editor.chain().focus().toggleHighlight({color: color}).run()}
       className={editor.isActive("highlight") ? "is-active" : ""}
