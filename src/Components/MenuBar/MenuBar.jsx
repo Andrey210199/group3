@@ -92,16 +92,8 @@ export default function MenuBar({editor}){
       <button onClick={() => editor.chain().focus().unsetAllMarks().clearNodes().run()}>
         clear style
       </button>
-
-
-      <button
-        onClick={() => editor.chain().focus().setParagraph().run()}
-        className={editor.isActive('paragraph') ? 'is-active' : ''}
-      >
-        paragraph
-      </button>
       
-      <select onChange={selectHeader}>
+      <select onClick={(e)=> e.button===-1 ? selectHeader(e): "" }>
         <option value={1}>h1</option>
         <option value={2}>h2</option>
         <option value={3}>h3</option>

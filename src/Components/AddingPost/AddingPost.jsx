@@ -10,10 +10,11 @@ import Underline from "@tiptap/extension-underline";
 import Placeholder from "@tiptap/extension-placeholder";
 import CharacterCount from "@tiptap/extension-character-count";
 
-import { useEffect } from "react";
-import { useState } from "react";
+import cn from "classnames";
+import { useEffect, useState } from "react";
 import MenuBar from "../MenuBar/MenuBar";
 
+import img from "./placeholder.png"
 import s from "./index.module.css";
 
 
@@ -21,9 +22,11 @@ const limit = 1000;
 
 export default function AddingPost(){
 
+  const [text, setText] = useState({header: "", img: ""});
+
   function handleSubmit(e){
     e.preventDefault();
-    console.log(editor?.getJSON());
+    console.log({...text, ...editor?.getJSON()});
   }
 
     const editor = useEditor({
@@ -79,10 +82,20 @@ export default function AddingPost(){
         `,
       })
 
-    return(
-        <form className={s.form}>
+      function handleInput(event, type){
+        setText({...text, [type]: event.target.value})
+      }
 
-            <input type="text"/>
+    return(
+        <form className={s.form} onSubmit ={handleSubmit}>
+
+            <input type="text" className={s.input} value={text.header} onChange= {(e) => handleInput(e, "header")} placeholder="Введите заголовок поста" required/>
+
+            <div className={s.img}>
+            <img className={s.img__image} src={text.img ===""? img: text.img} alt="Превью"/>
+            <input className={cn(s.input,s.img__text)} type="text" value={text.img} onChange = {(e)=> handleInput(e, "img")} placeholder="Введите ссылку на картинку поста" required/>
+            </div>
+
             <MenuBar editor={editor}/>
             <EditorContent editor={editor}/>
             <div className={s.characterCount}>
@@ -91,7 +104,7 @@ export default function AddingPost(){
                 {editor?.storage?.characterCount?.words()} words
             </div>
 
-            <button onClick={handleSubmit}>Опубликовать</button>
+            <button>Опубликовать</button>
         </form>
     )
 }
