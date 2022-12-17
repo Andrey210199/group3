@@ -8,7 +8,6 @@ import TextStyle from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
 import Underline from "@tiptap/extension-underline";
 import Placeholder from "@tiptap/extension-placeholder";
-import CharacterCount from "@tiptap/extension-character-count";
 
 import cn from "classnames";
 import { useEffect, useState } from "react";
@@ -16,95 +15,70 @@ import MenuBar from "../MenuBar/MenuBar";
 
 import img from "./placeholder.png"
 import s from "./index.module.css";
+import api from "../../Utilites/Api";
 
+export default function AddingPost() {
 
-const limit = 1000;
+  const [text, setText] = useState({ title: "", image: "" });
 
-export default function AddingPost(){
-
-  const [text, setText] = useState({header: "", img: ""});
-
-  function handleSubmit(e){
+  function handleSubmit(e) {
     e.preventDefault();
-    console.log({...text, ...editor?.getJSON()});
+    api.actionPosts("POST", "", { ...text, text: editor.getHTML() })
   }
 
-    const editor = useEditor({
-        extensions: [
-          StarterKit,
-          TextAlign.configure({
-            types: ["heading", "paragraph"]
-          }),
-          Highlight.configure({
-            multicolor: true
-          }),
-          TextStyle,
-          Color,
-          Underline,
-          Image,
-          Link,
-          Placeholder.configure({
-            placeholder: 'My Custom Placeholder',
-          }),
-          CharacterCount.configure({
-            limit: limit
-          })
-        ],
-        content: `
-          <h2>
-            Hi there,
-          </h2>
-          <p>
-            this is a <em>basic</em> example of <strong>tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists:
-          </p>
-          <ul>
-            <li>
-              That’s a bullet list with one …
-            </li>
-            <li>
-              … or two list items.
-            </li>
-          </ul>
-          <p>
-            Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:
-          </p>
-          <pre><code class="language-css">body {
-      display: none;
-    }</code></pre>
-          <p>
-            I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forget to check the other examples too.
-          </p>
-          <blockquote>
-            Wow, that’s amazing. Good work, boy! 👏
-            <br />
-            — Mom
-          </blockquote>
-        `,
+  function handleInput(event, type) {
+    setText({ ...text, [type]: event.target.value })
+  }
+
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      TextAlign.configure({
+        types: ["heading", "paragraph"]
+      }),
+      Highlight.configure({
+        multicolor: true
+      }),
+      TextStyle,
+      Color,
+      Underline,
+      Image,
+      Link,
+      Placeholder.configure({
+        placeholder: 'My Custom Placeholder',
       })
+    ]
+  })
 
-      function handleInput(event, type){
-        setText({...text, [type]: event.target.value})
-      }
+  //Проверка на получения с сервера 639df2b959b98b038f77a0c2, 638251d059b98b038f779d51
+ /*  useEffect(()=>{
+    api.actionPosts("","638251d059b98b038f779d51")
+    .then((posts)=>{
+      editor?.commands.setContent(posts.text)
+    })
+  },[editor]) */
 
-    return(
-        <form className={s.form} onSubmit ={handleSubmit}>
+  return (
+    <form className={s.form} onSubmit={handleSubmit}>
 
-            <input type="text" className={s.input} value={text.header} onChange= {(e) => handleInput(e, "header")} placeholder="Введите заголовок поста" required/>
+      <h1>Добавления поста</h1>
 
-            <div className={s.img}>
-            <img className={s.img__image} src={text.img ===""? img: text.img} alt="Превью"/>
-            <input className={cn(s.input,s.img__text)} type="text" value={text.img} onChange = {(e)=> handleInput(e, "img")} placeholder="Введите ссылку на картинку поста" required/>
-            </div>
+      <div className={s.post__title}>
+        <h2>Заголовок поста</h2>
+        <input type="text" className={s.input} value={text.title} onChange={(e) => handleInput(e, "title")} placeholder="Введите заголовок поста" required />
+      </div>
 
-            <MenuBar editor={editor}/>
-            <EditorContent editor={editor}/>
-            <div className={s.characterCount}>
-                {editor?.storage?.characterCount?.characters()}/{limit} characters
-                <br />
-                {editor?.storage?.characterCount?.words()} words
-            </div>
 
-            <button>Опубликовать</button>
-        </form>
-    )
+      <div className={s.img}>
+        <h2>Картинка для превью поста</h2>
+        <img className={s.img__image} src={text.image === "" ? img : text.image} alt="Превью" />
+        <input className={cn(s.input, s.img__text)} type="text" value={text.image} onChange={(e) => handleInput(e, "image")} placeholder="Введите ссылку на картинку поста" required />
+      </div>
+
+      <MenuBar editor={editor} />
+      <EditorContent editor={editor} />
+
+      <button>Опубликовать</button>
+    </form>
+  )
 }

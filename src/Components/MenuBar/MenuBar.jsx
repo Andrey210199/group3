@@ -1,182 +1,63 @@
 import { useState } from "react";
 import ButtonWithPopup from "../ButtonWithPopup/ButtonWithPopup";
+import Aligns from "../MenuElements/Aligns/Aligns";
+import Blockquote from "../MenuElements/Blockquote/Blockquote";
+import Codes from "../MenuElements/Codes/Codes";
+import Colors from "../MenuElements/Colors/Colors";
+import Conversion from "../MenuElements/Conversion/Conversion";
+import Headers from "../MenuElements/Headers/Headers";
+import HorizontalRule from "../MenuElements/HorizontalRule/HorizontalRule";
+import Lists from "../MenuElements/Lists/Lists";
+import TextStyles from "../MenuElements/TextStyles/TextStyles";
 
-export default function MenuBar({editor}){
-    
-    const [color, setColor] = useState("#000000");
-    const [activeModalLink, setActiveModalLink] = useState(false);
-    const [activeModalImg, setActiveModalImg] = useState(false);
+export default function MenuBar({ editor }) {
 
-    function selectHeader(val){
-       return editor.chain().focus().toggleHeading({ level: Number(val.target.value)}).run();
-    }
+  const [color, setColor] = useState("#000000");
 
-    function selectAlign(val){
-        return editor.chain().focus().setTextAlign(val.target.value).run();
-    }
+  function changeLink(value) {
+    return editor.chain().focus().extendMarkRange("link").toggleLink({ href: value }).run();
+  }
 
-    function changeLink(value){
-     return editor.chain().focus().extendMarkRange("link").toggleLink({ href: value }).run();
-    }
+  function changeImg(value) {
+    return editor.chain().focus().setImage({ src: value }).run();
+  }
 
-    function changeImg(value){
-      return editor.chain().focus().setImage({src: value}).run();
-    }
+  if (!editor) {
+    return null;
+  }
+  return (
+    <>
 
-    if(!editor){
-        return null;
-    }
-    return(
-        <>
+      <div onClick={(e) => e.preventDefault()}>
 
-        <div  onClick={(e)=>e.preventDefault()}>
+        <TextStyles editor={editor} />
 
-      <button
-        onClick={() => editor.chain().focus().toggleBold().run()}
-        disabled={
-          !editor.can()
-            .chain()
-            .focus()
-            .toggleBold()
-            .run()
-        }
-        className={editor.isActive('bold') ? 'is-active' : ''}
-      >
-        bold
-      </button>
+        <Codes editor={editor} />
 
-      <button
-        onClick={() => editor.chain().focus().toggleItalic().run()}
-        disabled={
-          !editor.can()
-            .chain()
-            .focus()
-            .toggleItalic()
-            .run()
-        }
-        className={editor.isActive('italic') ? 'is-active' : ''}
-      >
-        italic
-      </button>
+        <Headers editor={editor} />
 
-      <button
-        onClick={() => editor.chain().focus().toggleStrike().run()}
-        disabled={
-          !editor.can()
-            .chain()
-            .focus()
-            .toggleStrike()
-            .run()
-        }
-        className={editor.isActive('strike') ? 'is-active' : ''}
-      >
-        strike
-      </button>
+        <Lists editor={editor} />
 
-      <button
-        onClick={() => editor.chain().focus().toggleCode().run()}
-        disabled={
-          !editor.can()
-            .chain()
-            .focus()
-            .toggleCode()
-            .run()
-        }
-        className={editor.isActive('code') ? 'is-active' : ''}
-      >
-        code
-      </button>
+        <Blockquote editor={editor} />
 
+        <HorizontalRule editor={editor} />
 
+        <ButtonWithPopup editor={editor} event={changeImg} text="image" />
+        <ButtonWithPopup editor={editor} event={changeLink} text="link" />
 
-      <button onClick={() => editor.chain().focus().unsetAllMarks().clearNodes().run()}>
-        clear style
-      </button>
-      
-      <select onClick={(e)=> e.button===-1 ? selectHeader(e): "" }>
-        <option value={1}>h1</option>
-        <option value={2}>h2</option>
-        <option value={3}>h3</option>
-        <option value={4}>h4</option>
-        <option value={5}>h5</option>
-        <option value={6}>h6</option>
-      </select>
+        <Colors editor={editor} color={color} />
 
-     
-      <button
-        onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={editor.isActive('bulletList') ? 'is-active' : ''}
-      >
-        bullet list
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={editor.isActive('orderedList') ? 'is-active' : ''}
-      >
-        ordered list
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-        className={editor.isActive('codeBlock') ? 'is-active' : ''}
-      >
-        code block
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        className={editor.isActive('blockquote') ? 'is-active' : ''}
-      >
-        blockquote
-      </button>
-      <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
-        horizontal rule
-      </button>
+        <Aligns editor={editor} />
 
-      <button onClick={() => editor.chain().focus().toggleUnderline().run()}
-        className={editor.isActive('underline') ? 'is-active' : ''}>underline</button>
+        <Conversion editor={editor} />
 
-  
-  <ButtonWithPopup editor={editor} active={activeModalImg} setActive={setActiveModalImg} event ={changeImg} text="image"/>
-  <ButtonWithPopup editor={editor} active={activeModalLink} setActive={setActiveModalLink} event ={changeLink} text="link"/>
+      </div>
 
-      <button onClick={()=> editor.chain().focus().toggleHighlight({color: color}).run()}
-      className={editor.isActive("highlight") ? "is-active" : ""}
-      >Highlight</button>
-      <button  onClick={()=>{editor.chain().focus().setColor(color).run()}}>color</button>
+      <input type="color"
+        onInput={(e) => setColor(e.target.value)}
+        value={color} />
 
-      <button value="left" onClick={selectAlign} className={editor.isActive({ textAlign: "left" }) ? 'is-active' : ''}>left</button>
-      <button value="right" onClick={selectAlign} className={editor.isActive({ textAlign: "right" }) ? 'is-active' : ''}>right</button>
-      <button value="center" onClick={selectAlign} className={editor.isActive({ textAlign: "center" }) ? 'is-active' : ''}>center</button>
-
-      <button
-        onClick={() => editor.chain().focus().undo().run()}
-        disabled={
-          !editor.can()
-            .chain()
-            .focus()
-            .undo()
-            .run()
-        }
-      >
-        undo
-      </button>
-      <button
-        onClick={() => editor.chain().focus().redo().run()}
-        disabled={
-          !editor.can()
-            .chain()
-            .focus()
-            .redo()
-            .run()
-        }
-      >
-        redo
-      </button>
-    </div>
-    <input type="color" 
-    onInput={(e)=> setColor(e.target.value)}
-    value={color}
-    />
-        </>
-    )
+    </>
+  )
 
 }
