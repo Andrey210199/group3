@@ -11,6 +11,7 @@ export default function ButtonWithPopup({ event, text }) {
 
   function installLink() {
     event(value);
+    setValue("");
   }
 
   return (
@@ -24,7 +25,7 @@ export default function ButtonWithPopup({ event, text }) {
           <div>
             <input value={value} type="text" onChange={(e) => setValue(e.target.value)} />
             <button onClick={(e) => { installLink(e); setActive(false) }}>Ok</button>
-            <button onClick={() => setActive(false)}>Cancel</button>
+            <button onClick={() =>{ setActive(false); setValue("")} }>Cancel</button>
           </div>
 
         </Modal>, document.body)}
