@@ -28,7 +28,7 @@ dayjs.locale("ru");
 const PostCard = ({  _id, author, created_at, image, text, title, likes,}) => {
   const {deletePost, handleLiked :onLiked} = useContext(PostContext);
   const {currentUser} = useContext(UserContext);
-
+  console.log(currentUser._id, author);
   const liked = isLiked(likes, currentUser._id);
 
   const handleLike = () => {
@@ -88,11 +88,17 @@ const PostCard = ({  _id, author, created_at, image, text, title, likes,}) => {
                 </Badge>
               </IconButton>
             </Tooltip>
-            <Tooltip title="Delete" onClick={handleClickDel}>
+
+            {
+              currentUser._id === author._id &&  
+               <Tooltip title="Delete" onClick={handleClickDel}>
               <IconButton>
+               
                 <Delete />
               </IconButton>
             </Tooltip>
+            }
+          
             {/* Роутинг на страницу с Подробной карточкой */}
             <button>Подробнее</button> 
           </CardActions>

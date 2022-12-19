@@ -46,9 +46,6 @@ export default function App() {
         })
       .catch(err => console.log (err) )
   }, [postsData])
-  
-console.log(currentUser);
-
 
 
 
