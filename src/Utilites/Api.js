@@ -1,4 +1,4 @@
-import { json } from "react-router";
+
 
 const config ={
     postsUrl: "https://api.react-learning.ru/v2/group-7/posts",
@@ -17,7 +17,7 @@ class Api{
         this.userUrl = userUrl;
         this.headers = headers;
     }
-    _OnResponse= res=>{
+    _OnResponse = (res) =>{
         return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
     }
 
@@ -50,8 +50,8 @@ class Api{
 
     }
 
-    actionPosts(method,postId="", postData){
-        return fetch(`${this.postsUrl}${postId && `/${postId}`}`, this._ReqestSwith(method, postData))
+    actionPosts(method="", postId="", postData=""){
+        return fetch(`${this.postsUrl}${postId && `/${postId}`}`, this._RequestSwitch(method, postData))
         .then(this._OnResponse);
 
     }
@@ -66,10 +66,10 @@ class Api{
         .then(this._OnResponse);
     }
 
-    changeLike(postId="" ,islike){
+    changeLike(postId="" , islike){
         return fetch(`${this.postsUrl}/likes${postId && `/${postId}`}`,
         {
-            method: islike? "DELETE": "PUT",
+            method: islike ? "DELETE": "PUT",
             headers: this.headers
         }).then(this._OnResponse);
     }
@@ -81,7 +81,11 @@ class Api{
     }
 
     getUsersUser(userId=""){
-        return fetch(`${this.userUrl}${userId &&`/${userId}`}`,this._getRequest())
+        return fetch(`${this.userUrl}${userId &&`/${userId}`}`, this._getRequest())
+        .then(this._OnResponse);
+    }
+    getCurrentUser(){
+        return fetch(`${this.userUrl}/me`,this._getRequest())
         .then(this._OnResponse);
     }
 
@@ -94,7 +98,7 @@ class Api{
         return fetch(`${this.userUrl}/me/avatar`,{
             method: "PATH",
             headers: this.headers,
-            body: json.stringify(avatar)
+            body: JSON.stringify(avatar)
         }).then(this._OnResponse);
     }
 
