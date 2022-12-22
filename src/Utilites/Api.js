@@ -1,4 +1,4 @@
-import { json } from "react-router";
+
 
 const config = {
     postsUrl: "https://api.react-learning.ru/v2/group-7/posts",
@@ -50,7 +50,7 @@ class Api {
 
     }
 
-    actionPosts(method = "", postId = "", postData) {
+    actionPosts(method,postId="", postData){
         return fetch(`${this.postsUrl}${postId && `/${postId}`}`, this._RequestSwitch(method, postData))
         .then(this._OnResponse);
 
@@ -66,12 +66,12 @@ class Api {
         .then(this._OnResponse);
     }
 
-    changeLike(postId = "", islike) {
+    changeLike(postId="" ,islike){
         return fetch(`${this.postsUrl}/likes${postId && `/${postId}`}`,
-            {
-                method: islike ? "DELETE" : "PUT",
-                headers: this.headers
-            }).then(this._OnResponse);
+        {
+            method: islike? "DELETE": "PUT",
+            headers: this.headers
+        }).then(this._OnResponse);
     }
 
     actionComments(method = "", postId = "", commentId = "", commentData) {
@@ -80,8 +80,8 @@ class Api {
             .then(this._OnResponse);
     }
 
-    getUsersUser(userId = "") {
-        return fetch(`${this.userUrl}${userId && `/${userId}`}`, this._getRequest())
+    getUsersUser(userId=""){
+        return fetch(`${this.userUrl}${userId &&`/${userId}`}`,this._getRequest())
         .then(this._OnResponse);
     }
 
@@ -94,7 +94,7 @@ class Api {
         return fetch(`${this.userUrl}/me/avatar`, {
             method: "PATH",
             headers: this.headers,
-            body: json.stringify(avatar)
+            body: JSON.stringify(avatar)
         }).then(this._OnResponse);
     }
 
