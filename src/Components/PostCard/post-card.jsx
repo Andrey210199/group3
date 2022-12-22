@@ -28,7 +28,6 @@ dayjs.locale("ru");
 const PostCard = ({  _id, author, created_at, image, text, title, likes,}) => {
   const {deletePost, handleLiked :onLiked} = useContext(PostContext);
   const {currentUser} = useContext(UserContext);
-  console.log(currentUser._id, author);
   const liked = isLiked(likes, currentUser._id);
 
   const handleLike = () => {

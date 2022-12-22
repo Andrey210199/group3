@@ -1,6 +1,6 @@
 
 
-const config ={
+const config = {
     postsUrl: "https://api.react-learning.ru/v2/group-7/posts",
     userUrl: "https://api.react-learning.ru/v2/group-7/users",
     registerUrl: "https://api.react-learning.ru/",
@@ -10,25 +10,25 @@ const config ={
     }
 }
 
-class Api{
-    constructor({postsUrl, userUrl, registerUrl, headers}){
+class Api {
+    constructor({ postsUrl, userUrl, registerUrl, headers }) {
         this.registerUrl = registerUrl;
         this.postsUrl = postsUrl;
         this.userUrl = userUrl;
         this.headers = headers;
     }
-    _OnResponse = (res) =>{
+    _OnResponse = res => {
         return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
     }
 
-    _getRequest(){
-       return( {
+    _getRequest() {
+        return ({
             method: "GET",
             headers: this.headers
         });
     }
 
-    _postRequest(data){
+    _postRequest(data) {
         return (
             {
                 method: "POST",
@@ -39,81 +39,77 @@ class Api{
 
     }
 
-    _RequestSwitch = (method, data)=>{
-       return( method === "POST" || method ==="PATCH" || method ==="DELETE" 
-        ? {
-            method: method,
-            headers: this.headers,
-            body: method==="DELETE" ? JSON.stringify(data) : ""
-        }
-        : this._getRequest())
+    _RequestSwitch = (method, data) => {
+        return (method === "POST" || method === "PATCH" || method === "DELETE"
+            ? {
+                method: method,
+                headers: this.headers,
+                body: method !== "DELETE" ? JSON.stringify(data) : ""
+            }
+            : this._getRequest())
 
     }
 
-    actionPosts(method="", postId="", postData=""){
+    actionPosts(method,postId="", postData){
         return fetch(`${this.postsUrl}${postId && `/${postId}`}`, this._RequestSwitch(method, postData))
         .then(this._OnResponse);
 
     }
 
-    getSearchOnTitle(title){
-        return fetch(`${this.postsUrl}/search/?query=${title}`,this._getRequest())
+    getSearchOnTitle(title) {
+        return fetch(`${this.postsUrl}/search/?query=${title}`, this._getRequest())
         .then(this._OnResponse);
     }
 
-    getPaginate(pageNumber, limit, titleSearch){
-        return fetch(`${this.postsUrl}/paginate?page=${pageNumber}&limit=${limit}&query=${titleSearch}`,this._getRequest())
+    getPaginate(pageNumber, limit, titleSearch) {
+        return fetch(`${this.postsUrl}/paginate?page=${pageNumber}&limit=${limit}&query=${titleSearch}`, this._getRequest())
         .then(this._OnResponse);
     }
 
-    changeLike(postId="" , islike){
+    changeLike(postId="" ,islike){
         return fetch(`${this.postsUrl}/likes${postId && `/${postId}`}`,
         {
-            method: islike ? "DELETE": "PUT",
+            method: islike? "DELETE": "PUT",
             headers: this.headers
         }).then(this._OnResponse);
     }
-    
-    actionComments(method, postId="", commentId="", commentData){
+
+    actionComments(method = "", postId = "", commentId = "", commentData) {
         return fetch(`${this.postsUrl}/comments${postId && `/${postId}`}${commentId && `/${commentId}`}`,
-        this._RequestSwitch(method, commentData))
-        .then(this._OnResponse);
+            this._RequestSwitch(method, commentData))
+            .then(this._OnResponse);
     }
 
     getUsersUser(userId=""){
-        return fetch(`${this.userUrl}${userId &&`/${userId}`}`, this._getRequest())
-        .then(this._OnResponse);
-    }
-    getCurrentUser(){
-        return fetch(`${this.userUrl}/me`,this._getRequest())
+        return fetch(`${this.userUrl}${userId &&`/${userId}`}`,this._getRequest())
         .then(this._OnResponse);
     }
 
-    getPathUser(method, userData=""){
-        return fetch(`${this.userUrl}/me`,this._RequestSwitch(method, userData))
+    getPathUser(method = "", userData = "") {
+        return fetch(`${this.userUrl}/me`, this._RequestSwitch(method, userData))
         .then(this._OnResponse);
     }
 
-    changeAvatar(avatar){
-        return fetch(`${this.userUrl}/me/avatar`,{
+    changeAvatar(avatar) {
+        return fetch(`${this.userUrl}/me/avatar`, {
             method: "PATH",
             headers: this.headers,
             body: JSON.stringify(avatar)
         }).then(this._OnResponse);
     }
 
-    register(regData){
-        return fetch(`${this.registerUrl}/signup`,this._postRequest(regData))
+    register(regData) {
+        return fetch(`${this.registerUrl}/signup`, this._postRequest(regData))
         .then(this._OnResponse);
     }
 
-    authorization(authData){
-        return fetch(`${this.registerUrl}/signin`,this._postRequest(authData))
+    authorization(authData) {
+        return fetch(`${this.registerUrl}/signin`, this._postRequest(authData))
         .then(this._OnResponse);
     }
 
-    resetPass(newPass, user="", token){
-        return fetch(`${this.registerUrl}/password-reset${user && `/${user}/${token}`}`,this._postRequest(newPass))
+    resetPass(newPass, user = "", token) {
+        return fetch(`${this.registerUrl}/password-reset${user && `/${user}/${token}`}`, this._postRequest(newPass))
         .then(this._OnResponse);
     }
 

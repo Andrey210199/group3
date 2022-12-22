@@ -8,6 +8,7 @@ import { PostContext } from '../../context/postContext';
 import { UserContext } from '../../context/userContext';
 import api from '../../Utilites/Api';
 import PostList from "../PostList/post-list";
+import AddingPostPage from '../../Page/AddingPostPage/AddingPostPage';
 import './App.css';
 
 export default function App() {
