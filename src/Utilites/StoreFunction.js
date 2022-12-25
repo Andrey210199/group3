@@ -1,3 +1,4 @@
+import { favoritesAdd, favoritesDelete } from "../Storage/Slices/PostsSlile";
 
 export function isError(action){
     return action.type.endsWith("rejected");
@@ -5,9 +6,9 @@ export function isError(action){
 
 export function StateFavorites({liked, data, state}){
     if (!liked) {
-        state.favorites.push(data);
+        favoritesAdd(state, data);
     }
     else {
-       state.favorites = state.favorites.filter(post => post._id !== data._id);
+       favoritesDelete(state, data);
     }
 }

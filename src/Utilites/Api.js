@@ -86,7 +86,7 @@ class Api {
     }
 
     userInfo(){
-        return fetch(`${this.userUrl}/users/me`, this._getRequest())
+        return fetch(`${this.userUrl}/me`, this._getRequest())
         .then(this._OnResponse);
     }
 

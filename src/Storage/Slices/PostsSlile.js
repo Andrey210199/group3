@@ -9,7 +9,7 @@ const initialState = {
     favorites: []
 }
 
-const fetchGetPosts = createAsyncThunk(
+export const fetchGetPosts = createAsyncThunk(
     `${NAMEPOSTSSLICE}/fetchGetPosts`,
 
     async function (_, { rejectWithValue, fulfillWithValue, getState, extra: api }) {
@@ -26,7 +26,56 @@ const fetchGetPosts = createAsyncThunk(
     }
 );
 
-const fetchChangeLike = createAsyncThunk(
+export const fetchAddPost = createAsyncThunk(
+    `${NAMEPOSTSSLICE}/fetchAddPost`,
+
+    async function (post, { rejectWithValue, fulfillWithValue, extra: api }) {
+
+        try {
+
+            const data = await api.actionPosts("POST", "", post);
+            return fulfillWithValue(data);
+
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
+
+export const fetchChengePost = createAsyncThunk(
+    `${NAMEPOSTSSLICE}/fetchChengePost`,
+
+    async function (post, { rejectWithValue, fulfillWithValue, extra: api }) {
+
+        try {
+
+            const data = await api.actionPosts("PATCH", post._id, post);
+            return fulfillWithValue(data);
+
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+
+)
+
+export const fetchDeletePost = createAsyncThunk(
+    `${NAMEPOSTSSLICE}/fetchDeletePost`,
+
+    async function (post, { rejectWithValue, fulfillWithValue, getState, extra: api }) {
+
+        try {
+
+            const data = await api.actionPosts("DELETE", post._id);
+            return fulfillWithValue(data);
+
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+)
+
+export const fetchChangeLike = createAsyncThunk(
     `${NAMEPOSTSSLICE}/fetchChangeLike`,
 
     async function (post, { rejectWithValue, fulfillWithValue, getState, extra: api }) {
@@ -34,7 +83,7 @@ const fetchChangeLike = createAsyncThunk(
         try {
 
             const { user } = getState();
-            const liked = isLiked(post.liked, user.data._id);
+            const liked = isLiked(post.likes, user.data._id);
             const data = await api.changeLike(post._id, liked);
             return fulfillWithValue({ data, liked });
 
@@ -48,6 +97,22 @@ const fetchChangeLike = createAsyncThunk(
 const postsSlice = createSlice({
     name: NAMEPOSTSSLICE,
     initialState,
+    reducers: {
+
+        favoritesAdd: (state, action) => {
+            state.favorites.push(action.payload);
+        },
+
+        favoritesDelete: (state, action) => {
+            state.favorites = state.favorites.filter(post => post._id !== action.payload._id);
+        },
+
+        changePost: (state, action) => {
+            const { data } = action.payload;
+            state.data = state.data.map(post => post._id === data._id ? data : post);
+        }
+
+    },
     extraReducers: builder => {
         builder.addCase(fetchGetPosts.pending, state => {
             state.data = null;
@@ -61,11 +126,20 @@ const postsSlice = createSlice({
                 state.favorites = state.data.filter(post => isLiked(post.likes, currentUser._id));
                 state.loading = false;
             })
+            .addCase(fetchChengePost.fulfilled, () => {
+                changePost();
+            })
+            .addCase(fetchAddPost.fulfilled, (state, action) => {
+                state.data = state.data.push(action.payload);
+            })
             .addCase(fetchChangeLike.fulfilled, (state, action) => {
                 const { data, liked } = action.payload;
-                state.data = data;
+                changePost();
                 StateFavorites({ liked, data, state });
 
+            })
+            .addCase(fetchDeletePost.fulfilled, (state, action) => {
+                state.data = state.data.filter(post => post._id !== action.payload._id);
             })
             .addMatcher(isError, (state, action) => {
                 state.error = action.payload;
@@ -74,4 +148,5 @@ const postsSlice = createSlice({
 
 });
 
+export const { favoritesAdd, favoritesDelete, changePost } = postsSlice.actions;
 export default postsSlice.reducer;

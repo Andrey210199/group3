@@ -1,26 +1,27 @@
-import cn from "classnames";
+import { useSelector } from "react-redux";
+import { NAMESINGLEPOSTSLICE } from "../../Constants/StorageConstants";
+import AddingPost from "../AddingPost/AddingPost";
 
 import s from "./index.module.css";
 
 
-export default function Post({ _id,image, likes, tags, title, text,}){
+export default function Post() {
 
-    return(
+    const { image, likes, tags, title, text } = useSelector(state => state[NAMESINGLEPOSTSLICE].data);
+
+    return (
 
         <div className={s.postContent}>
 
-            <h1 className={s.title}>{title}</h1>
-            <img src={image} className={s.postImage} alt="image" decoding="async"/>
-            <p className={s.postText}>{text}</p>
-           { !!tags && tags.map(tag => <a href="#" key={tag} className={s.tag}>{tag}</a>) }
+            <AddingPost image={image} title={title} text={text} tags={tags}/>
 
-           <div className={s.like}>
+            <div className={s.like}>
 
-            {!!likes?.length && likes.length}
-            <button className={s.like__btn}>♥</button>
+                {!!likes?.length && likes.length}
+                <button className={s.like__btn}>♥</button>
 
             </div>
-            
+
         </div>
 
     )

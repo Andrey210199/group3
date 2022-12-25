@@ -1,19 +1,19 @@
 import s from "./index.module.css"
 import PostCard from "../PostCard/post-card"
-import { useContext } from "react";
-import { PostContext } from "../../context/postContext";
+import { useSelector } from "react-redux";
+import { NAMEPOSTSSLICE } from "../../Constants/StorageConstants";
 
-const PostList = () =>  {
-    const { postsData: posts } = useContext(PostContext);
+const PostList = ({posts}) =>  {
+    
+   const loading = useSelector(state => state[NAMEPOSTSSLICE].loading);
 
     return (
         
         <div className={s.posts}>
-            {posts.map(item => (
+            {loading ? <></>
+            : posts?.map(item => (
                  <PostCard key={item._id} {...item} />
-            )
-               
-            
+            )   
         )}
         
         </div>     
