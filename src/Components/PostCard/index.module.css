@@ -1,0 +1,17 @@
+ .card {
+    display: flex;
+    flex-direction: column;
+
+
+
+}  
+
+.card:hover {
+    box-shadow: 10px 10px 10px  #ccc;
+
+}
+.margin {
+    margin-top: auto;
+
+}
+

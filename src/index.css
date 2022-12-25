@@ -17,3 +17,26 @@ code {
   flex-direction: column;
   min-height: 100vh;
 }
+.container {
+	max-width: 1024px;
+	padding-left: 16px;
+	padding-right: 16px;
+	width: 95%;
+	margin: 0 auto;
+
+}
+
+.content {
+	padding: 20px 0;
+	flex: 1 0 auto;
+
+	
+}
+
+.ProseMirror p.is-editor-empty:first-child::before{
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
