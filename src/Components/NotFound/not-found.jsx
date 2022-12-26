@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import error404 from './img/404.svg';
 import rabbit from './img/rabbit.svg';
 import './style.css';
@@ -11,9 +12,9 @@ export const NotFound = ({ title, buttonText }) => {
         <h1 className="title">{title}</h1>
         <img src={rabbit} className="rabbit" />
 
-        <a href="/" className="btn">
+        <Link to="/" className="btn">
           {buttonText}
-        </a>
+        </Link>
       </div>
     </>
   );

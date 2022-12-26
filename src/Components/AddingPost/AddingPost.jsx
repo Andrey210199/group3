@@ -15,15 +15,14 @@ import MenuBar from "../MenuBar/MenuBar";
 
 import img from "./placeholder.png"
 import s from "./index.module.css";
-import api from "../../Utilites/Api";
 
-export default function AddingPost() {
+export default function AddingPost({ image, title, text: postText, enabled = false, tags, handleSubmit}) {
 
   const [text, setText] = useState({ title: "", image: "" });
 
   function handleSubmit(e) {
     e.preventDefault();
-    api.actionPosts("POST", "", { ...text, text: editor.getHTML() })
+    handleSubmit(text, editor);
   }
 
   function handleInput(event, type) {
@@ -50,35 +49,39 @@ export default function AddingPost() {
     ]
   })
 
-  //Проверка на получения с сервера 639df2b959b98b038f77a0c2, 638251d059b98b038f779d51
- /*  useEffect(()=>{
-    api.actionPosts("","638251d059b98b038f779d51")
-    .then((posts)=>{
-      editor?.commands.setContent(posts.text)
-    })
-  },[editor]) */
+  useEffect(() => {
+    editor?.setEditable(enabled);
+    editor?.commands.setContent(postText);
+  }, [editor, enabled, postText])
 
   return (
     <form className={s.form} onSubmit={handleSubmit}>
 
-      <h1>Добавления поста</h1>
+      {enabled ?
+        <>
+          <div className={s.post__title}>
+            <h2>Заголовок поста</h2>
+            <input type="text" className={s.input} value={text.title} onChange={(e) => handleInput(e, "title")} placeholder="Введите заголовок поста" required />
+          </div>
 
-      <div className={s.post__title}>
-        <h2>Заголовок поста</h2>
-        <input type="text" className={s.input} value={text.title} onChange={(e) => handleInput(e, "title")} placeholder="Введите заголовок поста" required />
-      </div>
+          <div className={s.img}>
+            <h2>Картинка для превью поста</h2>
+            <img className={s.img__image} src={text.image === "" ? img : text.image} alt="Превью" />
+            <input className={cn(s.input, s.img__text)} type="text" value={text.image} onChange={(e) => handleInput(e, "image")} placeholder="Введите ссылку на картинку поста" required />
+          </div>
+        </>
+        : <>
+          <h2>{title}</h2>
+          <img src={image} className={s.img__image} alt="postImage" decoding="async" />
+        </>
+      }
 
-
-      <div className={s.img}>
-        <h2>Картинка для превью поста</h2>
-        <img className={s.img__image} src={text.image === "" ? img : text.image} alt="Превью" />
-        <input className={cn(s.input, s.img__text)} type="text" value={text.image} onChange={(e) => handleInput(e, "image")} placeholder="Введите ссылку на картинку поста" required />
-      </div>
-
-      <MenuBar editor={editor} />
+      {enabled && <MenuBar editor={editor} />}
       <EditorContent editor={editor} />
 
-      <button>Опубликовать</button>
+      {tags && tags.map(tag => <a href="/#" key={tag} className={s.tag}>{tag}</a>)}
+
+      {enabled && <button>Опубликовать</button>}
     </form>
   )
 }

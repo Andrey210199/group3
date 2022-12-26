@@ -85,6 +85,11 @@ class Api {
         .then(this._OnResponse);
     }
 
+    userInfo(){
+        return fetch(`${this.userUrl}/me`, this._getRequest())
+        .then(this._OnResponse);
+    }
+
     getPathUser(method = "", userData = "") {
         return fetch(`${this.userUrl}/me`, this._RequestSwitch(method, userData))
         .then(this._OnResponse);
