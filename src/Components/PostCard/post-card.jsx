@@ -5,43 +5,31 @@ import {
   CardHeader,
   CardMedia,
   Avatar,
-  Badge,
-  Tooltip,
-  IconButton,
   Typography,
 
 } from "@mui/material";
-import { Favorite, Delete } from "@mui/icons-material";
 import s from "./index.module.css";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
-import { useContext } from "react";
-import { PostContext } from "../../context/postContext";
-import { isLiked } from "../../Utilites/total";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { NAMEUSERSLICE } from "../../Constants/StorageConstants";
+import { useDispatch } from "react-redux";
 import { fetchChangeLike, fetchDeletePost } from "../../Storage/Slices/PostsSlile";
+import ButtonLike from "../Buttons/ButtonLike/ButtonLike";
+import ButtonDelete from "../Buttons/ButtonDelete/ButtonDelete";
 
 dayjs.locale("ru");
 
 const PostCard = (props) => {
-  const { _id, author, created_at, image, text, title, likes } = props;
-  //const { deletePost } = useContext(PostContext);
-  const currentUser = useSelector(state => state[NAMEUSERSLICE].data);
-  const liked = isLiked(likes, currentUser._id);
+  const { _id, author, created_at, image, text, title } = props;
   const dispatch = useDispatch();
 
-  function handleLike() {
-    dispatch(fetchChangeLike(props));
+  function handleLike(post) {
+    dispatch(fetchChangeLike(post));
   }
+
   const handleClickDel = () => {
     if (window.confirm("Вы уверены, что хотите удалить пост?")) dispatch(fetchDeletePost(props));
   };
-
-
-
-
 
   return (
 
@@ -70,35 +58,10 @@ const PostCard = (props) => {
 
       </CardContent>
       <CardActions className={s.margin} disableSpacing>
-        <Tooltip title={"Liked"}>
-          <IconButton
-            aria-label="add to favorites"
-            onClick={handleLike}
-            sx={[liked && { color: "#942a00" }]}
 
-          >
-            <Badge
-              badgeContent={likes.length}
-              color="error"
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-            >
-              <Favorite />
-            </Badge>
-          </IconButton>
-        </Tooltip>
+        <ButtonLike post={props} onLike={handleLike} />
 
-        {
-          currentUser._id === author._id &&
-          <Tooltip title="Delete" onClick={handleClickDel}>
-            <IconButton>
-
-              <Delete />
-            </IconButton>
-          </Tooltip>
-        }
+        <ButtonDelete author={author} onDelete={handleClickDel} />
 
         {/* Роутинг на страницу с Подробной карточкой */}
         <Link to={`/post/${_id}`}>Подробнее</Link>

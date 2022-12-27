@@ -16,13 +16,13 @@ import MenuBar from "../MenuBar/MenuBar";
 import img from "./placeholder.png"
 import s from "./index.module.css";
 
-export default function AddingPost({ image, title, text: postText, enabled = false, tags, handleSubmit}) {
+export default function AddingPost({ image, title, text: postText, enabled = false, tags, handleSubmit: onSubmit}) {
 
   const [text, setText] = useState({ title: "", image: "" });
 
   function handleSubmit(e) {
     e.preventDefault();
-    handleSubmit(text, editor);
+    onSubmit(text, editor.getHTML());
   }
 
   function handleInput(event, type) {

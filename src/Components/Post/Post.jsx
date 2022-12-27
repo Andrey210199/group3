@@ -1,13 +1,23 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NAMESINGLEPOSTSLICE } from "../../Constants/StorageConstants";
+import { fetchChangeLike } from "../../Storage/Slices/PostsSlile";
+import { setProductState } from "../../Storage/Slices/SinglePostSlice";
 import AddingPost from "../AddingPost/AddingPost";
+import ButtonLike from "../Buttons/ButtonLike/ButtonLike";
 
 import s from "./index.module.css";
 
 
 export default function Post() {
 
-    const { image, likes, tags, title, text } = useSelector(state => state[NAMESINGLEPOSTSLICE].data);
+    const post = useSelector(state => state[NAMESINGLEPOSTSLICE].data);
+    const { image, tags, title, text } = post;
+    const dispatch = useDispatch();
+
+    function handleLike(post){
+        dispatch(fetchChangeLike(post))
+        .then((newPost)=>dispatch(setProductState(newPost.payload.data)));
+    }
 
     return (
 
@@ -17,8 +27,7 @@ export default function Post() {
 
             <div className={s.like}>
 
-                {!!likes?.length && likes.length}
-                <button className={s.like__btn}>♥</button>
+                <ButtonLike post={post} onLike={handleLike}/>
 
             </div>
 

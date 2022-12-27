@@ -8,9 +8,9 @@ export const NotFound = ({ title, buttonText }) => {
   return (
     <>
       <div className="notFound">
-        <img src={error404} className="error404" aria-hidden="true" />
+        <img src={error404} className="error404" aria-hidden="true" alt="NoFoundImg" />
         <h1 className="title">{title}</h1>
-        <img src={rabbit} className="rabbit" />
+        <img src={rabbit} className="rabbit" alt="decorationImg"/>
 
         <Link to="/" className="btn">
           {buttonText}

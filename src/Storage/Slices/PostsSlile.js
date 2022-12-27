@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { NAMEPOSTSSLICE, STATEINITIAL } from "../../Constants/StorageConstants";
-import { isError, StateFavorites } from "../../Utilites/StoreFunction";
+import { changeLike, changePosts, dataPush, isError } from "../../Utilites/StoreFunction";
 import { isLiked } from "../../Utilites/total";
 
 const initialState = {
@@ -97,49 +97,37 @@ export const fetchChangeLike = createAsyncThunk(
 const postsSlice = createSlice({
     name: NAMEPOSTSSLICE,
     initialState,
-    reducers: {
-
-        favoritesAdd: (state, action) => {
-            state.favorites.push(action.payload);
-        },
-
-        favoritesDelete: (state, action) => {
-            state.favorites = state.favorites.filter(post => post._id !== action.payload._id);
-        },
-
-        changePost: (state, action) => {
-            const { data } = action.payload;
-            state.data = state.data.map(post => post._id === data._id ? data : post);
-        }
-
-    },
     extraReducers: builder => {
         builder.addCase(fetchGetPosts.pending, state => {
             state.data = null;
             state.loading = true;
             state.error = null;
+            state.total = null;
+            state.favorites = null;
         })
             .addCase(fetchGetPosts.fulfilled, (state, action) => {
-                const { total, data: posts, user: currentUser } = action.payload;
-                state.total = total;
+                const { data: posts, user: currentUser } = action.payload;
+                state.total = posts.length;
                 state.data = posts;
-                state.favorites = state.data.filter(post => isLiked(post.likes, currentUser._id));
+                state.favorites = state.data.filter(post => isLiked(post.likes, currentUser.data._id));
                 state.loading = false;
             })
-            .addCase(fetchChengePost.fulfilled, () => {
-                changePost();
+            .addCase(fetchChengePost.fulfilled, (state, action) => {
+                const { data } = action.payload;
+                changePosts(state, data);
             })
             .addCase(fetchAddPost.fulfilled, (state, action) => {
-                state.data = state.data.push(action.payload);
+                dataPush(state, action.payload.data);
             })
             .addCase(fetchChangeLike.fulfilled, (state, action) => {
                 const { data, liked } = action.payload;
-                changePost();
-                StateFavorites({ liked, data, state });
+                changePosts(state, data)
+                changeLike({ state, data, liked });
 
             })
             .addCase(fetchDeletePost.fulfilled, (state, action) => {
-                state.data = state.data.filter(post => post._id !== action.payload._id);
+                const { data } = action.payload;
+                state.data = state.data.filter(post => post._id !== data._id);
             })
             .addMatcher(isError, (state, action) => {
                 state.error = action.payload;
@@ -148,5 +136,4 @@ const postsSlice = createSlice({
 
 });
 
-export const { favoritesAdd, favoritesDelete, changePost } = postsSlice.actions;
 export default postsSlice.reducer;

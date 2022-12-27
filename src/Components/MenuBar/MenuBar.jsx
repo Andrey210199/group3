@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ButtonWithPopup from "../ButtonWithPopup/ButtonWithPopup";
+import ButtonWithPopup from "../Buttons/ButtonWithPopup/ButtonWithPopup";
 import Aligns from "../MenuElements/Aligns/Aligns";
 import Blockquote from "../MenuElements/Blockquote/Blockquote";
 import Codes from "../MenuElements/Codes/Codes";

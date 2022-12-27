@@ -1,6 +1,6 @@
 import { createPortal } from "react-dom";
 import { useState } from "react";
-import Modal from "../Modal/Modal";
+import Modal from "../../Modal/Modal";
 import s from "./index.module.css";
 
 export default function ButtonWithPopup({ event, text }) {

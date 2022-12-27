@@ -1,27 +1,67 @@
 
-import { useState } from "react";
+import CharacterCount from "@tiptap/extension-character-count";
+import Highlight from "@tiptap/extension-highlight";
+import Link from "@tiptap/extension-link";
+import Placeholder from "@tiptap/extension-placeholder";
+import TextAlign from "@tiptap/extension-text-align";
+import Underline from "@tiptap/extension-underline";
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import { useDispatch, useSelector } from "react-redux";
+import { MAXCHARACTERS } from "../../Constants/Constant";
+import { NAMESINGLEPOSTSLICE } from "../../Constants/StorageConstants";
+import { fetchSetRewiew } from "../../Storage/Slices/SinglePostSlice";
+import MenuBarComment from "../MenuBarComment/MenuBarComment";
 import s from "./index.module.css";
 
-export default function AddComment({handleSubComment}){
+export default function AddComment() {
 
-    const [commentText, setCommentText] = useState();
+    const { _id: postId} = useSelector(state => state[NAMESINGLEPOSTSLICE].data);
+    const limit = MAXCHARACTERS;
+    const dispatch = useDispatch();
 
-    function handleClick(evt){
+    function handleSubmit(evt) {
         evt.preventDefault();
-       commentText.trim() && handleSubComment(commentText);
+        editor.getText().trim() && dispatch(fetchSetRewiew({ postId, comment: editor.getHTML()}));
 
     }
 
-    function handleTextArea(event){
-        setCommentText(event.target.value);
-    }
+    const editor = useEditor({
 
-    return(
+        extensions: [
+            StarterKit,
+            TextAlign.configure({
+                types: ["heading", "paragraph"]
+            }),
+            Highlight.configure({
+                multicolor: true
+            }),
+            Underline,
+            Link,
+            CharacterCount.configure({
+                limit
+            }),
+            Placeholder.configure({
+                placeholder: 'Написать комментарий',
+            })
+        ]
 
-        <form className={s.addComment}>
+    });
 
-            <textarea value={commentText} className={s.textarea} onInput={handleTextArea}/>
-            <button onClick={handleClick}>Отправить</button>
+    return (
+
+        <form className={s.addComment} onSubmit={handleSubmit}>
+
+            <MenuBarComment editor={editor} />
+            <EditorContent editor={editor} />
+
+            <div className="character-count">
+                {editor?.storage.characterCount.characters()}/{limit} Символов
+                <br />
+                {editor?.storage.characterCount.words()} Слов
+            </div>
+
+            <button>Отправить</button>
 
         </form>
     )

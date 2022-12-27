@@ -3,8 +3,8 @@ import api from "../../Utilites/Api";
 
 export default function AddingPostPage() {
 
-    function handleSubmit(text, editor){
-        api.actionPosts("POST", "", { ...text, text: editor.getHTML() })
+    function handleSubmit(text, editorText){
+        api.actionPosts("POST", "", { ...text, text: editorText })
     }
 
     return (
@@ -12,7 +12,7 @@ export default function AddingPostPage() {
         <>
             <h1>Добавления поста</h1>
             
-            <AddingPost handleSubmit={handleSubmit}/>
+            <AddingPost handleSubmit={handleSubmit} enabled={true}/>
         </>
     )
 }

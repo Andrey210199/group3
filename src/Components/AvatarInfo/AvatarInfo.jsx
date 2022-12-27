@@ -2,16 +2,13 @@ import { Avatar } from "@mui/material";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { useSelector } from "react-redux";
-import { NAMESINGLEPOSTSLICE } from "../../Constants/StorageConstants";
 
 dayjs.locale("ru");
 dayjs.extend(relativeTime);
 
 
-export default function AvatarInfo({ s }) {
+export default function AvatarInfo({author, created, s }) {
 
-    const { author, created_at: created } = useSelector(state => state[NAMESINGLEPOSTSLICE].data);
     const { avatar, name } = author;
 
     function firstLetter() {

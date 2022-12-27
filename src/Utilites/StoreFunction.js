@@ -1,14 +1,26 @@
-import { favoritesAdd, favoritesDelete } from "../Storage/Slices/PostsSlile";
 
-export function isError(action){
+export function isError(action) {
     return action.type.endsWith("rejected");
 }
 
-export function StateFavorites({liked, data, state}){
+export function changeLike({ state, data, liked }) {
+
     if (!liked) {
-        favoritesAdd(state, data);
+        dataPush(state, data);
     }
     else {
-       favoritesDelete(state, data);
+        dataFilter(state, data);
     }
+}
+
+export function dataPush(state, data){
+    state.favorites.push(data);
+}
+
+export function dataFilter(state, data){
+    state.favorites = state.favorites.filter(post => post._id !== data._id);
+}
+
+export function changePosts(state, data) {
+    state.data = state.data.map(post => post._id === data._id ? data : post);
 }

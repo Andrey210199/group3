@@ -24,7 +24,7 @@ export default function App() {
   const [postsData, setPostsData] = useState([]);
   const posts = useSelector(state => state[NAMEPOSTSSLICE].data);
   const currentUser = useSelector(state => state[NAMEUSERSLICE].data);
-
+  
 
 
   const dispatch = useDispatch();

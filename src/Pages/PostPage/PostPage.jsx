@@ -10,21 +10,23 @@ import { fetchGetSinglePost } from "../../Storage/Slices/SinglePostSlice";
 
 import s from "./index.module.css";
 
-export default function PostPage(props) {
+export default function PostPage() {
 
     const isLoading = useSelector(state => state[NAMESINGLEPOSTSLICE].loading);
     const currentUser = useSelector(state => state.user.data);
+    const post = useSelector(state => state[NAMESINGLEPOSTSLICE].data);
+    const created = post?.created_at;
+    const author = post?.author;
     const { id: postId } = useParams();
     const dispatch = useDispatch();
 
-    //избавиться
-    const post = useSelector(state => state[NAMESINGLEPOSTSLICE].data);
-    const { comments } = post !== null ? post : "";
-    const [postComments, setpostComments] = useState();
-
     useEffect(() => {
-        dispatch(fetchGetSinglePost(postId));
+        dispatch(fetchGetSinglePost(postId))
+        .then(post => console.log(post.payload.comments));
     }, [dispatch, postId]);
+
+    //избавиться
+    const [postComments, setpostComments] = useState();
 
     //Надо добавить запрос на сервер, чтобы добавлять комментарии
     function handleSubComment(comment) {
@@ -39,23 +41,19 @@ export default function PostPage(props) {
         setpostComments([...postComments, commentObj]);
     }
 
-    useEffect(() => {
-        setpostComments(comments);
-    }, [comments]);
-
     return (
         <>
             {
                 isLoading ? <></> :
                     <>
                         <div className={s.authorContent}>
-                            <AvatarInfo s={s} />
+                            <AvatarInfo created={created} author={author} s={s} />
                         </div>
 
                         <Post />
 
                         <div className={s.comments}>
-                            <CommentList postComments={postComments}>
+                            <CommentList>
                                 <AddComment handleSubComment={handleSubComment} />
                             </CommentList>
                         </div>
