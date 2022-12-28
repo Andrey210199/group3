@@ -7,6 +7,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MAXCHARACTERS } from "../../Constants/Constant";
 import { NAMESINGLEPOSTSLICE } from "../../Constants/StorageConstants";
@@ -14,15 +15,16 @@ import { fetchSetRewiew } from "../../Storage/Slices/SinglePostSlice";
 import MenuBarComment from "../MenuBarComment/MenuBarComment";
 import s from "./index.module.css";
 
-export default function AddComment() {
+export default function AddComment({ enable = false, content }) {
 
-    const { _id: postId} = useSelector(state => state[NAMESINGLEPOSTSLICE].data);
+    const { _id: postId } = useSelector(state => state[NAMESINGLEPOSTSLICE].data);
     const limit = MAXCHARACTERS;
     const dispatch = useDispatch();
 
     function handleSubmit(evt) {
         evt.preventDefault();
-        editor.getText().trim() && dispatch(fetchSetRewiew({ postId, comment: editor.getHTML()}));
+        editor.getText().trim() && dispatch(fetchSetRewiew({ postId, comment: editor.getHTML() }));
+        editor.commands.setContent("");
 
     }
 
@@ -48,20 +50,28 @@ export default function AddComment() {
 
     });
 
+    useEffect(() => {
+        editor?.setEditable(enable);
+        editor?.commands.setContent(content)
+    }, [editor, enable, content])
+
     return (
 
         <form className={s.addComment} onSubmit={handleSubmit}>
 
-            <MenuBarComment editor={editor} />
+            {enable && <MenuBarComment editor={editor} />}
             <EditorContent editor={editor} />
 
-            <div className="character-count">
-                {editor?.storage.characterCount.characters()}/{limit} Символов
-                <br />
-                {editor?.storage.characterCount.words()} Слов
-            </div>
+            {enable &&
+                <>
+                    <div className="character-count">
+                        {editor?.storage.characterCount.characters()}/{limit} Символов
+                        <br />
+                        {editor?.storage.characterCount.words()} Слов
+                    </div>
 
-            <button>Отправить</button>
+                    <button>Отправить</button>
+                </>}
 
         </form>
     )

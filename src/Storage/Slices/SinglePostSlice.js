@@ -4,6 +4,7 @@ import { isError } from "../../Utilites/StoreFunction";
 
 const initialState = {
     ...STATEINITIAL,
+    commentsLoading: true,
     comments: null
 }
 
@@ -38,22 +39,32 @@ export const fetchSetSinglePost = createAsyncThunk(
     }
 );
 
-export const fetchGetCommentAuthor = createAsyncThunk(
-    `${NAMESINGLEPOSTSLICE}/fetchGetCommentAuthor`,
+export const fetchGetComments = createAsyncThunk(
+    `${NAMESINGLEPOSTSLICE}/fetchGetComments`,
 
-    async function(authorId, {rejectWithValue,fulfillWithValue, extra: api}){
-        
+    async function (postId, { rejectWithValue, fulfillWithValue, extra: api }) {
+
+        try {
+
+            const data = await api.actionComments("", postId);
+            return fulfillWithValue(data);
+
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+
     }
 )
 
 export const fetchSetRewiew = createAsyncThunk(
     `${NAMESINGLEPOSTSLICE}/fetchSetRewiew`,
 
-    async function ({ comment, postId }, { rejectWithValue, fulfillWithValue, extra: api }) {
+    async function ({ comment, postId }, { rejectWithValue, fulfillWithValue, getState, extra: api }) {
 
         try {
+            const { user } = getState()
             const data = await api.actionComments("POST", postId, "", { text: comment });
-            return fulfillWithValue(data);
+            return fulfillWithValue({ data, user });
 
         } catch (error) {
             return rejectWithValue(error);
@@ -93,8 +104,15 @@ const singlePostSlice = createSlice({
             state.error = null;
             state.comments = null;
         })
+            .addCase(fetchGetComments.pending, state => {
+                state.commentsLoading = true;
+                state.comments = null;
+            })
+            .addCase(fetchGetComments.fulfilled, (state, action) => {
+                state.comments = action.payload;
+                state.commentsLoading = false;
+            })
             .addCase(fetchGetSinglePost.fulfilled, (state, action) => {
-                console.log(action.payload)
                 state.data = action.payload;
                 state.loading = false;
             })
@@ -102,10 +120,9 @@ const singlePostSlice = createSlice({
                 state.data = action.payload;
             })
             .addCase(fetchSetRewiew.fulfilled, (state, action) => {
-                state.data = action.payload;
-            })
-            .addCase(fetchDeleteRewiew.fulfilled, (state, action) => {
-                state.data = action.payload;
+                const { data, user } = action.payload;
+                const comment = data.comments[data.comments.length - 1];
+                state.comments.push({ ...comment, author: user.data });
             })
             .addMatcher(isError, (state, action) => {
                 state.error = action.payload;

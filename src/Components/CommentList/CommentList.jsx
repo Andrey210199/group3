@@ -4,12 +4,12 @@ import Comment from "../Comment/Comment";
 
 export default function CommentList({ children }) {
 
-    const { comments } = useSelector(state => state[NAMESINGLEPOSTSLICE].data);
+    const { comments, data } = useSelector(state => state[NAMESINGLEPOSTSLICE]);
 
     return (
         <>
             {children}
-            {comments && comments.map(comment => <Comment key={comment._id} {...comment} />)}
+            {comments && comments.map(comment => <Comment key={comment._id} {...comment} postId={data._id} />)}
         </>
     )
 }

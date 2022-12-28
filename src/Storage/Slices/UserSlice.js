@@ -5,7 +5,8 @@ import { isError } from "../../Utilites/StoreFunction";
 
 const initialState = {
     ...STATEINITIAL,
-    isAutch: false
+    isAutch: false,
+    allUsers: null
 }
 
 export const fetchGetUser = createAsyncThunk(
@@ -31,6 +32,7 @@ const userSlice = createSlice({
 
         builder.addCase(fetchGetUser.pending, state => {
             state.data = null;
+            state.allUsers = null;
             state.loading = true;
             state.error = null;
         })

@@ -16,7 +16,7 @@ import MenuBar from "../MenuBar/MenuBar";
 import img from "./placeholder.png"
 import s from "./index.module.css";
 
-export default function AddingPost({ image, title, text: postText, enabled = false, tags, handleSubmit: onSubmit}) {
+export default function AddingPost({ image, title, text: postText, enabled = false, tags, handleSubmit: onSubmit }) {
 
   const [text, setText] = useState({ title: "", image: "" });
 
@@ -77,6 +77,7 @@ export default function AddingPost({ image, title, text: postText, enabled = fal
       }
 
       {enabled && <MenuBar editor={editor} />}
+
       <EditorContent editor={editor} />
 
       {tags && tags.map(tag => <a href="/#" key={tag} className={s.tag}>{tag}</a>)}
