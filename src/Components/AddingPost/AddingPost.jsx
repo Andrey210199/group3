@@ -15,14 +15,16 @@ import MenuBar from "../MenuBar/MenuBar";
 
 import img from "./placeholder.png"
 import s from "./index.module.css";
+import Tags from "../Tags/Tags";
 
-export default function AddingPost({ image, title, text: postText, enabled = false, tags, handleSubmit: onSubmit }) {
+export default function AddingPost({ image: postImage, title: postTitle, text: postText, enabled = false, tags, handleSubmit: onSubmit }) {
 
   const [text, setText] = useState({ title: "", image: "" });
+  const [inputTags, setInputTags] = useState([]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    onSubmit(text, editor.getHTML());
+    onSubmit(text, inputTags, editor.getHTML());
   }
 
   function handleInput(event, type) {
@@ -52,7 +54,8 @@ export default function AddingPost({ image, title, text: postText, enabled = fal
   useEffect(() => {
     editor?.setEditable(enabled);
     editor?.commands.setContent(postText);
-  }, [editor, enabled, postText])
+    postTitle && setText({ title: postTitle, image: postImage })
+  }, [editor, enabled, postText, postImage, postTitle])
 
   return (
     <form className={s.form} onSubmit={handleSubmit}>
@@ -71,8 +74,8 @@ export default function AddingPost({ image, title, text: postText, enabled = fal
           </div>
         </>
         : <>
-          <h2>{title}</h2>
-          <img src={image} className={s.img__image} alt="postImage" decoding="async" />
+          <h2>{postTitle}</h2>
+          <img src={postImage} className={s.img__image} alt="postImage" decoding="async" />
         </>
       }
 
@@ -80,9 +83,14 @@ export default function AddingPost({ image, title, text: postText, enabled = fal
 
       <EditorContent editor={editor} />
 
-      {tags && tags.map(tag => <a href="/#" key={tag} className={s.tag}>{tag}</a>)}
+      {enabled ?
+        <>
+          <Tags setInputTags={setInputTags} tags={tags} />
+          <button>Опубликовать</button>
+        </>
+        : tags && tags.map(tag => <a href="/#" key={tag} className={s.tag}>{tag}</a>)
+      }
 
-      {enabled && <button>Опубликовать</button>}
     </form>
   )
 }

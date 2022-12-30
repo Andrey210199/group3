@@ -6,7 +6,8 @@ import { isLiked } from "../../Utilites/total";
 const initialState = {
     ...STATEINITIAL,
     total: null,
-    favorites: []
+    favorites: [],
+    tags: {}
 }
 
 export const fetchGetPosts = createAsyncThunk(
@@ -97,6 +98,11 @@ export const fetchChangeLike = createAsyncThunk(
 const postsSlice = createSlice({
     name: NAMEPOSTSSLICE,
     initialState,
+    reducers: {
+        addTag: (state, action) => {
+            state.tags = { ...state.tags, [action.payload]: action.payload};
+        }
+    },
     extraReducers: builder => {
         builder.addCase(fetchGetPosts.pending, state => {
             state.data = null;
@@ -111,10 +117,17 @@ const postsSlice = createSlice({
                 state.data = posts;
                 state.favorites = state.data.filter(post => isLiked(post.likes, currentUser.data._id));
                 state.loading = false;
+
+                state.data.map(post => {
+
+                    post.tags.map(tag => {
+                        return state.tags = { ...state.tags, [tag]: tag };
+                    })
+                    return state.tags;
+                });
             })
             .addCase(fetchChengePost.fulfilled, (state, action) => {
-                const { data } = action.payload;
-                changePosts(state, data);
+                changePosts(state, action.payload);
             })
             .addCase(fetchAddPost.fulfilled, (state, action) => {
                 dataPush(state, action.payload.data);
@@ -136,4 +149,5 @@ const postsSlice = createSlice({
 
 });
 
+export const { addTag } = postsSlice.actions;
 export default postsSlice.reducer;

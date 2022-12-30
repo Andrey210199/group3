@@ -1,14 +1,13 @@
 import { useDispatch } from "react-redux";
 import AddingPost from "../../Components/AddingPost/AddingPost";
 import { fetchAddPost } from "../../Storage/Slices/PostsSlile";
-import api from "../../Utilites/Api";
 
 export default function AddingPostPage() {
 
     const dispatch = useDispatch();
 
-    function handleSubmit(text, editorText) {
-        dispatch(fetchAddPost({ ...text, text: editorText }));
+    function handleSubmit(text, tags, editorText) {
+        dispatch(fetchAddPost({ ...text, tags, text: editorText }));
     }
 
     return (
