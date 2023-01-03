@@ -14,6 +14,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchGetUser } from "../../Storage/Slices/UserSlice";
 import { fetchGetPosts } from "../../Storage/Slices/PostsSlile";
 import { NAMEPOSTSSLICE, NAMEUSERSLICE } from "../../Constants/StorageConstants";
+import { Header } from "../Header/header";
+import { Container } from "@mui/material";
+
+
+
 
 
 export default function App() {
@@ -24,8 +29,6 @@ export default function App() {
   const [postsData, setPostsData] = useState([]);
   const posts = useSelector(state => state[NAMEPOSTSSLICE].data);
   const currentUser = useSelector(state => state[NAMEUSERSLICE].data);
-  
-
 
   const dispatch = useDispatch();
 
@@ -75,27 +78,30 @@ export default function App() {
   return (
     <UserContext.Provider value={{ currentUser }}>
       <PostContext.Provider value={{ postsData, deletePost, handleLiked }}>
-        {/* <Header/> */}
-        <main className="container content">
-          <Routes>
-            <Route path="/" element={
-              <PostList posts={posts} />
-            } />
+        <Header/>
+        <Container>
 
-            <Route path="/post/:id" element={
-              <PostPage />
-            } />
+          <main className="content">
+            <Routes>
+              <Route path="/" element={
+                <PostList posts={posts} />
+              } />
 
-            <Route path="/add_post" element={
-              <AddingPostPage />
-            } />
+              <Route path="/post/:id" element={
+                <PostPage />
+              } />
 
-            <Route path="*" element={
-              <NotFoundPage />
-            } />
+              <Route path="/add_post" element={
+                <AddingPostPage />
+              } />
 
-          </Routes>
-        </main>
+              <Route path="*" element={
+                <NotFoundPage />
+              } />
+
+            </Routes>
+          </main>
+        </Container>
         {/* <Footer/> */}
       </PostContext.Provider>
     </UserContext.Provider>
