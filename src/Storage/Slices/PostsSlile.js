@@ -100,7 +100,7 @@ const postsSlice = createSlice({
     initialState,
     reducers: {
         addTag: (state, action) => {
-            state.tags = { ...state.tags, [action.payload]: action.payload};
+            state.tags = { ...state.tags, [action.payload]: action.payload };
         }
     },
     extraReducers: builder => {
