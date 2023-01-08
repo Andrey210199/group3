@@ -54,7 +54,7 @@ export default function App() {
   function deletePost(idPost) {
     api.actionPosts("DELETE", idPost)
       .then((data) => {
-        const newPosts = postsData?.filter(post => post._id !== data._id)
+        const newPosts = posts?.filter(post => post._id !== data._id)
         setPostsData(newPosts)
       })
       .catch(err => {
@@ -84,7 +84,7 @@ export default function App() {
           <main className="content">
             <Routes>
               <Route path="/" element={
-                <PostList posts={posts} />
+                <PostList posts={postsData} />
               } />
 
               <Route path="/post/:id" element={

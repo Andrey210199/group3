@@ -13,12 +13,19 @@ import cn from "classnames";
 import { useEffect, useState } from "react";
 import MenuBar from "../MenuBar/MenuBar";
 
-import img from "./placeholder.png"
+import img from "./placeholder.png";
 import s from "./index.module.css";
 import Tags from "../Tags/Tags";
 
-export default function AddingPost({ image: postImage, title: postTitle, text: postText, enabled = false, tags, handleSubmit: onSubmit }) {
-
+export default function AddingPost({
+  children,
+  image: postImage,
+  title: postTitle,
+  text: postText,
+  enabled = false,
+  tags,
+  handleSubmit: onSubmit,
+}) {
   const [text, setText] = useState({ title: "", image: "" });
   const [inputTags, setInputTags] = useState([]);
 
@@ -28,17 +35,17 @@ export default function AddingPost({ image: postImage, title: postTitle, text: p
   }
 
   function handleInput(event, type) {
-    setText({ ...text, [type]: event.target.value })
+    setText({ ...text, [type]: event.target.value });
   }
 
   const editor = useEditor({
     extensions: [
       StarterKit,
       TextAlign.configure({
-        types: ["heading", "paragraph"]
+        types: ["heading", "paragraph"],
       }),
       Highlight.configure({
-        multicolor: true
+        multicolor: true,
       }),
       TextStyle,
       Color,
@@ -46,51 +53,92 @@ export default function AddingPost({ image: postImage, title: postTitle, text: p
       Image,
       Link,
       Placeholder.configure({
-        placeholder: 'My Custom Placeholder',
-      })
-    ]
-  })
+        placeholder: "My Custom Placeholder",
+      }),
+    ],
+  });
 
   useEffect(() => {
     editor?.setEditable(enabled);
     editor?.commands.setContent(postText);
-    postTitle && setText({ title: postTitle, image: postImage })
-  }, [editor, enabled, postText, postImage, postTitle])
+    postTitle && setText({ title: postTitle, image: postImage });
+  }, [editor, enabled, postText, postImage, postTitle]);
 
   return (
     <form className={s.form} onSubmit={handleSubmit}>
-
-      {enabled ?
+      {enabled ? (
         <>
           <div className={s.post__title}>
             <h2>Заголовок поста</h2>
-            <input type="text" className={s.input} value={text.title} onChange={(e) => handleInput(e, "title")} placeholder="Введите заголовок поста" required />
+            <input
+              type="text"
+              className={s.input}
+              value={text.title}
+              onChange={(e) => handleInput(e, "title")}
+              placeholder="Введите заголовок поста"
+              required
+            />
           </div>
 
           <div className={s.img}>
             <h2>Картинка для превью поста</h2>
-            <img className={s.img__image} src={text.image === "" ? img : text.image} alt="Превью" />
-            <input className={cn(s.input, s.img__text)} type="text" value={text.image} onChange={(e) => handleInput(e, "image")} placeholder="Введите ссылку на картинку поста" required />
+            <img
+              className={s.img__image}
+              src={text.image === "" ? img : text.image}
+              alt="Превью"
+            />
+            <input
+              className={cn(s.input, s.img__text)}
+              type="text"
+              value={text.image}
+              onChange={(e) => handleInput(e, "image")}
+              placeholder="Введите ссылку на картинку поста"
+              required
+            />
           </div>
         </>
-        : <>
-          <h2>{postTitle}</h2>
-          <img src={postImage} className={s.img__image} alt="postImage" decoding="async" />
+      ) : (
+        <>
+          <div className={s.post_image}>
+            <img
+              src={postImage}
+              className={s.img__image}
+              alt="postImage"
+              decoding="async"
+            />
+          </div>
+          <div className={s.header}>
+            <h2 className={s.header__title}>{postTitle}</h2>
+            {children && children}
+            <div className={s.post_tags}>
+              <div className={`${s.tag} ${s.title_tag}`}>тэги:</div>
+            {
+              tags &&
+              tags.map((tag) => (
+                  <a href="/#" key={tag} className={s.tag}>
+                    {tag}
+                  </a>
+              ))
+            }
+            </div>
+          </div>
         </>
-      }
+      )}
 
       {enabled && <MenuBar editor={editor} />}
 
       <EditorContent editor={editor} />
 
-      {enabled ?
+      {enabled ? (
         <>
           <Tags setInputTags={setInputTags} tags={tags} />
           <button>Опубликовать</button>
         </>
-        : tags && tags.map(tag => <a href="/#" key={tag} className={s.tag}>{tag}</a>)
-      }
-
+      ) : (
+        
+          <></>
+      
+      )}
     </form>
-  )
+  );
 }

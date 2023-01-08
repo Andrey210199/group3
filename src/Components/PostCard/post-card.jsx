@@ -21,6 +21,8 @@ import { PostContext } from "../../context/postContext";
 import { isLiked } from "../../Utilites/total";
 import { UserContext } from "../../context/userContext";
 import ButtonDelete from "../Buttons/ButtonDelete/ButtonDelete";
+import ButtonLike from "../Buttons/ButtonLike/ButtonLike";
+import { Link } from "react-router-dom";
 
 dayjs.locale("ru");
 
@@ -45,6 +47,7 @@ const PostCard = ({  _id, author, created_at, image, text, title, likes,}) => {
         boxShadow: 0,
       }}
     >
+      <Link to={`/post/${_id}`} className={s.link}>
       <CardMedia component="img" height="195" image={image} alt={title} />
       <CardHeader
       
@@ -67,6 +70,7 @@ const PostCard = ({  _id, author, created_at, image, text, title, likes,}) => {
           {text}
         </Typography>
       </CardContent>
+      </Link>
       <CardActions className={s.margin} disableSpacing>
         <Tooltip title={"Liked"}>
           <IconButton
@@ -90,7 +94,7 @@ const PostCard = ({  _id, author, created_at, image, text, title, likes,}) => {
         
 
         {/* Роутинг на страницу с Подробной карточкой */}
-        <button>Подробнее</button>
+        
       <ButtonDelete author ={author} onDelete = {handleClickDel} style = {{position: "absolute", right: "15px"}}/>
 
       </CardActions>

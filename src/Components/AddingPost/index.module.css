@@ -3,9 +3,53 @@
 }
 
 .img__image{
-    width: 80%;
+    width: 100%;
+
+}
+.form {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+
+}
+.header__title{
+    margin: 0;
+    font-size: 2em;
+    text-align: center;
+    
 }
 
+.post_image {
+    width: 50%;
+
+}
+.header{
+    width: 40%;    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    position: relative;
+
+}
+.post_tags{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px
+}
 .tag{
-    padding: 10px;
+    display: inline-block;
+    text-decoration: none;
+    color: var(--bg-main-color);
+    background-color: var(--text-secondary-color);
+    padding: 5px 12px;
+    border-radius: 15px;
+    cursor: default;
+
+}
+.title_tag{
+    background-color: var(--red-color);
+
 }
