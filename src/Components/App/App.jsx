@@ -16,6 +16,7 @@ import { fetchGetPosts } from "../../Storage/Slices/PostsSlile";
 import { NAMEPOSTSSLICE, NAMEUSERSLICE } from "../../Constants/StorageConstants";
 import { Header } from "../Header/header";
 import { Container } from "@mui/material";
+import { Footer } from "../Footer/footer";
 
 
 
@@ -102,7 +103,7 @@ export default function App() {
             </Routes>
           </main>
         </Container>
-        {/* <Footer/> */}
+        <Footer/>
       </PostContext.Provider>
     </UserContext.Provider>
   );
