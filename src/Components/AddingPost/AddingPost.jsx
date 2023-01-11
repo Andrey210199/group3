@@ -8,14 +8,16 @@ import TextStyle from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
 import Underline from "@tiptap/extension-underline";
 import Placeholder from "@tiptap/extension-placeholder";
-
+import TagIcon from '@mui/icons-material/Tag';
 import cn from "classnames";
 import { useEffect, useState } from "react";
 import MenuBar from "../MenuBar/MenuBar";
 
 import img from "./placeholder.png";
 import s from "./index.module.css";
+import "../../index.css";
 import Tags from "../Tags/Tags";
+
 
 export default function AddingPost({
   children,
@@ -111,11 +113,12 @@ export default function AddingPost({
             <h2 className={s.header__title}>{postTitle}</h2>
             {children && children}
             <div className={s.post_tags}>
-              <div className={`${s.tag} ${s.title_tag}`}>тэги:</div>
+
             {
               tags &&
               tags.map((tag) => (
-                  <a href="/#" key={tag} className={s.tag}>
+                <a href="/#" key={tag} className={s.tag}>
+                    <TagIcon fontSize="small"/>
                     {tag}
                   </a>
               ))
@@ -132,7 +135,7 @@ export default function AddingPost({
       {enabled ? (
         <>
           <Tags setInputTags={setInputTags} tags={tags} />
-          <button>Опубликовать</button>
+          <button className="btn">Опубликовать</button>
         </>
       ) : (
         

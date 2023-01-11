@@ -40,13 +40,16 @@
     gap: 20px
 }
 .tag{
-    display: inline-block;
+
     text-decoration: none;
     color: var(--bg-main-color);
     background-color: var(--text-secondary-color);
     padding: 5px 12px;
     border-radius: 15px;
     cursor: default;
+    margin: 0;
+    display: flex;
+    
 
 }
 .title_tag{

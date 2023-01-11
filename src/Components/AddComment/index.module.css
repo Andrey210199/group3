@@ -1,3 +1,15 @@
 .textarea{
     resize: none;
 }
+
+.comment_menu{
+display: flex;
+gap: 20px;
+}
+.new_comment{
+
+    border-radius: 10px;
+    background-color: var(--bg-main-color-light);
+    margin: 10px 0;
+    padding: 10px;
+}
