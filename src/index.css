@@ -3,7 +3,7 @@ body {
 
   margin: 0;
   font-family: "Arial",  sans-serif;
-
+  box-sizing: border-box;
   color: var(--text-main-color);
   background-color: var(--bg-main-color);
 }

@@ -1,6 +1,4 @@
-.ProseMirror p{
-    padding: 10px;
-}
+
 
 
 .ProseMirror p.is-editor-empty:first-child::before{

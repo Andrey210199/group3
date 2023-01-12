@@ -43,8 +43,8 @@ export default function PostPage() {
                     <>
 
 
+                        <AvatarInfo created={created} author={author} s={s} />    
                         <Post isEditor={isEditor} postId={postId}>                            
-                            <AvatarInfo created={created} author={author} s={s} />    
                             <div className={s.like}>
                                 <ButtonLike post={post} onLike={handleLike} iconSize = {"large"}/>
                                 <ButtonEdit author={author} isEnable={setIsEditor} />

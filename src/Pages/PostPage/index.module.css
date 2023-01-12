@@ -27,7 +27,9 @@
 
 }
 .like{
-    order: 5;
+ 
+  display: flex;
+    margin-left: 102%;
 
 }
 
