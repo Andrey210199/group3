@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NAMEPOSTSSLICE } from "../../Constants/StorageConstants";
 import { addTag } from "../../Storage/Slices/PostsSlile";
-
+import s from "./index.module.css";
+import "../../index.css";
 export default function Tags({ setInputTags, tags }) {
 
 
@@ -31,10 +32,11 @@ export default function Tags({ setInputTags, tags }) {
     }, [tags])
 
     return (
-        <div>
+        <div className={s.tags}>
             <Autocomplete
                 multiple
                 value={autoCompleteValue}
+                
                 onChange={handleAutocomplete}
                 options={options}
                 getOptionLabel={option => option}
@@ -45,7 +47,7 @@ export default function Tags({ setInputTags, tags }) {
                 }
             />
 
-            <input placeholder="Создать новый тег" value={newTag} onChange={(e) => setNewTag(e.target.value)} /><button type="button" onClick={newOption}>Создать тег</button>
+            <input className = {s.new_tag} placeholder="Создать новый тег" value={newTag} onChange={(e) => setNewTag(e.target.value)} /><button className ={`btn ${s.btn_tag}`} type="button" onClick={newOption}>Создать тег</button>
         </div>
     )
 }

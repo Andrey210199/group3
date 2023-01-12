@@ -28,7 +28,11 @@ code {
 
 .content {
 	padding: 60px 0;
-	flex: 1 0 auto;	
+
+}
+.MuiContainer-root {
+  flex: 1 0 auto;	
+
 }
 
 .ProseMirror p.is-editor-empty:first-child::before{
@@ -37,6 +41,15 @@ code {
   float: left;
   height: 0;
   pointer-events: none;
+}
+.ProseMirror .is-editor-empty{
+  height: 60px;
+  padding: 10px;
+
+}
+.ProseMirror-focused {
+  outline: 1px solid var(--text-secondary-color);
+  border-radius: 10px;
 }
 .btn{
     color: var(--text-secondary-color);

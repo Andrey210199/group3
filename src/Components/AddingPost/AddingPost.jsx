@@ -15,7 +15,7 @@ import MenuBar from "../MenuBar/MenuBar";
 
 import img from "./placeholder.png";
 import s from "./index.module.css";
-import "../../index.css";
+import "./style.css";
 import Tags from "../Tags/Tags";
 
 
@@ -41,6 +41,7 @@ export default function AddingPost({
   }
 
   const editor = useEditor({
+
     extensions: [
       StarterKit,
       TextAlign.configure({
@@ -55,7 +56,7 @@ export default function AddingPost({
       Image,
       Link,
       Placeholder.configure({
-        placeholder: "My Custom Placeholder",
+        placeholder: "Текст вашего поста",
       }),
     ],
   });
@@ -67,81 +68,163 @@ export default function AddingPost({
   }, [editor, enabled, postText, postImage, postTitle]);
 
   return (
-    <form className={s.form} onSubmit={handleSubmit}>
-      {enabled ? (
-        <>
-          <div className={s.post__title}>
-            <h2>Заголовок поста</h2>
-            <input
-              type="text"
-              className={s.input}
-              value={text.title}
-              onChange={(e) => handleInput(e, "title")}
-              placeholder="Введите заголовок поста"
-              required
-            />
-          </div>
+    // <form className={s.form} onSubmit={handleSubmit}>
+    //   {enabled ? (
+    //     <>
+    //       <div className={s.post__title}>
+    //         <h2>Заголовок поста</h2>
+    //         <input
+    //           type="text"
+    //           className={s.input}
+    //           value={text.title}
+    //           onChange={(e) => handleInput(e, "title")}
+    //           placeholder="Введите заголовок поста"
+    //           required
+    //         />
+    //       </div>
 
-          <div className={s.img}>
-            <h2>Картинка для превью поста</h2>
-            <img
-              className={s.img__image}
-              src={text.image === "" ? img : text.image}
-              alt="Превью"
-            />
-            <input
-              className={cn(s.input, s.img__text)}
-              type="text"
-              value={text.image}
-              onChange={(e) => handleInput(e, "image")}
-              placeholder="Введите ссылку на картинку поста"
-              required
-            />
-          </div>
-        </>
-      ) : (
-        <>
-          <div className={s.post_image}>
-            <img
-              src={postImage}
-              className={s.img__image}
-              alt="postImage"
-              decoding="async"
-            />
-          </div>
-          <div className={s.header}>
-            <h2 className={s.header__title}>{postTitle}</h2>
-            {children && children}
-            <div className={s.post_tags}>
+    //       <div className={s.img}>
+    //         <h2>Картинка для превью поста</h2>
+    //         <img
+    //           className={s.img__image}
+    //           src={text.image === "" ? img : text.image}
+    //           alt="Превью"
+    //         />
+    //         <input
+    //           className={cn(s.input, s.img__text)}
+    //           type="text"
+    //           value={text.image}
+    //           onChange={(e) => handleInput(e, "image")}
+    //           placeholder="Введите ссылку на картинку поста"
+    //           required
+    //         />
+    //       </div>
+    //     </>
+    //   ) : (
+    //     <>
+    //       <div className={s.post_image}>
+    //         <img
+    //           src={postImage}
+    //           className={s.img__image}
+    //           alt="postImage"
+    //           decoding="async"
+    //         />
+    //       </div>
+    //       <div className={s.header}>
+    //         <h2 className={s.header__title}>{postTitle}</h2>
+    //         {children && children}
+    //         <div className={s.post_tags}>
 
-            {
-              tags &&
-              tags.map((tag) => (
-                <a href="/#" key={tag} className={s.tag}>
-                    <TagIcon fontSize="small"/>
-                    {tag}
-                  </a>
-              ))
-            }
-            </div>
-          </div>
-        </>
-      )}
+    //         {
+    //           tags &&
+    //           tags.map((tag) => (
+    //             <a href="/#" key={tag} className={s.tag}>
+    //                 <TagIcon fontSize="small"/>
+    //                 {tag}
+    //               </a>
+    //           ))
+    //         }
+    //         </div>
+    //       </div>
+    //     </>
+    //   )}
 
-      {enabled && <MenuBar editor={editor} />}
+    //   {enabled && <MenuBar editor={editor} />}
 
-      <EditorContent editor={editor} />
+    //   <EditorContent editor={editor} />
 
-      {enabled ? (
-        <>
-          <Tags setInputTags={setInputTags} tags={tags} />
-          <button className="btn">Опубликовать</button>
-        </>
-      ) : (
+    //   {enabled ? (
+    //     <>
+    //       <Tags setInputTags={setInputTags} tags={tags} />
+    //       <button className="btn">Опубликовать</button>
+    //     </>
+    //   ) : (
         
-          <></>
+    //       <></>
       
-      )}
-    </form>
-  );
-}
+    //   )}
+    // </form>
+
+enabled     
+  ?
+  <form className={cn(s.form, s.form_edit)} onSubmit={handleSubmit}>
+
+  
+    <div className={s.post__title}>
+      <h2 className={s.title}>Заголовок поста</h2>
+      <input
+        type="text"
+        className={s.input}
+        value={text.title}
+        onChange={(e) => handleInput(e, "title")}
+        placeholder="Введите заголовок поста"
+        required
+      />
+    </div>
+
+    <div className={s.img}>
+      <h2>Картинка для превью поста</h2>
+      <img
+        className={s.img__image}
+        src={text.image === "" ? img : text.image}
+        alt="Превью"
+      />
+      <input
+        className={cn(s.input, s.img__text)}
+        type="text"
+        value={text.image}
+        onChange={(e) => handleInput(e, "image")}
+        placeholder="Введите ссылку на картинку поста"
+        required
+      />
+    </div>
+ 
+
+
+ <MenuBar editor={editor} />
+
+  <EditorContent editor={editor} />
+
+
+    <Tags setInputTags={setInputTags} tags={tags} />
+    <button className={`btn ${s.btn_publish}`}>Опубликовать</button>
+
+</form>
+: 
+<form className={s.form} onSubmit={handleSubmit}>
+
+  <>
+    <div className={s.post_image}>
+      <img
+        src={postImage}
+        className={s.img__image}
+        alt="postImage"
+        decoding="async"
+      />
+    </div>
+    <div className={s.header}>
+      <h2 className={s.header__title}>{postTitle}</h2>
+      {children && children}
+      <div className={s.post_tags}>
+
+      {
+        tags &&
+        tags.map((tag) => (
+          <a href="/#" key={tag} className={s.tag}>
+              <TagIcon fontSize="small"/>
+              {tag}
+            </a>
+        ))
+      }
+      </div>
+    </div>
+  </>
+
+
+
+
+<EditorContent editor={editor} />
+
+</form>
+
+  )}

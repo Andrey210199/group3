@@ -1,15 +1,21 @@
-.textarea{
-    resize: none;
+.textarea {
+  resize: none;
 }
 
-.comment_menu{
-display: flex;
-gap: 20px;
+.new_comment {
+  border-radius: 10px;
+  background-color: var(--bg-main-color-light);
+  margin: 10px 0;
+  padding: 10px;
 }
-.new_comment{
-
-    border-radius: 10px;
-    background-color: var(--bg-main-color-light);
-    margin: 10px 0;
-    padding: 10px;
+.comments > .addComment {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--text-main-color-ligth);
+  padding: 10px;
+  margin: 10px 0;
+}
+.addComment div:first-child {
+  display: flex;
+  gap: 5px;
 }

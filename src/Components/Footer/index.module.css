@@ -1,6 +1,7 @@
 .footer {
   background-color: var(--bg-secondary-color);
   color: var(--text-secondary-color);
+  display: flex;
 }
 .flex {
   display: flex;

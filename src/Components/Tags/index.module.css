@@ -1,0 +1,15 @@
+.tags{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.new_tag{
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 10px;
+    background-color: var(--bg-main-color-light);
+}
+.btn_tag{
+width: 150px;
+
+}

@@ -9,7 +9,7 @@ import Headers from "../MenuElements/Headers/Headers";
 import HorizontalRule from "../MenuElements/HorizontalRule/HorizontalRule";
 import Lists from "../MenuElements/Lists/Lists";
 import TextStyles from "../MenuElements/TextStyles/TextStyles";
-
+import s from "./index.module.css"
 export default function MenuBar({ editor }) {
 
   const [color, setColor] = useState("#000000");
@@ -26,9 +26,9 @@ export default function MenuBar({ editor }) {
     return null;
   }
   return (
-    <>
+   
 
-      <div onClick={(e) => e.preventDefault()}>
+      <div classNmae = {s.menu_bar} onClick={(e) => e.preventDefault()}>
 
         <TextStyles editor={editor} />
 
@@ -51,13 +51,13 @@ export default function MenuBar({ editor }) {
 
         <Conversion editor={editor} />
 
+        <input type="color"
+          onInput={(e) => setColor(e.target.value)}
+          value={color} />
       </div>
 
-      <input type="color"
-        onInput={(e) => setColor(e.target.value)}
-        value={color} />
 
-    </>
+   
   )
 
 }

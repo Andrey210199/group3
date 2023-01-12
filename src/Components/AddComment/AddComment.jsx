@@ -59,8 +59,14 @@ export default function AddComment({ enable = false, content }) {
     return (
 
         <form className={s.addComment} onSubmit={handleSubmit}>
-
-            {enable && <MenuBarComment editor={editor} className={s.comment_menu} />}
+            
+            {enable && 
+            <>
+            <h3>Добавить комментарий</h3>
+            
+            <MenuBarComment editor={editor} className={s.comment_menu} />
+            </>}
+            
             <EditorContent editor={editor} className={s.new_comment}/>
 
             {enable &&

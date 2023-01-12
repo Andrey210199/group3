@@ -52,6 +52,7 @@ export default function PostPage() {
                         </Post>
                         {isCommentLoading ? <></> :
                             <div className={s.comments}>
+                            
                                 <CommentList>
                                     <AddComment enable />
                                 </CommentList>
