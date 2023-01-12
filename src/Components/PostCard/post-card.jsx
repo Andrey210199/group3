@@ -53,7 +53,7 @@ const PostCard = (props) => {
           {title}
         </Typography>
         <Typography variant="body2" noWrap color="text.secondary">
-          {text}
+          {text.slice(0,100).replace(/(<([^>]+)>)/g,"")}
         </Typography>
 
       </CardContent>
