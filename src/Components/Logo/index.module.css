@@ -6,7 +6,7 @@
   }
   .logo{
     padding: 30px 0;
-    cursor: auto;
+    cursor: pointer;
     text-decoration: none;
     color: inherit;
     display: flex;
