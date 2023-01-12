@@ -40,7 +40,7 @@ export default function PostPage() {
                             <AvatarInfo created={created} author={author} s={s} />
                         </div>
 
-                        <Post isEditor={isEditor} postId={postId} />
+                        <Post isEditor={isEditor} postId={postId} isEnable={setIsEditor} />
 
                         {isCommentLoading ? <></> :
                             <div className={s.comments}>

@@ -62,7 +62,7 @@ export const fetchSetRewiew = createAsyncThunk(
     async function ({ comment, postId }, { rejectWithValue, fulfillWithValue, getState, extra: api }) {
 
         try {
-            const { user } = getState()
+            const { user } = getState();
             const data = await api.actionComments("POST", postId, "", { text: comment });
             return fulfillWithValue({ data, user });
 

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { NAMEPOSTSSLICE, STATEINITIAL } from "../../Constants/StorageConstants";
+import { NAMEPOSTSSLICE, NAMEUSERSLICE, STATEINITIAL } from "../../Constants/StorageConstants";
 import { changeLike, changePosts, dataPush, isError } from "../../Utilites/StoreFunction";
 import { isLiked } from "../../Utilites/total";
 
@@ -17,7 +17,7 @@ export const fetchGetPosts = createAsyncThunk(
 
         try {
 
-            const { user } = getState();
+            const { [NAMEUSERSLICE]: user } = getState();
             const data = await api.actionPosts();
             return fulfillWithValue({ data, user });
 
