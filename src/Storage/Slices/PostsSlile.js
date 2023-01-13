@@ -161,8 +161,7 @@ const postsSlice = createSlice({
 
             })
             .addCase(fetchDeletePost.fulfilled, (state, action) => {
-                const { data } = action.payload;
-                state.data = state.data.filter(post => post._id !== data._id);
+                state.data = state.data.filter(post => post._id !== action.payload._id);
             })
             .addMatcher(isError, (state, action) => {
                 state.error = action.payload;
