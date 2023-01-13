@@ -30,12 +30,6 @@ export default function AddComment({ enable = false, content }) {
 
     const editor = useEditor({
 
-        editorProps:{
-            attributes:{
-                class: enable && s.mirror
-            }
-        },
-
         extensions: [
             StarterKit,
             TextAlign.configure({

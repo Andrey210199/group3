@@ -61,8 +61,8 @@ class Api {
             .then(this._OnResponse);
     }
 
-    getPaginate(pageNumber, limit, titleSearch) {
-        return fetch(`${this.postsUrl}/paginate?page=${pageNumber}&limit=${limit}&query=${titleSearch}`, this._getRequest())
+    getPaginate(pageNumber, limit, titleSearch="") {
+        return fetch(`${this.postsUrl}/paginate?page=${pageNumber}&limit=${limit}${titleSearch && `&query=${titleSearch}`}`, this._getRequest())
             .then(this._OnResponse);
     }
 

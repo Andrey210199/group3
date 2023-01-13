@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useEffect, useState } from 'react';
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 import { PostContext } from '../../context/postContext';
 import { UserContext } from '../../context/userContext';
@@ -12,8 +12,9 @@ import { NotFoundPage } from "../../Pages/NotFoundPage/not-found-page";
 import './App.css';
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGetUser } from "../../Storage/Slices/UserSlice";
-import { fetchGetPosts } from "../../Storage/Slices/PostsSlile";
+import { fetchGetPagePosts, fetchGetPosts } from "../../Storage/Slices/PostsSlile";
 import { NAMEPOSTSSLICE, NAMEUSERSLICE } from "../../Constants/StorageConstants";
+import PaginationCard from "../PaginationCard/PaginationCard";
 
 
 export default function App() {
@@ -24,8 +25,10 @@ export default function App() {
   const [postsData, setPostsData] = useState([]);
   const posts = useSelector(state => state[NAMEPOSTSSLICE].data);
   const currentUser = useSelector(state => state[NAMEUSERSLICE].data);
-  
 
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const page = parseInt(query.get('page') || 1);
 
   const dispatch = useDispatch();
 
@@ -45,8 +48,9 @@ export default function App() {
           .then(post => {
             setPostsData(post.payload.data)
           })
+        dispatch(fetchGetPagePosts(page))
       })
-  }, [dispatch])
+  }, [dispatch, page])
 
   function deletePost(idPost) {
     api.actionPosts("DELETE", idPost)
@@ -79,7 +83,10 @@ export default function App() {
         <main className="container content">
           <Routes>
             <Route path="/" element={
+              <>
               <PostList posts={posts} />
+              <PaginationCard page={page}/>
+              </>
             } />
 
             <Route path="/post/:id" element={
@@ -95,6 +102,7 @@ export default function App() {
             } />
 
           </Routes>
+
         </main>
         {/* <Footer/> */}
       </PostContext.Provider>
