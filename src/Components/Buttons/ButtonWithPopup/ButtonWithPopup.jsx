@@ -1,6 +1,6 @@
 import { createPortal } from "react-dom";
 import { useState } from "react";
-import Modal from "../Modal/Modal";
+import Modal from "../../Modal/Modal";
 import s from "./index.module.css";
 
 export default function ButtonWithPopup({ event, text }) {
@@ -14,18 +14,24 @@ export default function ButtonWithPopup({ event, text }) {
     setValue("");
   }
 
+  function positionCalc(e) {
+    const parent = e.target.parentNode.getBoundingClientRect();
+    setPosition({ x: parent.x - parent.width, y: parent.y + parent.height });
+    setActive(true);
+  }
+
+
   return (
     <span className={s.content}>
 
-      <button onClick={(e) => { setPosition({ x: e.clientX, y: e.clientY }); setActive(true) }
-      }>{text}</button>
+      <button onClick={positionCalc}>{text}</button>
 
       {active &&
-        createPortal(<Modal setActive={setActive} style={{ position: "fixed", left: position?.x - 100, top: position?.y + 20 /*Костыль на время*/ }}>
+        createPortal(<Modal setActive={setActive} style={{ position: "fixed", left: position?.x, top: position?.y }}>
           <div>
             <input value={value} type="text" onChange={(e) => setValue(e.target.value)} />
             <button onClick={(e) => { installLink(e); setActive(false) }}>Ok</button>
-            <button onClick={() =>{ setActive(false); setValue("")} }>Cancel</button>
+            <button onClick={() => { setActive(false); setValue("") }}>Cancel</button>
           </div>
 
         </Modal>, document.body)}

@@ -50,28 +50,28 @@ class Api {
 
     }
 
-    actionPosts(method,postId="", postData){
+    actionPosts(method, postId = "", postData) {
         return fetch(`${this.postsUrl}${postId && `/${postId}`}`, this._RequestSwitch(method, postData))
-        .then(this._OnResponse);
+            .then(this._OnResponse);
 
     }
 
     getSearchOnTitle(title) {
         return fetch(`${this.postsUrl}/search/?query=${title}`, this._getRequest())
-        .then(this._OnResponse);
+            .then(this._OnResponse);
     }
 
-    getPaginate(pageNumber, limit, titleSearch) {
-        return fetch(`${this.postsUrl}/paginate?page=${pageNumber}&limit=${limit}&query=${titleSearch}`, this._getRequest())
-        .then(this._OnResponse);
+    getPaginate(pageNumber, limit, titleSearch="") {
+        return fetch(`${this.postsUrl}/paginate?page=${pageNumber}&limit=${limit}${titleSearch && `&query=${titleSearch}`}`, this._getRequest())
+            .then(this._OnResponse);
     }
 
-    changeLike(postId="" ,islike){
+    changeLike(postId = "", islike) {
         return fetch(`${this.postsUrl}/likes${postId && `/${postId}`}`,
-        {
-            method: islike? "DELETE": "PUT",
-            headers: this.headers
-        }).then(this._OnResponse);
+            {
+                method: islike ? "DELETE" : "PUT",
+                headers: this.headers
+            }).then(this._OnResponse);
     }
 
     actionComments(method = "", postId = "", commentId = "", commentData) {
@@ -80,14 +80,19 @@ class Api {
             .then(this._OnResponse);
     }
 
-    getUsersUser(userId=""){
-        return fetch(`${this.userUrl}${userId &&`/${userId}`}`,this._getRequest())
-        .then(this._OnResponse);
+    getUsersUser(userId = "") {
+        return fetch(`${this.userUrl}${userId && `/${userId}`}`, this._getRequest())
+            .then(this._OnResponse);
+    }
+
+    userInfo() {
+        return fetch(`${this.userUrl}/me`, this._getRequest())
+            .then(this._OnResponse);
     }
 
     getPathUser(method = "", userData = "") {
         return fetch(`${this.userUrl}/me`, this._RequestSwitch(method, userData))
-        .then(this._OnResponse);
+            .then(this._OnResponse);
     }
 
     changeAvatar(avatar) {
@@ -100,17 +105,17 @@ class Api {
 
     register(regData) {
         return fetch(`${this.registerUrl}/signup`, this._postRequest(regData))
-        .then(this._OnResponse);
+            .then(this._OnResponse);
     }
 
     authorization(authData) {
         return fetch(`${this.registerUrl}/signin`, this._postRequest(authData))
-        .then(this._OnResponse);
+            .then(this._OnResponse);
     }
 
     resetPass(newPass, user = "", token) {
         return fetch(`${this.registerUrl}/password-reset${user && `/${user}/${token}`}`, this._postRequest(newPass))
-        .then(this._OnResponse);
+            .then(this._OnResponse);
     }
 
 }
