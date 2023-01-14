@@ -11,18 +11,26 @@ import { useNavigate } from 'react-router-dom';
 const schema = yup.object().shape({
   email: yup
     .string()
+    .required('Email обязателен')
     .matches(
       /([A-z0-9_.-]{1,})@([A-z0-9_.-]{1,})\.([A-z]{2,8})/gm,
       'Неверно указан Email'
-    )
-    .required('Email обязателен'),
+    ),
+  nickname: yup
+    .string()
+    .required('Nickname обязателен')
+    .matches(
+      /(?=.*[a-z])(?=.*[A-Z])[a-zA-Z]{2,}/g,
+      'Nickname должен содержать минимум 2 символа, строчные и прописные буквы (только латинские)'
+    ),
+
   password: yup
     .string()
+    .required('Пароль обязателен')
     .matches(
       /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}/g,
-      'Пароль должен содержать минимум 6 знаков, цифру, строчные и прописные буквы'
-    )
-    .required('Пароль обязателен'),
+      'Пароль должен содержать минимум 6 символов, цифру, строчные и прописные буквы'
+    ),
 });
 
 export const Register = () => {
@@ -47,6 +55,15 @@ export const Register = () => {
         Регистрация
       </Typography>
       <Form onSubmit={handleSubmit(onSubmit)}>
+        <FormInput
+          {...register('nickname')}
+          id="nickname"
+          type="text"
+          label="Nickname"
+          name="nickname"
+          error={!!errors.nickname}
+          helperText={errors?.nickname?.message}
+        />
         <FormInput
           {...register('email')}
           id="email"

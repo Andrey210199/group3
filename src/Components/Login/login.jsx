@@ -11,18 +11,18 @@ import { useNavigate } from 'react-router-dom';
 const schema = yup.object().shape({
   email: yup
     .string()
+    .required('Email обязателен')
     .matches(
       /([A-z0-9_.-]{1,})@([A-z0-9_.-]{1,})\.([A-z]{2,8})/gm,
       'Неверно указан Email'
-    )
-    .required('Email обязателен'),
+    ),
   password: yup
     .string()
+    .required('Пароль обязателен')
     .matches(
       /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}/g,
-      'Пароль должен содержать минимум 6 знаков, цифру, строчные и прописные буквы'
-    )
-    .required('Пароль обязателен'),
+      'Пароль должен содержать минимум 6 символов, цифру, строчные и прописные буквы'
+    ),
 });
 
 export const Login = () => {
