@@ -97,9 +97,9 @@ class Api {
 
     changeAvatar(avatar) {
         return fetch(`${this.userUrl}/me/avatar`, {
-            method: "PATH",
+            method: "PATCH",
             headers: this.headers,
-            body: JSON.stringify(avatar)
+            body: JSON.stringify({avatar})
         }).then(this._OnResponse);
     }
 

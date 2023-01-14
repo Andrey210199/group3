@@ -2,19 +2,20 @@ import { Pagination, PaginationItem } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { NAMEPOSTSSLICE, POSTLIMIT } from "../../Constants/StorageConstants";
-import { fetchGetPagePosts } from "../../Storage/Slices/PostsSlile";
+import { fetchGetPagePosts, fetchSearch } from "../../Storage/Slices/PostsSlile";
 
 export default function PaginationCard({ page }) {
 
     const postsState = useSelector(state => state[NAMEPOSTSSLICE]);
-    const { loading, total: count } = postsState;
+    const { loading, total: count, isSearch, search } = postsState;
     const dispatch = useDispatch();
 
 
 
     function handleClike(e, value) {
         if (value !== page) {
-            dispatch(fetchGetPagePosts(value))
+            isSearch ? dispatch(fetchSearch({ page: value, search }))
+                : dispatch(fetchGetPagePosts(value))
         }
 
     }

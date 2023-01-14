@@ -80,6 +80,7 @@ export default function AddingPost({ image: postImage, title: postTitle, text: p
         </>
       }
 
+      
       {enabled && <MenuBar editor={editor} />}
 
       <EditorContent editor={editor} />

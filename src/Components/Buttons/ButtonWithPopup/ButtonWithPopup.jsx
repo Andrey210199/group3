@@ -27,7 +27,7 @@ export default function ButtonWithPopup({ event, text }) {
       <button onClick={positionCalc}>{text}</button>
 
       {active &&
-        createPortal(<Modal setActive={setActive} style={{ position: "fixed", left: position?.x, top: position?.y }}>
+        createPortal(<Modal active={active} setActive={setActive} style={{ position: "fixed", left: position?.x, top: position?.y }}>
           <div>
             <input value={value} type="text" onChange={(e) => setValue(e.target.value)} />
             <button onClick={(e) => { installLink(e); setActive(false) }}>Ok</button>

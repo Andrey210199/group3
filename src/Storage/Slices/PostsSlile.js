@@ -8,7 +8,9 @@ const initialState = {
     postsObject: null,
     total: null,
     favorites: [],
-    tags: {}
+    tags: {},
+    search: "",
+    isSearch: false
 }
 
 export const fetchGetPagePosts = createAsyncThunk(
@@ -110,17 +112,42 @@ export const fetchChangeLike = createAsyncThunk(
 );
 
 
+export const fetchSearch = createAsyncThunk(
+    `${NAMEPOSTSSLICE}/fetchSearch`,
+
+    async function ({ page, search }, { rejectWithValue, fulfillWithValue, extra: api }) {
+
+        try {
+
+            const data = await api.getPaginate(page, POSTLIMIT, search);
+            return fulfillWithValue(data);
+
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+)
+
 const postsSlice = createSlice({
     name: NAMEPOSTSSLICE,
     initialState,
     reducers: {
         addTag: (state, action) => {
             state.tags = { ...state.tags, [action.payload]: action.payload };
+        },
+        setSearch: (state, action) => {
+            state.search = action.payload;
         }
     },
     extraReducers: builder => {
         builder.addCase(fetchGetPosts.pending, state => {
             state.postsObject = null;
+            state.error = null;
+            state.favorites = null;
+            state.loading = true;
+        })
+        .addCase(fetchSearch.pending, state =>{
+            state.data = null;
             state.error = null;
             state.favorites = null;
             state.loading = true;
@@ -138,6 +165,7 @@ const postsSlice = createSlice({
             })
             .addCase(fetchGetPagePosts.pending, state => {
                 state.data = null;
+                state.isSearch = false;
                 state.loading = true;
                 state.error = null;
             })
@@ -146,6 +174,7 @@ const postsSlice = createSlice({
                 state.data = data.posts;
                 state.total = data.total;
                 state.favorites = state.data.filter(post => isLiked(post.likes, user.data._id));
+                state.isSearch =false;
                 state.loading = false;
             })
             .addCase(fetchChengePost.fulfilled, (state, action) => {
@@ -153,6 +182,12 @@ const postsSlice = createSlice({
             })
             .addCase(fetchAddPost.fulfilled, (state, action) => {
                 dataPush(state, action.payload.data);
+            })
+            .addCase(fetchSearch.fulfilled, (state, action)=>{
+                state.data = action.payload.posts;
+                state.total = action.payload.total;
+                state.isSearch = true;
+                state.loading = false;
             })
             .addCase(fetchChangeLike.fulfilled, (state, action) => {
                 const { data, liked } = action.payload;
@@ -165,10 +200,12 @@ const postsSlice = createSlice({
             })
             .addMatcher(isError, (state, action) => {
                 state.error = action.payload;
+                state.isSearch = false;
+                state.loading = false;
             })
     }
 
 });
 
-export const { addTag } = postsSlice.actions;
+export const { addTag, setSearch } = postsSlice.actions;
 export default postsSlice.reducer;
