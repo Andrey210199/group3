@@ -25,11 +25,11 @@ const schema = yup.object().shape({
     .required('Пароль обязателен'),
 });
 
-export const Login = () => {
+export const Register = () => {
   const navigate = useNavigate();
-  const handleClickRegBtn = (e) => {
+  const handleClickLogBtn = (e) => {
     e.preventDefault();
-    navigate('/registration');
+    navigate('/login');
   };
 
   const {
@@ -44,7 +44,7 @@ export const Login = () => {
   return (
     <MainContainer>
       <Typography component="h2" variant="h5">
-        Вход
+        Регистрация
       </Typography>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormInput
@@ -66,10 +66,10 @@ export const Login = () => {
           helperText={errors?.password?.message}
         />
         <FormButton type="submit" variant="contained">
-          Вход
+          Зарегистрироваться
         </FormButton>
-        <FormButton variant="outlined" onClick={handleClickRegBtn}>
-          Регистрация
+        <FormButton variant="outlined" onClick={handleClickLogBtn}>
+          Войти
         </FormButton>
       </Form>
     </MainContainer>

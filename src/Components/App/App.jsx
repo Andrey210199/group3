@@ -9,6 +9,7 @@ import PostList from '../PostList/post-list';
 import AddingPostPage from '../../Page/AddingPostPage/AddingPostPage';
 import './App.css';
 import { Login } from '../Login/login';
+import { Register } from '../Register/register';
 
 export default function App() {
   const USER_ID = '636a510659b98b038f779d09';
@@ -59,7 +60,8 @@ export default function App() {
         {/* <Header/> */}
         <main className="container content">
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/registration" element={<Register />} />
           </Routes>
         </main>
         {/* <Footer/> */}
