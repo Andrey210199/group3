@@ -28,8 +28,19 @@ export default function AddComment({ enable = false, content }) {
         editor.commands.setContent("");
 
     }
+    function addActiveStyle(el){
+        const style_element = document.querySelector(".elem_active");
+        style_element&&style_element.classList.remove("elem_active");
+        el.target.classList.add("elem_active");     
+    }
 
     const editor = useEditor({
+        editorProps:{
+            attributes:{
+                class: enable ? s.new_text : s.text_comment
+
+            }
+        },
 
         extensions: [
             StarterKit,
@@ -62,9 +73,9 @@ export default function AddComment({ enable = false, content }) {
             
             {enable && 
             <>
-            <h3>Добавить комментарий</h3>
+            <h3 className={s.add_comment_title}>Добавить комментарий</h3>
             
-            <MenuBarComment editor={editor} className={s.comment_menu} />
+            <MenuBarComment editor={editor} className={s.comment_menu} addActiveStyle={addActiveStyle} />
             </>}
             
             <EditorContent editor={editor} className={s.new_comment}/>

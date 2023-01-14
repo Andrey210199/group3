@@ -7,6 +7,7 @@
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto auto auto;
   gap: 20px;
+ position: relative;
 }
 
 .header__title {
@@ -16,10 +17,15 @@
   text-align: center;
 }
 .form .post_text {
-  padding: 10px;
+  padding: 10px 10px 10px 10px;
   grid-row: 3/4;
   grid-column: 2/3;
 }
+.form_edit .post_text {
+  padding-top: 70px;
+
+}
+
 .post_image {
   grid-column: 1/2;
   grid-row: 1/4;
@@ -32,7 +38,6 @@
   flex-wrap: wrap;
   gap: 15px;
   margin-top: 20px;
-
 }
 .tag {
   text-decoration: none;
@@ -43,7 +48,7 @@
   cursor: default;
   margin: 0;
   display: flex;
-  
+
   max-width: 100%;
   max-height: 1em;
 }
@@ -55,9 +60,8 @@
   margin: 0;
   margin-bottom: 10px;
 }
-.img{
+.img {
   grid-row: 1/4;
-
 }
 .input {
   border-radius: 10px;
@@ -68,7 +72,20 @@
 .img__text {
   width: 400px;
 }
-.btn_publish{
-
+.btn_publish {
   align-self: flex-end;
-  justify-self: flex-start;}
+  justify-self: flex-start;
+}
+.wrapper {
+  position: relative;
+}
+@media (max-width: 800px) {
+  .form_edit .post_text {
+    padding-top: 100px;
+  }
+}
+@media (max-width: 710px) {
+  .form_edit .post_text {
+    padding-top: 120px;
+  }
+}

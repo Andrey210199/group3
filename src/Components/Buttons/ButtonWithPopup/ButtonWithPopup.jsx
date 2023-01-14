@@ -3,7 +3,9 @@ import { useState } from "react";
 import Modal from "../../Modal/Modal";
 import s from "./index.module.css";
 
-export default function ButtonWithPopup({ event, text }) {
+
+
+export default function ButtonWithPopup({ event, text, addActiveStyle }) {
 
   const [value, setValue] = useState("");
   const [position, setPosition] = useState();
@@ -17,8 +19,13 @@ export default function ButtonWithPopup({ event, text }) {
   return (
     <span className={s.content}>
 
-      <button onClick={(e) => { setPosition({ x: e.clientX, y: e.clientY }); setActive(true) }
-      }>{text}</button>
+      <button onClick={(e) => {         
+        addActiveStyle(e);        
+        setPosition({ x: e.clientX, y: e.clientY }); 
+        setActive(true) }}
+        className="menu_button">{text}
+
+    </button>
 
       {active &&
         createPortal(<Modal setActive={setActive} style={{ position: "fixed", left: position?.x - 100, top: position?.y + 20 /*Костыль на время*/ }}>

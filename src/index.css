@@ -61,3 +61,30 @@ code {
     border-radius: 15px;
     margin-left: 20px;
 }
+
+.elem_active{
+  background-color: var( --active-color) ;
+  border-radius: 2px;
+}
+button{
+  background-color: var(--bg-main-color-light);
+}
+button:hover{
+  background-color: var(--bg-secondary-color);
+}
+
+.menu_button-text{
+  height: 24px;
+  width: auto;
+  padding: 2px;
+  border: 1px solid var(--text-main-color-ligth);
+  border-radius: 2px;
+
+}
+.menu_button{
+  border: 0;
+  height: 24px;
+  width: 24px;
+  padding: 0;
+  border-radius: 2px;
+}

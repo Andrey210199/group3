@@ -15,7 +15,7 @@ import MenuBar from "../MenuBar/MenuBar";
 
 import img from "./placeholder.png";
 import s from "./index.module.css";
-import "./style.css";
+
 import Tags from "../Tags/Tags";
 
 export default function AddingPost({
@@ -38,6 +38,11 @@ export default function AddingPost({
   function handleInput(event, type) {
     setText({ ...text, [type]: event.target.value });
   }
+ function addActiveStyle(el){
+    const style_element = document.querySelector(".elem_active");
+    style_element&&style_element.classList.remove("elem_active");
+    el.target.classList.add("elem_active");     
+}
 
   const editor = useEditor({
     extensions: [
@@ -150,7 +155,7 @@ export default function AddingPost({
     // </form>
 
     enabled ? (
-      <form className={s.form} onSubmit={handleSubmit}>
+      <form className={cn(s.form, s.form_edit)} onSubmit={handleSubmit}>
         <div className={cn(s.img, s.post_image)}>
           <h2>Картинка для превью поста</h2>
           <img
@@ -180,8 +185,8 @@ export default function AddingPost({
         </div>
 
         
-        <div>
-        <MenuBar editor={editor} />
+        <div className={s.wrapper}>
+        <MenuBar editor={editor} addActiveStyle={addActiveStyle}/>
         <EditorContent editor={editor} />
         </div>
 

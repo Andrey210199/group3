@@ -1,17 +1,23 @@
 
-export default function Conversion({ editor }) {
+export default function Conversion({ editor, addActiveStyle }) {
     return (
         <>
             <button
-                onClick={() => editor.chain().focus().undo().run()}
+            className="menu_button-text"
+                onClick={(val) => {
+                    addActiveStyle(val);
+                    editor.chain().focus().undo().run()}}
                 disabled={!editor.can().chain().focus().undo().run()}>
-                undo
+                Отменить
             </button>
 
             <button
-                onClick={() => editor.chain().focus().redo().run()}
+            className="menu_button-text"
+                onClick={(val) =>{
+                    addActiveStyle(val);
+                    editor.chain().focus().redo().run()}}
                 disabled={!editor.can().chain().focus().redo().run()}>
-                redo
+                Вернуть
             </button>
         </>
     )

@@ -8,14 +8,24 @@
   margin: 10px 0;
   padding: 10px;
 }
-.comments > .addComment {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--text-main-color-ligth);
-  padding: 10px;
-  margin: 10px 0;
+
+.new_text{
+  min-height: 80px;
+    padding: 10px;
+    border-radius: 10px;
 }
-.addComment div:first-child {
-  display: flex;
-  gap: 5px;
+.new_text:focus{
+  min-height: 80px;
+
+}
+.text_comment{
+  cursor: default;
+}
+.text_comment:focus{
+ 
+  outline: 0;
+  
+}
+.add_comment_title{
+  padding-left: 30px;
 }
