@@ -43,8 +43,10 @@ export default function App() {
         <Login />
         <Registration />
       </ProtectedComponent>
-      
+
+      <ProtectedComponent isProtected={false}>
         <EditUser />
+      </ProtectedComponent>
 
       {/* <Header/> */}
 
