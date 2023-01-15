@@ -15,6 +15,7 @@ import EditUser from '../Form/EditUser/EditUser';
 import Search from '../Search/Search';
 import Login from '../Form/Login/Login';
 import Registration from '../Form/Registration/Registration';
+import ProtectedComponent from '../ProtectedComponent/ProtectedComponent';
 
 
 export default function App() {
@@ -38,10 +39,15 @@ export default function App() {
 
   return (
     <>
-      <EditUser />
+      <ProtectedComponent isProtected={true}>
+        <Login />
+        <Registration />
+      </ProtectedComponent>
+      
+        <EditUser />
+
       {/* <Header/> */}
-      <Login/>
-      <Registration/>
+
       <main className="container content">
         <Routes>
           <Route path="/" element={

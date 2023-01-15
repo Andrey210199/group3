@@ -6,8 +6,7 @@ import { isError } from "../../Utilites/StoreFunction";
 const initialState = {
     ...STATEINITIAL,
     isAutch: false,
-    allUsers: null,
-    logined: false
+    allUsers: null
 }
 
 export const fetchGetUser = createAsyncThunk(
@@ -124,10 +123,10 @@ const userSlice = createSlice({
             })
             .addCase(fetchUserAutch.fulfilled, (state, action) => {
                 state.data = action.payload;
+                state.isAutch = true;
             })
             .addCase(fetchUpdatAvatar.fulfilled, (state, action) => {
                 state.data = action.payload;
-                state.logined = true;
             })
             .addMatcher(isError, (state, action) => {
                 state.error = action.payload;

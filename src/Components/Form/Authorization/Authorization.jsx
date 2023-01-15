@@ -18,13 +18,21 @@ export default function Authorization({ title, onSubmit, oneBtn, twoBtn, find, o
 
     const email = register("email", EMAILVALIDATE);
 
-    const password = register("password", PASSWORDVALIDATE);
+    const password = register("password", find === URLREGISTRATION ? PASSWORDVALIDATE
+        : {
+            required: {
+                value: true,
+                message: PASSWORDVALIDATE.required.message
+            }
+        }
+
+    );
 
     function handleFormSubmit(value) {
 
         if (validateName(value.name)) {
             setErrorName(null);
-            onSubmit({value, reset});
+            onSubmit({ value, reset });
         }
         else {
             setErrorName(NAMEMASSAGEERROR);
