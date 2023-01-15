@@ -11,8 +11,10 @@ import { fetchGetUser } from "../../Storage/Slices/UserSlice";
 import { fetchGetPagePosts, fetchGetPosts, fetchSearch } from "../../Storage/Slices/PostsSlile";
 import { NAMEPOSTSSLICE } from "../../Constants/StorageConstants";
 import PaginationCard from "../PaginationCard/PaginationCard";
-import EditUser from '../EditUser/EditUser';
+import EditUser from '../Form/EditUser/EditUser';
 import Search from '../Search/Search';
+import Login from '../Form/Login/Login';
+import Registration from '../Form/Registration/Registration';
 
 
 export default function App() {
@@ -38,6 +40,8 @@ export default function App() {
     <>
       <EditUser />
       {/* <Header/> */}
+      <Login/>
+      <Registration/>
       <main className="container content">
         <Routes>
           <Route path="/" element={
