@@ -1,54 +1,47 @@
-import bold from "./img/bold.png";
-import italic from "./img/italic.png";
-import strike from "./img/strike.png";
-import underline from "./img/underline.png";
+
 import cn from "classnames";
-import "../../../index.css"
-export default function TextStyles({ editor, addActiveStyle }) {
+import s from "./index.module.css";
+import "../../../index.css";
+export default function TextStyles({ editor}) {
  
     return (
         <>
             <button
-                onClick={(val) => {
-                    addActiveStyle(val);
-                    return editor.chain().focus().toggleBold().run()}}
+                onClick={() => editor.chain().focus().toggleBold().run()}
+                    title="Жирный"
                 disabled={!editor.can().chain().focus().toggleBold().run()}
-                className={cn("menu_button", editor.isActive('bold') ? 'is-active' : '')}>
-                <img src={bold} alt="Жирный" title="Жирный"/>
+                className={cn("menu_button", s.bold, editor.isActive('bold') ? 'elem_active' : '')}>
+           
             </button>
 
             <button
-                onClick={(val) => {
-                    addActiveStyle(val);
-                    return editor.chain().focus().toggleItalic().run()}}
+            title="Курсив"
+                onClick={() =>  editor.chain().focus().toggleItalic().run()}
                 disabled={
                     !editor.can().chain().focus().toggleItalic().run()}
-                    className={cn("menu_button", editor.isActive('italic') ? 'is-active' : '')} 
+                    className={cn("menu_button", s.italic, editor.isActive('italic') ? 'elem_active' : '')} 
                 >
-                <img src={italic} alt="Курсив" title="Курсив"/>
+ 
             </button>
-
+            <button 
+            title="Подчеркнутый"onClick={() => editor.chain().focus().toggleUnderline().run()}
+                className={cn("menu_button", s.underline, editor.isActive('underline') ? 'elem_active' : '')}>
+              
+            </button>
             <button
-                onClick={(val) => {
-                    addActiveStyle(val);
-                    return editor.chain().focus().toggleStrike().run()}}
+            title="Зачеркнутый"
+                onClick={() => editor.chain().focus().toggleStrike().run()}
                 disabled={!editor.can().chain().focus().toggleStrike().run()}
-                className={cn("menu_button", editor.isActive('strike') ? 'is-active' : '')}>
-                <img src={strike} alt="Зачеркнутый" title="Зачеркнутый"/>
+                className={cn("menu_button", s.strike, editor.isActive('strike') ? 'elem_active' : '')}>
+              
             </button>
 
-            <button onClick={(val) => {
-                addActiveStyle(val);
-                return editor.chain().focus().toggleUnderline().run()}}
-                className={cn("menu_button", editor.isActive('underline') ? 'is-active' : '')}>
-                <img src={underline} alt="Подчеркнутый" title="Подчеркнутый"/>
-            </button>
+           
 
-            <button onClick={(val) => {
-                addActiveStyle(val);
-                return editor.chain().focus().unsetAllMarks().clearNodes().run()}}
-                className="menu_button-text">
-                Очистить стили
+            <button onClick={() => editor.chain().focus().unsetAllMarks().clearNodes().run()}
+                className={cn("menu_button", s.clear)}
+                title="Очистить стили">
+                
             </button>
         </>
     )

@@ -38,11 +38,7 @@ export default function AddingPost({
   function handleInput(event, type) {
     setText({ ...text, [type]: event.target.value });
   }
- function addActiveStyle(el){
-    const style_element = document.querySelector(".elem_active");
-    style_element&&style_element.classList.remove("elem_active");
-    el.target.classList.add("elem_active");     
-}
+
 
   const editor = useEditor({
     extensions: [
@@ -186,7 +182,7 @@ export default function AddingPost({
 
         
         <div className={s.wrapper}>
-        <MenuBar editor={editor} addActiveStyle={addActiveStyle}/>
+        <MenuBar editor={editor} />
         <EditorContent editor={editor} />
         </div>
 

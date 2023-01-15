@@ -1,26 +1,22 @@
-.left{
+.button{
     height: 24px;
     width: 24px;
-    background-image: url("./img/left.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+}
+.left{
+   
+    background-image: url("./img/left.png");
+ 
 }
 .right{
-    height: 24px;
-    width: 24px;
+
     background-image: url("./img/right.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
 }
 .center{
-    height: 24px;
-    width: 24px;
+
     background-image: url("./img/center.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
 }
  
 .hidden{

@@ -71,20 +71,16 @@ button{
 }
 button:hover{
   background-color: var(--bg-secondary-color);
-}
-
-.menu_button-text{
-  height: 24px;
-  width: auto;
-  padding: 2px;
-  border: 1px solid var(--text-main-color-ligth);
-  border-radius: 2px;
 
 }
+
 .menu_button{
   border: 0;
   height: 24px;
   width: 24px;
   padding: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
   border-radius: 2px;
 }

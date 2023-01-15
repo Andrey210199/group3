@@ -1,23 +1,24 @@
+import s from "./index.module.css";
+import cn from "classnames";
+import "../../../index.css"
 
-export default function Conversion({ editor, addActiveStyle }) {
+export default function Conversion({ editor }) {
     return (
         <>
             <button
-            className="menu_button-text"
-                onClick={(val) => {
-                    addActiveStyle(val);
-                    editor.chain().focus().undo().run()}}
+            className={cn("menu_button", s.back)}
+            title="Отменить изменения"
+                onClick={(val) =>  editor.chain().focus().undo().run()}
                 disabled={!editor.can().chain().focus().undo().run()}>
-                Отменить
+               
             </button>
 
             <button
-            className="menu_button-text"
-                onClick={(val) =>{
-                    addActiveStyle(val);
-                    editor.chain().focus().redo().run()}}
+            className={cn("menu_button", s.forward)}
+            title="Вернуть изменения"
+                onClick={(val) => editor.chain().focus().redo().run()}
                 disabled={!editor.can().chain().focus().redo().run()}>
-                Вернуть
+                
             </button>
         </>
     )

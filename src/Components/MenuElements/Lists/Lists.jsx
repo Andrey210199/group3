@@ -1,19 +1,23 @@
-import order from "./img/ordered.png";
-import unorder from "./img/unordered.png";
+
+import "../../../index.css";
+import s from "./index.module.css";
+import cn from "classnames";
 
 export default function Lists({ editor }) {
     return (
         <>
             <button
                 onClick={() => editor.chain().focus().toggleBulletList().run()}
-                className={editor.isActive('bulletList') ? 'is-active' : ''}>
-                <img src={unorder} alt="Маркированный список" title="Маркированный список"/>
+                className={cn("menu_button", s.unorder, editor.isActive('bulletList') ? 'elem_active' : '')}
+                title="Маркированный список">
+               
             </button>
 
             <button
                 onClick={() => editor.chain().focus().toggleOrderedList().run()}
-                className={editor.isActive('orderedList') ? 'is-active' : ''}>
-                <img src={order} alt="Нумерованный список" title="Нумерованный список"/>
+                className={cn("menu_button", s.order, editor.isActive('orderedList') ? 'elem_active' : '')}
+                title="Нумерованный список">
+                
             </button>
         </>
     )

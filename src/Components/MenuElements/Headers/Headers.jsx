@@ -1,4 +1,4 @@
-
+import s from "./index.module.css"
 export default function Headers({ editor }) {
 
     function selectHeader(val) {
@@ -6,7 +6,9 @@ export default function Headers({ editor }) {
     }
 
     return (
-        <select onClick={(e) => e.button !== 0 ? selectHeader(e) : ""}>
+        <select 
+        className={s.headers}
+        onClick={(e) => e.button !== 0 ? selectHeader(e) : ""}>
             <option value={1}>Заголовок 1</option>
             <option value={2}>Заголовок 2</option>
             <option value={3}>Заголовок 3</option>

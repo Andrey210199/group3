@@ -2,10 +2,11 @@ import { createPortal } from "react-dom";
 import { useState } from "react";
 import Modal from "../../Modal/Modal";
 import s from "./index.module.css";
+import "../../../index.css"
 
 
 
-export default function ButtonWithPopup({ event, text, addActiveStyle }) {
+export default function ButtonWithPopup({ event, text }) {
 
   const [value, setValue] = useState("");
   const [position, setPosition] = useState();
@@ -19,12 +20,9 @@ export default function ButtonWithPopup({ event, text, addActiveStyle }) {
   return (
     <span className={s.content}>
 
-      <button onClick={(e) => {         
-        addActiveStyle(e);        
-        setPosition({ x: e.clientX, y: e.clientY }); 
-        setActive(true) }}
-        className="menu_button">{text}
-
+      <button 
+      className = "menu_button" onClick={(e) => { setPosition({ x: e.clientX, y: e.clientY }); setActive(true) }
+      }>{text}
     </button>
 
       {active &&
