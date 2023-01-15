@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { NAMESINGLEPOSTSLICE, STATEINITIAL } from "../../Constants/StorageConstants";
-import { isError } from "../../Utilites/StoreFunction";
+import { deleteComment, isError } from "../../Utilites/StoreFunction";
 
 const initialState = {
     ...STATEINITIAL,
@@ -62,7 +62,7 @@ export const fetchSetRewiew = createAsyncThunk(
     async function ({ comment, postId }, { rejectWithValue, fulfillWithValue, getState, extra: api }) {
 
         try {
-            const { user } = getState()
+            const { user } = getState();
             const data = await api.actionComments("POST", postId, "", { text: comment });
             return fulfillWithValue({ data, user });
 
@@ -123,6 +123,10 @@ const singlePostSlice = createSlice({
                 const { data, user } = action.payload;
                 const comment = data.comments[data.comments.length - 1];
                 state.comments.push({ ...comment, author: user.data });
+            })
+            .addCase(fetchDeleteRewiew.fulfilled, (state, action) => {
+                const {comments} =action.payload;
+                state.comments = deleteComment(state, comments);
             })
             .addMatcher(isError, (state, action) => {
                 state.error = action.payload;

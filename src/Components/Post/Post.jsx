@@ -8,7 +8,8 @@ import ButtonLike from "../Buttons/ButtonLike/ButtonLike";
 import s from "./index.module.css";
 
 
-export default function Post({ isEditor, postId, children }) {
+
+export default function Post({ isEditor, postId, isEnable, children }) {
 
     const post = useSelector(state => state[NAMESINGLEPOSTSLICE].data);
     const { image, tags, title, text } = post;
@@ -18,6 +19,11 @@ export default function Post({ isEditor, postId, children }) {
 
     function handleSubmit(text, tags, editorText) {
         dispatch(fetchChengePost({ ...text, tags, text: editorText, _id: postId }))
+        .then((data)=>{
+            dispatch(setProductState(data.payload))
+            isEnable(false);
+        })
+
     }
 
     return (

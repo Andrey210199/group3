@@ -38,6 +38,12 @@ export default function AddComment({ enable = false, content }) {
             }
         },
 
+        editorProps: {
+            attributes: {
+                class: enable && s.editor
+            }
+        },
+
         extensions: [
             StarterKit,
             TextAlign.configure({

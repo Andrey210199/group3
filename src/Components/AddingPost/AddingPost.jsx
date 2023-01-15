@@ -69,8 +69,9 @@ export default function AddingPost({
   useEffect(() => {
     editor?.setEditable(enabled);
     editor?.commands.setContent(postText);
-    postTitle && setText({ title: postTitle, image: postImage });
-  }, [editor, enabled, postText, postImage, postTitle]);
+    postTitle && setText({ title: postTitle, image: postImage })
+    setInputTags(tags);
+  }, [editor, enabled, postText, postImage, postTitle, tags])
 
   return (
     // <form className={s.form} onSubmit={handleSubmit}>

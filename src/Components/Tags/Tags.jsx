@@ -2,6 +2,7 @@ import { Autocomplete, TextField } from "@mui/material";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { MAXADDTAGS } from "../../Constants/Constant";
 import { NAMEPOSTSSLICE } from "../../Constants/StorageConstants";
 import { addTag } from "../../Storage/Slices/PostsSlile";
 import s from "./index.module.css";
@@ -16,20 +17,39 @@ export default function Tags({ setInputTags, tags }) {
 
     const options = Object.values(stateOptions);
 
+    function testTags(autoCompleteValue, newTag) {
+        let test = true;
+        autoCompleteValue.forEach(tag => {
+
+            if (newTag === tag) {
+                test = false;
+            }
+        })
+        return test;
+    }
+
     function newOption() {
-        dispatch(addTag(newTag));
-        setAutoCompleteValue([...autoCompleteValue, newTag]);
-        setInputTags && setInputTags([...autoCompleteValue, newTag]);
+        if (autoCompleteValue.length < MAXADDTAGS) {
+            dispatch(addTag(newTag));
+            if (testTags(autoCompleteValue, newTag)) {
+                setAutoCompleteValue([...autoCompleteValue, newTag]);
+            }
+        }
         setNewTag("");
     }
 
     function handleAutocomplete(_, value) {
-        setAutoCompleteValue(value);
+        if (autoCompleteValue.length < MAXADDTAGS)
+            setAutoCompleteValue(value);
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         tags && setAutoCompleteValue(tags);
     }, [tags])
+
+    useEffect(() => {
+        setInputTags && setInputTags([...autoCompleteValue]);
+    }, [autoCompleteValue, setInputTags])
 
     return (
         <div className={s.tags}>

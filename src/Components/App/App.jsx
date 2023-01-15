@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useEffect, useState } from 'react';
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 import { PostContext } from '../../context/postContext';
 import { UserContext } from '../../context/userContext';
@@ -12,7 +12,7 @@ import { NotFoundPage } from "../../Pages/NotFoundPage/not-found-page";
 import './App.css';
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGetUser } from "../../Storage/Slices/UserSlice";
-import { fetchGetPosts } from "../../Storage/Slices/PostsSlile";
+import { fetchGetPagePosts, fetchGetPosts } from "../../Storage/Slices/PostsSlile";
 import { NAMEPOSTSSLICE, NAMEUSERSLICE } from "../../Constants/StorageConstants";
 import { Header } from "../Header/header";
 import { Container } from "@mui/material";
@@ -20,6 +20,7 @@ import { Footer } from "../Footer/footer";
 
 
 
+import PaginationCard from "../PaginationCard/PaginationCard";
 
 
 export default function App() {
@@ -30,6 +31,10 @@ export default function App() {
   const [postsData, setPostsData] = useState([]);
   const posts = useSelector(state => state[NAMEPOSTSSLICE].data);
   const currentUser = useSelector(state => state[NAMEUSERSLICE].data);
+
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const page = parseInt(query.get('page') || 1);
 
   const dispatch = useDispatch();
 
@@ -49,8 +54,9 @@ export default function App() {
           .then(post => {
             setPostsData(post.payload.data)
           })
+        dispatch(fetchGetPagePosts(page))
       })
-  }, [dispatch])
+  }, [dispatch, page])
 
   function deletePost(idPost) {
     api.actionPosts("DELETE", idPost)
@@ -79,32 +85,35 @@ export default function App() {
   return (
     <UserContext.Provider value={{ currentUser }}>
       <PostContext.Provider value={{ postsData, deletePost, handleLiked }}>
-        <Header/>
-        <Container>
+        <Header />
+        <main className="container content">
+       
+          <Routes>
+            <Route path="/" element={
+              <>
+              <PostList posts={posts} />
+              <PaginationCard page={page}/>
+              </>
+            } />
 
-          <main className="content">
-            <Routes>
-              <Route path="/" element={
-                <PostList posts={postsData} />
-              } />
+            <Route path="/post/:id" element={
+              <PostPage />
+            } />
 
-              <Route path="/post/:id" element={
-                <PostPage />
-              } />
+            <Route path="/add_post" element={
+              <AddingPostPage />
+            } />
 
-              <Route path="/add_post" element={
-                <AddingPostPage />
-              } />
+            <Route path="*" element={
+              <NotFoundPage />
+            } />
 
-              <Route path="*" element={
-                <NotFoundPage />
-              } />
+          </Routes>
 
-            </Routes>
-          </main>
-        </Container>
-        <Footer/>
+        </main>
+     <Footer/> 
       </PostContext.Provider>
     </UserContext.Provider>
+  
   );
 }

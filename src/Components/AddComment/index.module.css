@@ -1,6 +1,3 @@
-.textarea {
-  resize: none;
-}
 
 .new_comment {
   border-radius: 10px;
@@ -29,3 +26,6 @@
 .add_comment_title{
   padding-left: 30px;
 }
+/* .editor{
+    height: 200px;
+} */
