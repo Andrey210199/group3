@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { NAMEUSERSLICE } from "../../../Constants/StorageConstants";
-
+import s from "./index.module.css"
 
 export default function ButtonEdit({author, isEnable}){
 
@@ -15,6 +15,6 @@ export default function ButtonEdit({author, isEnable}){
 
     return(
         currentUser?._id === author?._id &&
-        <button onClick={hangleClick}>Редактировать</button>
+        <button className={s.btn_edit}onClick={hangleClick}>Редактировать</button>
     );
 }

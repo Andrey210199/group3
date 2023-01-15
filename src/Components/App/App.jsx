@@ -14,6 +14,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchGetUser } from "../../Storage/Slices/UserSlice";
 import { fetchGetPagePosts, fetchGetPosts } from "../../Storage/Slices/PostsSlile";
 import { NAMEPOSTSSLICE, NAMEUSERSLICE } from "../../Constants/StorageConstants";
+import { Header } from "../Header/header";
+import { Container } from "@mui/material";
+import { Footer } from "../Footer/footer";
+
+
+
 import PaginationCard from "../PaginationCard/PaginationCard";
 
 
@@ -55,7 +61,7 @@ export default function App() {
   function deletePost(idPost) {
     api.actionPosts("DELETE", idPost)
       .then((data) => {
-        const newPosts = postsData?.filter(post => post._id !== data._id)
+        const newPosts = posts?.filter(post => post._id !== data._id)
         setPostsData(newPosts)
       })
       .catch(err => {
@@ -79,8 +85,9 @@ export default function App() {
   return (
     <UserContext.Provider value={{ currentUser }}>
       <PostContext.Provider value={{ postsData, deletePost, handleLiked }}>
-        {/* <Header/> */}
+        <Header />
         <main className="container content">
+       
           <Routes>
             <Route path="/" element={
               <>
@@ -104,8 +111,9 @@ export default function App() {
           </Routes>
 
         </main>
-        {/* <Footer/> */}
+     <Footer/> 
       </PostContext.Provider>
     </UserContext.Provider>
+  
   );
 }

@@ -2,6 +2,9 @@ import { createPortal } from "react-dom";
 import { useState } from "react";
 import Modal from "../../Modal/Modal";
 import s from "./index.module.css";
+import "../../../index.css"
+
+
 
 export default function ButtonWithPopup({ event, text }) {
 
@@ -24,7 +27,7 @@ export default function ButtonWithPopup({ event, text }) {
   return (
     <span className={s.content}>
 
-      <button onClick={positionCalc}>{text}</button>
+<button className="menu_button" onClick={positionCalc}>{text}</button>
 
       {active &&
         createPortal(<Modal setActive={setActive} style={{ position: "fixed", left: position?.x, top: position?.y }}>
