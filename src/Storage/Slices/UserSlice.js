@@ -59,7 +59,7 @@ export const fetchUserAutch = createAsyncThunk(
 );
 
 export const fetchRegistration = createAsyncThunk(
-    `${NAMEUSERSLICE}/fetchUserAutch`,
+    `${NAMEUSERSLICE}/fetchRegistration`,
 
     async function (userData, { rejectWithValue, fulfillWithValue, extra: api }) {
 
@@ -75,15 +75,15 @@ export const fetchRegistration = createAsyncThunk(
 );
 
 export const fetchTokenCheck = createAsyncThunk(
-    `${NAMEUSERSLICE}/fetchUserAutch`,
+    `${NAMEUSERSLICE}/fetchTokenCheck`,
 
-    async function(token, {rejectWithValue, fulfillWithValue, extra: api}){
-        
+    async function (token, { rejectWithValue, fulfillWithValue, extra: api }) {
+
         try {
 
             const data = await api.getPathUser("GET", token);
             return fulfillWithValue(data);
-            
+
         } catch (error) {
             return rejectWithValue(error);
         }
@@ -122,8 +122,12 @@ const userSlice = createSlice({
                 state.data = action.payload;
                 state.loading = false;
             })
+            .addCase(fetchUserAutch.fulfilled, (state, action) => {
+                state.data = action.payload;
+            })
             .addCase(fetchUpdatAvatar.fulfilled, (state, action) => {
                 state.data = action.payload;
+                state.logined = true;
             })
             .addMatcher(isError, (state, action) => {
                 state.error = action.payload;

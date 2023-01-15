@@ -24,8 +24,7 @@ export default function Authorization({ title, onSubmit, oneBtn, twoBtn, find, o
 
         if (validateName(value.name)) {
             setErrorName(null);
-            onSubmit(value);
-            reset();
+            onSubmit({value, reset});
         }
         else {
             setErrorName(NAMEMASSAGEERROR);
