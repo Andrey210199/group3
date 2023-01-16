@@ -112,6 +112,22 @@ export const fetchChangeLike = createAsyncThunk(
 );
 
 
+export const fetchSearch = createAsyncThunk(
+    `${NAMEPOSTSSLICE}/fetchSearch`,
+
+    async function ({ page, search }, { rejectWithValue, fulfillWithValue, getState, extra: api }) {
+
+        try {
+            const { [NAMEUSERSLICE]: user } = getState();
+            const data = await api.getPaginate({ pageNumber: page, limit: POSTLIMIT, titleSearch: search });
+            return fulfillWithValue({ data, user });
+
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+)
+
 const postsSlice = createSlice({
     name: NAMEPOSTSSLICE,
     initialState,
@@ -130,6 +146,12 @@ const postsSlice = createSlice({
             state.favorites = null;
             state.loading = true;
         })
+            .addCase(fetchSearch.pending, state => {
+                state.data = null;
+                state.error = null;
+                state.favorites = null;
+                state.loading = true;
+            })
             .addCase(fetchGetPosts.fulfilled, (state, action) => {
                 state.postsObject = action.payload;
                 state.loading = false;
@@ -151,7 +173,8 @@ const postsSlice = createSlice({
                 const { data, user } = action.payload;
                 state.data = data.posts;
                 state.total = data.total;
-                state.favorites = state.data.filter(post => isLiked(post.likes, user.data._id));
+                state.favorites = dataLiked(state, user.data._id);
+                state.isSearch = false;
                 state.loading = false;
             })
             .addCase(fetchChengePost.fulfilled, (state, action) => {
@@ -159,6 +182,14 @@ const postsSlice = createSlice({
             })
             .addCase(fetchAddPost.fulfilled, (state, action) => {
                 dataPush(state, action.payload.data);
+            })
+            .addCase(fetchSearch.fulfilled, (state, action) => {
+                const { data, user } = action.payload;
+                state.data = data.posts;
+                state.total = data.total;
+                state.favorites = dataLiked(state, user.data._id);
+                state.isSearch = true;
+                state.loading = false;
             })
             .addCase(fetchChangeLike.fulfilled, (state, action) => {
                 const { data, liked } = action.payload;

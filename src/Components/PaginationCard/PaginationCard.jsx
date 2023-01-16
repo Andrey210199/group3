@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { NAMEPOSTSSLICE, POSTLIMIT } from "../../Constants/StorageConstants";
 import { fetchGetPagePosts, fetchSearch } from "../../Storage/Slices/PostsSlile";
 import s from "./index.module.css";
-import { fetchGetPagePosts, fetchSearch } from "../../Storage/Slices/PostsSlile";
+
 
 export default function PaginationCard({ page }) {
 

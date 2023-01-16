@@ -4,7 +4,9 @@
     align-items: center;
     gap: 10px;
     max-width: 150px;
-    margin-right: 100px;
     color: inherit;
-
+    grid-area: avatar;
+}
+.name{
+    margin: 0;
 }

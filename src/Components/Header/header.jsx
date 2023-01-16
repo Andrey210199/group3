@@ -18,7 +18,7 @@ export function Header({children}) {
         <Logo />
         <Search/>
         <div className={s.menu}>
-          {user && <UserInfo />}
+       
           {children}
           {/* <IconButton sx={{ color: "var(--text-secondary-color)" }}>
             <LoginIcon />

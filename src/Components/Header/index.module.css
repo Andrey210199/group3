@@ -2,24 +2,17 @@
 .header {
   background-color: var(--bg-secondary-color);
   color: var(--text-secondary-color);
-
-
-
-
 }
 .content{
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  
-}
-
-.login {
-  padding-left: 10px;
-  font-size: 20px;
-
+  align-items: center;  
 }
 .menu{
-  display: flex;
-  gap: 30px;
+  display: grid;
+  grid-template-areas: "avatar login"
+                        "edit registration";
+  align-items: center;
+  justify-content: center;
+  column-gap: 10px;
 }

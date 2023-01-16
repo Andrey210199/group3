@@ -12,7 +12,7 @@ export const UserInfo = () => {
   return (
     <div className={s.wrapper}>
       <Avatar alt={name} src={avatar} sx={{ width: 56, height: 56 }} />
-      <p>{name}</p>
+      <p className={s.name}>{name}</p>
     </div>
   );
 };
