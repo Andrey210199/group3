@@ -6,7 +6,7 @@ import { getToken } from "../../../Utilites/Cookie";
 import { isLiked } from "../../../Utilites/total";
 
 
-export default function ButtonLike({ post, onLike }) {
+export default function ButtonLike({ post, onLike, iconSize = "medium" }) {
 
   const currentUser = useSelector(state => state[NAMEUSERSLICE].data);
   const { likes } = post;
@@ -22,6 +22,7 @@ export default function ButtonLike({ post, onLike }) {
       <IconButton
         aria-label="add to favorites"
         onClick={handleLike}
+        size={iconSize}
         sx={[liked && { color: "#942a00" }]}
 
       >

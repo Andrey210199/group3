@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { NAMEPOSTSSLICE, POSTLIMIT } from "../../Constants/StorageConstants";
 import { fetchGetPagePosts, fetchSearch } from "../../Storage/Slices/PostsSlile";
-
+import s from "./index.module.css";
 export default function PaginationCard({ page }) {
 
     const postsState = useSelector(state => state[NAMEPOSTSSLICE]);
@@ -25,6 +25,7 @@ export default function PaginationCard({ page }) {
     return (
         loading ? <></>
             : pages() !== 1 && <Pagination
+            className={s.wrapper}
                 onChange={handleClike}
                 page={page}
                 count={pages()}

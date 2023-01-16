@@ -8,16 +8,14 @@ import ButtonLike from "../Buttons/ButtonLike/ButtonLike";
 import s from "./index.module.css";
 
 
-export default function Post({ isEditor, postId, isEnable }) {
+
+export default function Post({ isEditor, postId, isEnable, children }) {
 
     const post = useSelector(state => state[NAMESINGLEPOSTSLICE].data);
     const { image, tags, title, text } = post;
     const dispatch = useDispatch();
 
-    function handleLike(post) {
-        dispatch(fetchChangeLike(post))
-            .then((newPost) => dispatch(setProductState(newPost.payload.data)));
-    }
+   
 
     function handleSubmit(text, tags, editorText) {
         dispatch(fetchChengePost({ ...text, tags, text: editorText, _id: postId }))
@@ -31,14 +29,11 @@ export default function Post({ isEditor, postId, isEnable }) {
     return (
 
         <div className={s.postContent}>
+            
 
-            <AddingPost image={image} title={title} text={text} tags={tags} enabled={isEditor} handleSubmit={handleSubmit} />
+            <AddingPost children={children} image={image} title={title} text={text} tags={tags} enabled={isEditor} handleSubmit={handleSubmit}/>            
 
-            <div className={s.like}>
-
-                <ButtonLike post={post} onLike={handleLike} />
-
-            </div>
+                
 
         </div>
 

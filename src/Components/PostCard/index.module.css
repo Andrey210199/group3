@@ -1,17 +1,30 @@
- .card {
+
+.card {
     display: flex;
     flex-direction: column;
-
-
-
+    color: var(--text-secondary-color);
 }  
 
 .card:hover {
-    box-shadow: 10px 10px 10px  #ccc;
+    box-shadow: 10px 10px 10px  var(--bg-secondary-color);
+
+}
+.link{
+    text-decoration: none;
+    color: inherit;
 
 }
 .margin {
     margin-top: auto;
-
+    display: flex;
+    justify-content: start;
+    gap: 20px;
+    position: relative
 }
+.delete_btn{
+    position: absolute;
+    right: 15px;
+    
+}
+
 

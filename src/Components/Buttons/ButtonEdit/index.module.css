@@ -1,0 +1,11 @@
+.btn_edit{
+
+    color: var(--text-secondary-color);
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 18px;
+    background-color: inherit;
+    border: 2px solid currentColor;
+    border-radius: 55px;
+    margin-left: 20px;
+}

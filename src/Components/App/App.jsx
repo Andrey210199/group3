@@ -10,6 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchGetUser, fetchTokenCheck, unAutch } from "../../Storage/Slices/UserSlice";
 import { fetchGetPagePosts, fetchGetPosts, fetchSearch } from "../../Storage/Slices/PostsSlile";
 import { NAMEPOSTSSLICE } from "../../Constants/StorageConstants";
+import { Header } from "../Header/header";
+import { Container } from "@mui/material";
+import { Footer } from "../Footer/footer";
+
+
+
 import PaginationCard from "../PaginationCard/PaginationCard";
 import EditUser from '../Form/EditUser/EditUser';
 import Search from '../Search/Search';
@@ -61,9 +67,10 @@ export default function App() {
       <Link to={"?registration=true"}>Регистрация</Link>
       <Link to={"?userEdit=true"} >Редактирования пользователя</Link> */}
 
-      {/* <Header/> */}
+      <Header />
 
       <main className="container content">
+       
         <Routes>
           <Route path="/" element={
             <>
@@ -86,8 +93,9 @@ export default function App() {
 
         </Routes>
 
-      </main>
-      {/* <Footer/> */}
+        </main>
+     <Footer/> 
     </>
+  
   );
 }

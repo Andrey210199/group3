@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import relativeTime from "dayjs/plugin/relativeTime";
 
+
 dayjs.locale("ru");
 dayjs.extend(relativeTime);
 
@@ -16,11 +17,11 @@ export default function AvatarInfo({author, created, s }) {
     }
 
     return (
-        <>
+        <div className={s.about_author}>
 
-            <Avatar src={avatar} alt="creater avatar" loading="lazy" decoding="async">{!!avatar ? "" : firstLetter()}</Avatar>
-            <span className={s.name}>{name}</span>
-            {!!created && <span>{dayjs(created).fromNow()}</span>}
-        </>
+            <Avatar className={s.img} src={avatar} alt="creater avatar" loading="lazy" decoding="async">{!!avatar ? "" : firstLetter()}</Avatar>
+            <h3 className={s.name}>{name}</h3>
+            {!!created && <p className={s.date}>{dayjs(created).fromNow()}</p>}
+        </div>
     )
 }

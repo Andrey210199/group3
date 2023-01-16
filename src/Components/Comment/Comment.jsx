@@ -23,8 +23,8 @@ export default function Comment({ author, created_at, text: comment, _id: id, po
             <div className={s.comment__content}>
                 <AddComment content={comment} />
             </div>
-
-            <ButtonDelete author={author} onDelete={handleClickDel} />
+            
+            <ButtonDelete author={author} onDelete={handleClickDel} style={{position: "absolute",  top: "15px", right: "20px"}}/>
         </div>
     )
 }
