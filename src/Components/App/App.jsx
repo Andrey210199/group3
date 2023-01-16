@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { Link, Route, Routes, useSearchParams } from "react-router-dom";
+import { useEffect } from 'react';
+import { Link, Route, Routes, useSearchParams } from "react-router-dom";
 
 import PostList from "../PostList/post-list";
 import AddingPostPage from '../../Pages/AddingPostPage/AddingPostPage';
@@ -7,7 +9,7 @@ import PostPage from "../../Pages/PostPage/PostPage";
 import { NotFoundPage } from "../../Pages/NotFoundPage/not-found-page";
 import './App.css';
 import { useDispatch, useSelector } from "react-redux";
-import { fetchGetUser } from "../../Storage/Slices/UserSlice";
+import { fetchGetUser, fetchTokenCheck, unAutch } from "../../Storage/Slices/UserSlice";
 import { fetchGetPagePosts, fetchGetPosts, fetchSearch } from "../../Storage/Slices/PostsSlile";
 import { NAMEPOSTSSLICE } from "../../Constants/StorageConstants";
 import { Header } from "../Header/header";
@@ -17,46 +19,56 @@ import EditUser from '../Form/EditUser/EditUser';
 import Search from '../Search/Search';
 import Login from '../Form/Login/Login';
 import Registration from '../Form/Registration/Registration';
+import { getToken } from '../../Utilites/Cookie';
 import edit from "./img/edit.png";
-
 
 export default function App() {
 
   const statePosts = useSelector(state => state[NAMEPOSTSSLICE]);
   const { data: posts, isSearch, search } = statePosts;
 
-  const [query] = useSearchParams();
-  const page = parseInt(query.get('page') || 1);
-  const user = getToken();
+  const [query] = useSearchParams(); //удалить
+  const page = parseInt(query.get('page') || 1); //удалить
 
   const dispatch = useDispatch();
+  const user = getToken();
 
   useEffect(() => {
-    dispatch(fetchGetUser())
-      .then(() => {
-        dispatch(fetchGetPosts());
-        isSearch ? dispatch(fetchSearch({ page, search }))
-          : dispatch(fetchGetPagePosts(page));
-      });
-  }, [dispatch, page])
+    if (user) {
+      dispatch(fetchTokenCheck(user))
+        .then(() => { //удалить
+          dispatch(fetchGetPosts());
+          isSearch ? dispatch(fetchSearch({ page, search }))
+            : dispatch(fetchGetPagePosts(page));
+        })
 
- 
-
-
+    }
+    else {
+      dispatch(fetchGetUser())
+        .then(() => { //удалить
+          dispatch(fetchGetPosts());
+          isSearch ? dispatch(fetchSearch({ page, search }))
+            : dispatch(fetchGetPagePosts(page));
+        });
+    }
+  }, [dispatch, user])
 
   return (
     <>
+      <Login />
+      <Registration />
       <EditUser />
-      <Header>
-      {user ? <Link to="#" >Выход</Link>
+
+      {/* Временно */}
+ {/*      {user ? <Link to="#" onClick={unAutch}>Выход</Link>
         : <Link to={"?login=true"}>Вход</Link>}
       <Link to={"?registration=true"}>Регистрация</Link>
-      
-        <Link to={"?userEdit=true"} ><img src={edit} alt="Редактировать пользователя" title='Редактировать пользователя' /></Link> 
-        </Header> 
-      <Login/>
-      <Registration/>
+      <Link to={"?userEdit=true"} >Редактирования пользователя</Link> */}
+
+      <Header />
+
       <main className="container content">
+       
         <Routes>
           <Route path="/" element={
             <>
@@ -79,8 +91,9 @@ export default function App() {
 
         </Routes>
 
-      </main>
-      <Footer/>
+        </main>
+     <Footer/> 
     </>
+  
   );
 }

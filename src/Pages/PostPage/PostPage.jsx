@@ -10,6 +10,7 @@ import Post from "../../Components/Post/Post";
 import { NAMESINGLEPOSTSLICE } from "../../Constants/StorageConstants";
 import { fetchChangeLike } from "../../Storage/Slices/PostsSlile";
 import { fetchGetComments, fetchGetSinglePost, setProductState } from "../../Storage/Slices/SinglePostSlice";
+import { getToken } from "../../Utilites/Cookie";
 
 import s from "./index.module.css";
 
@@ -54,6 +55,7 @@ export default function PostPage() {
                             <div className={s.comments}>
                             
                                 <CommentList>
+                                    {/*  {getToken() ?<AddComment enable />: <p>Комментарии могут оставлять только зарегистрированные пользователи.</p>} */}
                                     <AddComment enable />
                                 </CommentList>
                             </div>}

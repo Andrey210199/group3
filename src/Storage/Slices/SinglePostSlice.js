@@ -14,7 +14,7 @@ export const fetchGetSinglePost = createAsyncThunk(
     async function (postId, { rejectWithValue, fulfillWithValue, extra: api }) {
 
         try {
-            const data = await api.actionPosts("GET", postId);
+            const data = await api.actionPosts({ postId });
             return fulfillWithValue(data);
 
         } catch (error) {
@@ -30,7 +30,7 @@ export const fetchSetSinglePost = createAsyncThunk(
 
         try {
 
-            const data = await api.actionPosts("PATCH", postId, postData);
+            const data = await api.actionPosts({ method: "PATCH", postId, postData });
             return fulfillWithValue(data);
 
         } catch (error) {
@@ -46,7 +46,7 @@ export const fetchGetComments = createAsyncThunk(
 
         try {
 
-            const data = await api.actionComments("", postId);
+            const data = await api.actionComments({ postId });
             return fulfillWithValue(data);
 
         } catch (error) {
@@ -63,7 +63,7 @@ export const fetchSetRewiew = createAsyncThunk(
 
         try {
             const { user } = getState();
-            const data = await api.actionComments("POST", postId, "", { text: comment });
+            const data = await api.actionComments({ method: "POST", postId, commentData: { text: comment } });
             return fulfillWithValue({ data, user });
 
         } catch (error) {
@@ -79,7 +79,7 @@ export const fetchDeleteRewiew = createAsyncThunk(
 
         try {
 
-            const data = await api.actionComments("DELETE", postId, commentId);
+            const data = await api.actionComments({ method: "DELETE", postId, commentId });
             return fulfillWithValue(data);
 
         } catch (error) {
@@ -99,10 +99,8 @@ const singlePostSlice = createSlice({
     extraReducers: builder => {
         builder.addCase(fetchGetSinglePost.pending, state => {
             state.data = null;
-            state.comments = [];
             state.loading = true;
             state.error = null;
-            state.comments = null;
         })
             .addCase(fetchGetComments.pending, state => {
                 state.commentsLoading = true;
@@ -125,7 +123,7 @@ const singlePostSlice = createSlice({
                 state.comments.push({ ...comment, author: user.data });
             })
             .addCase(fetchDeleteRewiew.fulfilled, (state, action) => {
-                const {comments} =action.payload;
+                const { comments } = action.payload;
                 state.comments = deleteComment(state, comments);
             })
             .addMatcher(isError, (state, action) => {

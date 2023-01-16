@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { NAMEUSERSLICE } from "../../Constants/StorageConstants";
 
 
-
 import s from "./index.module.css";
 
 export const UserInfo = () => {

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { NAMEPOSTSSLICE, NAMEUSERSLICE, POSTLIMIT, STATEINITIAL } from "../../Constants/StorageConstants";
-import { changeLike, changePosts, dataPush, isError } from "../../Utilites/StoreFunction";
+import { changeLike, changePosts, dataLiked, dataPush, isError } from "../../Utilites/StoreFunction";
 import { isLiked } from "../../Utilites/total";
 
 const initialState = {
@@ -19,7 +19,7 @@ export const fetchGetPagePosts = createAsyncThunk(
     async function (page, { rejectWithValue, fulfillWithValue, getState, extra: api }) {
         try {
             const { [NAMEUSERSLICE]: user } = getState();
-            const data = await api.getPaginate(page, POSTLIMIT);
+            const data = await api.getPaginate({ pageNumber: page, limit: POSTLIMIT });
             return fulfillWithValue({ data, user });
 
         } catch (error) {
@@ -35,7 +35,7 @@ export const fetchGetPosts = createAsyncThunk(
 
         try {
 
-            const data = await api.actionPosts();
+            const data = await api.actionPosts({});
             return fulfillWithValue(data);
 
         } catch (error) {
@@ -47,11 +47,11 @@ export const fetchGetPosts = createAsyncThunk(
 export const fetchAddPost = createAsyncThunk(
     `${NAMEPOSTSSLICE}/fetchAddPost`,
 
-    async function (post, { rejectWithValue, fulfillWithValue, extra: api }) {
+    async function (postData, { rejectWithValue, fulfillWithValue, extra: api }) {
 
         try {
 
-            const data = await api.actionPosts("POST", "", post);
+            const data = await api.actionPosts({ method: "POST", postData });
             return fulfillWithValue(data);
 
         } catch (error) {
@@ -67,7 +67,7 @@ export const fetchChengePost = createAsyncThunk(
 
         try {
 
-            const data = await api.actionPosts("PATCH", post._id, post);
+            const data = await api.actionPosts({ method: "PATCH", postId: post._id, postData: post });
             return fulfillWithValue(data);
 
         } catch (error) {
@@ -80,11 +80,11 @@ export const fetchChengePost = createAsyncThunk(
 export const fetchDeletePost = createAsyncThunk(
     `${NAMEPOSTSSLICE}/fetchDeletePost`,
 
-    async function (post, { rejectWithValue, fulfillWithValue, getState, extra: api }) {
+    async function (post, { rejectWithValue, fulfillWithValue, extra: api }) {
 
         try {
 
-            const data = await api.actionPosts("DELETE", post._id);
+            const data = await api.actionPosts({ method: "DELETE", postId: post._id });
             return fulfillWithValue(data);
 
         } catch (error) {
@@ -100,7 +100,7 @@ export const fetchChangeLike = createAsyncThunk(
 
         try {
 
-            const { user } = getState();
+            const { [NAMEUSERSLICE]: user } = getState();
             const liked = isLiked(post.likes, user.data._id);
             const data = await api.changeLike(post._id, liked);
             return fulfillWithValue({ data, liked });
@@ -111,22 +111,6 @@ export const fetchChangeLike = createAsyncThunk(
     }
 );
 
-
-export const fetchSearch = createAsyncThunk(
-    `${NAMEPOSTSSLICE}/fetchSearch`,
-
-    async function ({ page, search }, { rejectWithValue, fulfillWithValue, extra: api }) {
-
-        try {
-
-            const data = await api.getPaginate(page, POSTLIMIT, search);
-            return fulfillWithValue(data);
-
-        } catch (error) {
-            return rejectWithValue(error);
-        }
-    }
-)
 
 const postsSlice = createSlice({
     name: NAMEPOSTSSLICE,
@@ -142,12 +126,6 @@ const postsSlice = createSlice({
     extraReducers: builder => {
         builder.addCase(fetchGetPosts.pending, state => {
             state.postsObject = null;
-            state.error = null;
-            state.favorites = null;
-            state.loading = true;
-        })
-        .addCase(fetchSearch.pending, state =>{
-            state.data = null;
             state.error = null;
             state.favorites = null;
             state.loading = true;
@@ -174,7 +152,6 @@ const postsSlice = createSlice({
                 state.data = data.posts;
                 state.total = data.total;
                 state.favorites = state.data.filter(post => isLiked(post.likes, user.data._id));
-                state.isSearch =false;
                 state.loading = false;
             })
             .addCase(fetchChengePost.fulfilled, (state, action) => {
@@ -182,12 +159,6 @@ const postsSlice = createSlice({
             })
             .addCase(fetchAddPost.fulfilled, (state, action) => {
                 dataPush(state, action.payload.data);
-            })
-            .addCase(fetchSearch.fulfilled, (state, action)=>{
-                state.data = action.payload.posts;
-                state.total = action.payload.total;
-                state.isSearch = true;
-                state.loading = false;
             })
             .addCase(fetchChangeLike.fulfilled, (state, action) => {
                 const { data, liked } = action.payload;

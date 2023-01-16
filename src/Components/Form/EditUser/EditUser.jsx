@@ -8,6 +8,7 @@ import { fetchUpdatAvatar, fetchUpdateUser } from "../../../Storage/Slices/UserS
 import FormInput from "../../FormInput/FormInput";
 import Modal from "../../Modal/Modal";
 import ValidateName from "../../../Utilites/ValidateName";
+import ProtectedComponent from "../../ProtectedComponent/ProtectedComponent";
 
 export default function EditUser() {
 
@@ -43,6 +44,7 @@ export default function EditUser() {
 
     return (
         url.get(URLEDITUSER) &&
+        //  <ProtectedComponent>
         <Modal>
 
             <form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -57,5 +59,6 @@ export default function EditUser() {
             </form>
 
         </Modal>
+        //  </ProtectedComponent>
     )
 }

@@ -1,6 +1,8 @@
 export const MAXCHARACTERS = 500;
 export const MAXADDTAGS = 5;
 
+export const COOKIETOKEN = "BB5836E01528186351C071230F452F18D9669F5E";
+
 export const URLLOGIN = "login";
 export const URLREGISTRATION = "registration";
 export const URLEDITUSER = "userEdit";
@@ -25,7 +27,7 @@ export const PASSWORDVALIDATE = {
         message: "Пароль обязателен"
     },
     pattern: {
-       // value: /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}/g,
+        value: /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}/g,
         message: "Пароль должен содержать минимум 6 символов, цифру, строчные и прописные буквы"
     }
 }
@@ -49,7 +51,7 @@ export const AVATARVALIDATE = {
     },
 
     pattern: {
-        value: /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/g,
+        value: /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])/g,
         message: "Неверный url"
     }
 
