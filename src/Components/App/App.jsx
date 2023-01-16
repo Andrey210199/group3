@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Route, Routes, useSearchParams } from "react-router-dom";
+import { Link, Route, Routes, useSearchParams } from "react-router-dom";
 
 import PostList from "../PostList/post-list";
 import AddingPostPage from '../../Pages/AddingPostPage/AddingPostPage';
@@ -17,6 +17,7 @@ import EditUser from '../Form/EditUser/EditUser';
 import Search from '../Search/Search';
 import Login from '../Form/Login/Login';
 import Registration from '../Form/Registration/Registration';
+import edit from "./img/edit.png";
 
 
 export default function App() {
@@ -26,6 +27,7 @@ export default function App() {
 
   const [query] = useSearchParams();
   const page = parseInt(query.get('page') || 1);
+  const user = getToken();
 
   const dispatch = useDispatch();
 
@@ -45,7 +47,13 @@ export default function App() {
   return (
     <>
       <EditUser />
-      <Header/> 
+      <Header>
+      {user ? <Link to="#" >Выход</Link>
+        : <Link to={"?login=true"}>Вход</Link>}
+      <Link to={"?registration=true"}>Регистрация</Link>
+      
+        <Link to={"?userEdit=true"} ><img src={edit} alt="Редактировать пользователя" title='Редактировать пользователя' /></Link> 
+        </Header> 
       <Login/>
       <Registration/>
       <main className="container content">
