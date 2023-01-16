@@ -5,11 +5,11 @@ import "../../index.css";
 import cn from "classnames";
 import { Logo } from "../Logo/logo";
 import { UserInfo } from "../UserInfo/user-info";
-import { useContext } from "react";
-import { UserContext } from "../../context/userContext";
+import { NAMEUSERSLICE } from "../../Constants/StorageConstants";
+import { useSelector } from "react-redux";
 
 export function Header() {
-  const { currentUser } = useContext(UserContext);
+  const currentUser = useSelector(state => state[NAMEUSERSLICE].data);
   return (
     <header className={s.header}>
       

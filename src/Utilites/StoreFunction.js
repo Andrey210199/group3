@@ -1,3 +1,4 @@
+import { isLiked } from "./total";
 
 export function isError(action) {
     return action.type.endsWith("rejected");
@@ -11,6 +12,10 @@ export function changeLike({ state, data, liked }) {
     else {
         dataFilter(state, data);
     }
+}
+
+export function dataLiked(state, userId) {
+    return state.data.filter(post => isLiked(post.likes, userId));
 }
 
 export function dataPush(state, data) {
