@@ -3,7 +3,7 @@
 const config = {
     postsUrl: "https://api.react-learning.ru/v2/group-7/posts",
     userUrl: "https://api.react-learning.ru/v2/group-7/users",
-    registerUrl: "https://api.react-learning.ru/",
+    registerUrl: "https://api.react-learning.ru",
     headers: {
         "content-type": "application/json",
         authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhNTEwNjU5Yjk4YjAzOGY3NzlkMDkiLCJncm91cCI6Imdyb3VwLTciLCJpYXQiOjE2Njc5MTE5NDgsImV4cCI6MTY5OTQ0Nzk0OH0.ulDwC10wR3-KvsxJmhoC1xM3U-d_WJa7XKbKM2x8A2c"
@@ -97,9 +97,9 @@ class Api {
 
     changeAvatar(avatar) {
         return fetch(`${this.userUrl}/me/avatar`, {
-            method: "PATH",
+            method: "PATCH",
             headers: this.headers,
-            body: JSON.stringify(avatar)
+            body: JSON.stringify({avatar})
         }).then(this._OnResponse);
     }
 

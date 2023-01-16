@@ -6,6 +6,7 @@ import { MAXADDTAGS } from "../../Constants/Constant";
 import { NAMEPOSTSSLICE } from "../../Constants/StorageConstants";
 import { addTag } from "../../Storage/Slices/PostsSlile";
 import s from "./index.module.css";
+import cn from "classnames";
 import "../../index.css";
 export default function Tags({ setInputTags, tags }) {
 
@@ -67,7 +68,7 @@ export default function Tags({ setInputTags, tags }) {
                 }
             />
 
-            <input className = {s.new_tag} placeholder="Создать новый тег" value={newTag} onChange={(e) => setNewTag(e.target.value)} /><button className ={`btn ${s.btn_tag}`} type="button" onClick={newOption}>Создать тег</button>
+            <input className = {s.new_tag} placeholder="Создать новый тег" value={newTag} onChange={(e) => setNewTag(e.target.value)} /><button className ={cn("btn", s.btn_tag)} type="button" onClick={newOption}>Создать тег</button>
         </div>
     )
 }

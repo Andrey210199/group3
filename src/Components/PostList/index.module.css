@@ -4,6 +4,7 @@
 	grid-template-columns: repeat(4, 1fr);
 	gap: 16px;
 	color: var(--red-color);
+	padding: 20px 0;
 
 
 }

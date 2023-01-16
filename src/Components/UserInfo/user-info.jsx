@@ -1,13 +1,14 @@
 import { Avatar } from "@mui/material";
-import { useContext } from "react";
-import { UserContext } from "../../context/userContext";
+import { useSelector } from "react-redux";
+import { NAMEUSERSLICE } from "../../Constants/StorageConstants";
+
 
 
 import s from "./index.module.css";
 
 export const UserInfo = () => {
-  const { currentUser } = useContext(UserContext);
-  const { name, avatar } = currentUser;
+  const user = useSelector(state => state[NAMEUSERSLICE].data);
+  const { name, avatar } = user;
 
   return (
     <div className={s.wrapper}>

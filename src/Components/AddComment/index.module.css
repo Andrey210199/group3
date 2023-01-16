@@ -1,4 +1,7 @@
+.addComment{
+  margin-top: 30px;
 
+}
 .new_comment {
   border-radius: 10px;
   background-color: var(--bg-main-color-light);

@@ -1,9 +1,7 @@
-import { Container, IconButton } from "@mui/material";
+import { Container} from "@mui/material";
 
 import s from "./index.module.css";
 
-import { useContext } from "react";
-import { UserContext } from "../../context/userContext";
 
 export function Footer() {
   return (
