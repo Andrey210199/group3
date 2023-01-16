@@ -1,4 +1,4 @@
 
 export default function validateName(name) {
-    return !/[\/,.\\№%\[\]{}&$\^<>#@!?()]/g.test(name);
+    return !/[/,.\\№%[]{}&$\^<>#@!\?()]/g.test(name);
 }

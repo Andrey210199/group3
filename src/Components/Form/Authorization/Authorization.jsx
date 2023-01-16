@@ -6,6 +6,7 @@ import validateName from "../../../Utilites/ValidateName";
 import ButtonForm from "../../Buttons/ButtonForm/ButtonForm";
 import FormInput from "../../FormInput/FormInput";
 import Modal from "../../Modal/Modal";
+import ProtectedComponent from "../../ProtectedComponent/ProtectedComponent";
 
 export default function Authorization({ title, onSubmit, oneBtn, twoBtn, find, onClick, children }) {
 
@@ -41,25 +42,28 @@ export default function Authorization({ title, onSubmit, oneBtn, twoBtn, find, o
 
 
     return (
-        url.get(find) && <Modal>
+        url.get(find) &&
+       // <ProtectedComponent isProtected={false}>
+            <Modal>
 
-            <form onSubmit={handleSubmit(handleFormSubmit)}>
-                <h2>{title}</h2>
-                {find === URLREGISTRATION && <FormInput {...name} placeholder="Введите nickname" />}
-                {(errors?.name && <p>{errors.name.message}</p>) || (errorName && <p>{errorName}</p>)}
+                <form onSubmit={handleSubmit(handleFormSubmit)}>
+                    <h2>{title}</h2>
+                    {find === URLREGISTRATION && <FormInput {...name} placeholder="Введите nickname" />}
+                    {(errors?.name && <p>{errors.name.message}</p>) || (errorName && <p>{errorName}</p>)}
 
-                <FormInput {...email} placeholder="Введите email" />
-                {errors?.email && <p>{errors.email.message}</p>}
+                    <FormInput {...email} placeholder="Введите email" />
+                    {errors?.email && <p>{errors.email.message}</p>}
 
-                <FormInput {...password} type="password" placeholder="Введите пароль" />
-                {errors?.password && <p>{errors.password.message}</p>}
+                    <FormInput {...password} type="password" placeholder="Введите пароль" />
+                    {errors?.password && <p>{errors.password.message}</p>}
 
-                <ButtonForm type="submit">{oneBtn}</ButtonForm>
-                <ButtonForm onClick={onClick}>{twoBtn}</ButtonForm>
+                    <ButtonForm type="submit">{oneBtn}</ButtonForm>
+                    <ButtonForm onClick={onClick}>{twoBtn}</ButtonForm>
 
-            </form>
+                </form>
 
-        </Modal>
+            </Modal>
+      //  </ProtectedComponent>
 
     );
 }

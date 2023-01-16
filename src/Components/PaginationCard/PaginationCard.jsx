@@ -10,7 +10,9 @@ export default function PaginationCard({ page }) {
     const { loading, total: count, isSearch, search } = postsState;
     const dispatch = useDispatch();
 
-
+    function pages() {
+        return Math.ceil(count / POSTLIMIT);
+    }
 
     function handleClike(e, value) {
         if (value !== page) {
@@ -22,10 +24,10 @@ export default function PaginationCard({ page }) {
 
     return (
         loading ? <></>
-            : <Pagination
+            : pages() !== 1 && <Pagination
                 onChange={handleClike}
                 page={page}
-                count={Math.ceil(count / POSTLIMIT)}
+                count={pages()}
                 renderItem={(item) => (
                     <PaginationItem
                         component={Link}

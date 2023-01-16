@@ -8,6 +8,7 @@ import CommentList from "../../Components/CommentList/CommentList";
 import Post from "../../Components/Post/Post";
 import { NAMESINGLEPOSTSLICE } from "../../Constants/StorageConstants";
 import { fetchGetComments, fetchGetSinglePost } from "../../Storage/Slices/SinglePostSlice";
+import { getToken } from "../../Utilites/Cookie";
 
 import s from "./index.module.css";
 
@@ -45,7 +46,7 @@ export default function PostPage() {
                         {isCommentLoading ? <></> :
                             <div className={s.comments}>
                                 <CommentList>
-                                    <AddComment enable />
+                                    {getToken() ?<AddComment enable />: <p>Комментарии могут оставлять только зарегистрированные пользватели.</p>}
                                 </CommentList>
                             </div>}
                     </>

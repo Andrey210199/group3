@@ -1,22 +1,14 @@
 import { useSelector } from "react-redux";
-import { Navigate, useHref, useSearchParams } from "react-router-dom";
-import { URLEDITUSER, URLLOGIN, URLREGISTRATION } from "../../Constants/Constant";
+import { Navigate, useHref } from "react-router-dom";
+import { URLLOGIN } from "../../Constants/Constant";
 import { NAMEUSERSLICE } from "../../Constants/StorageConstants";
+import { getToken } from "../../Utilites/Cookie";
 
-export default function ProtectedComponent({ isProtected, children }) {
+export default function ProtectedComponent({ isProtected = true, children }) {
 
-    const user = true; //Временно
+    const user = getToken();
     const isLoading = useSelector(state => state[NAMEUSERSLICE].loading);
     const href = useHref();
-    const [search] = useSearchParams();
-
-    function isNotPopap(url) {
-        return (search.get(url) !== null && !search.get(url))
-    }
-
-    function isPopap(url) {
-        return (search.get(url) !== null && search.get(url))
-    }
 
 
     switch (true) {
@@ -24,17 +16,13 @@ export default function ProtectedComponent({ isProtected, children }) {
         case isLoading && isProtected:
             return <></> //временно
 
-        case (isNotPopap(URLLOGIN) || isNotPopap(URLREGISTRATION) || isPopap(URLEDITUSER)) && (isProtected && !user): //временно
+        case isProtected && !user:
             return <Navigate to={`?${URLLOGIN}=true`} replace />
 
-
-        case (isPopap(URLLOGIN) || isPopap(URLREGISTRATION)) && (isProtected && user): //временно
+        case isProtected && user:
             return <Navigate to={href} replace />
-
 
         default:
             return <>{children}</>
-
-
     }
 }

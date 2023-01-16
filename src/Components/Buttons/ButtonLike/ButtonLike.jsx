@@ -2,6 +2,7 @@ import { Favorite } from "@mui/icons-material";
 import { Badge, IconButton, Tooltip } from "@mui/material";
 import { useSelector } from "react-redux";
 import { NAMEUSERSLICE } from "../../../Constants/StorageConstants";
+import { getToken } from "../../../Utilites/Cookie";
 import { isLiked } from "../../../Utilites/total";
 
 
@@ -16,7 +17,7 @@ export default function ButtonLike({ post, onLike }) {
   }
 
   return (
-
+    getToken() &&
     <Tooltip title={"Liked"}>
       <IconButton
         aria-label="add to favorites"

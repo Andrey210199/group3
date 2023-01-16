@@ -1,12 +1,13 @@
+import { COOKIETOKEN } from "../Constants/Constant";
 
 export function getCookie(name) {
     let matches = document.cookie.match(
-        new RegExp(`(?:^|; )${name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1')}=([^;]*)`)
+        new RegExp(`(?:^|; )${name.replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1')}=([^;]*)`)
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function setCookie(name, value, options = { "max-age": 36000}) {
+export function setCookie(name, value, options = { "max-age": 36000 }) {
 
     options = {
         ...options
@@ -33,4 +34,8 @@ export function deleteCookie(name) {
     setCookie(name, "", {
         'max-age': -1
     })
+}
+
+export function getToken() {
+    return getCookie(COOKIETOKEN);
 }
