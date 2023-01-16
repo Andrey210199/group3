@@ -46,7 +46,8 @@ export default function PostPage() {
                         {isCommentLoading ? <></> :
                             <div className={s.comments}>
                                 <CommentList>
-                                    {getToken() ?<AddComment enable />: <p>Комментарии могут оставлять только зарегистрированные пользватели.</p>}
+                                    {/*  {getToken() ?<AddComment enable />: <p>Комментарии могут оставлять только зарегистрированные пользователи.</p>} */}
+                                    <AddComment enable />
                                 </CommentList>
                             </div>}
                     </>

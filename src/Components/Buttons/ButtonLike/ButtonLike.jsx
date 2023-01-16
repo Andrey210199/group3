@@ -17,7 +17,7 @@ export default function ButtonLike({ post, onLike }) {
   }
 
   return (
-    getToken() &&
+   //  getToken() && 
     <Tooltip title={"Liked"}>
       <IconButton
         aria-label="add to favorites"

@@ -56,7 +56,7 @@ export default function App() {
       <EditUser />
 
       {/* Временно */}
-{/*       {user ? <Link to="#" onClick={unAutch}>Выход</Link>
+ {/*      {user ? <Link to="#" onClick={unAutch}>Выход</Link>
         : <Link to={"?login=true"}>Вход</Link>}
       <Link to={"?registration=true"}>Регистрация</Link>
       <Link to={"?userEdit=true"} >Редактирования пользователя</Link> */}
