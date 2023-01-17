@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { forwardRef } from "react";
+import s from "./index.module.css";
 
 const FormInput = forwardRef(({ value="", ...props }, ref) => {
     
@@ -16,7 +17,7 @@ const FormInput = forwardRef(({ value="", ...props }, ref) => {
     }
 
     return (
-        <input {...props} value={text} onChange={handleChange} ref={ref} />
+        <input className={s.input} {...props} value={text} onChange={handleChange} ref={ref} />
     )
 })
 

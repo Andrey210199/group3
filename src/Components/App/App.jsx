@@ -81,9 +81,9 @@ export default function App() {
           <>
           <UserInfo />
           <Link
-            className={cn(s.link, )}
+            className={s.link }
             to={"?userEdit=true"}
-            title=" Редактирования пользователя"
+            title=" Редактирование пользователя"
           >
             <span className={s.editUser}>Изменить</span>
           </Link>
@@ -92,6 +92,7 @@ export default function App() {
           }
     
         {/* Временно */}
+
 
 
           {user ? (
@@ -112,7 +113,8 @@ export default function App() {
           <Link className={cn(s.link, s.registr_link)} to={"?registration=true"}>
             <span className={s.registration}>Регистрация</span>
           </Link>
-
+        
+   
     
       </Header>
 

@@ -7,6 +7,7 @@ import ButtonForm from "../../Buttons/ButtonForm/ButtonForm";
 import FormInput from "../../FormInput/FormInput";
 import Modal from "../../Modal/Modal";
 import ProtectedComponent from "../../ProtectedComponent/ProtectedComponent";
+import s from "./index.module.css";
 
 export default function Authorization({ title, onSubmit, oneBtn, twoBtn, find, onClick, children }) {
 
@@ -46,19 +47,21 @@ export default function Authorization({ title, onSubmit, oneBtn, twoBtn, find, o
        // <ProtectedComponent isProtected={false}>
             <Modal>
 
-                <form onSubmit={handleSubmit(handleFormSubmit)}>
-                    <h2>{title}</h2>
+                <form className={s.form} onSubmit={handleSubmit(handleFormSubmit)}>
+                    <h2 className={s.title}>{title}</h2>
                     {find === URLREGISTRATION && <FormInput {...name} placeholder="Введите nickname" />}
-                    {(errors?.name && <p>{errors.name.message}</p>) || (errorName && <p>{errorName}</p>)}
+                    {(errors?.name && <p className={s.error}>{errors.name.message}</p>) || (errorName && <p className={s.error}>{errorName}</p>)}
 
                     <FormInput {...email} placeholder="Введите email" />
-                    {errors?.email && <p>{errors.email.message}</p>}
+                    {errors?.email && <p className={s.error}>{errors.email.message}</p>}
 
                     <FormInput {...password} type="password" placeholder="Введите пароль" />
-                    {errors?.password && <p>{errors.password.message}</p>}
-
-                    <ButtonForm type="submit">{oneBtn}</ButtonForm>
-                    <ButtonForm onClick={onClick}>{twoBtn}</ButtonForm>
+                    {errors?.password && <p className={s.error}>{errors.password.message}</p>}
+                    <div className={s.btns}>
+                    
+                        <ButtonForm type="submit">{oneBtn}</ButtonForm>
+                        <ButtonForm onClick={onClick}>{twoBtn}</ButtonForm>
+                    </div>
 
                 </form>
 

@@ -10,9 +10,10 @@
 }
 .menu{
   display: grid;
+  grid-template-columns: 1fr 1fr;
   grid-template-areas: "avatar login"
                         "edit registration";
   align-items: center;
-  justify-content: center;
-  column-gap: 10px;
+  justify-content: start;
+  gap: 5px 10px;
 }

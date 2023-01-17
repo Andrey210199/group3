@@ -10,8 +10,7 @@ import { useSelector } from "react-redux";
 import Search from "../Search/Search";
 
 export function Header({children}) {
-  const user = useSelector((state) => state[NAMEUSERSLICE].data);
-  console.log(user);
+
   return (
     <header className={s.header}>
       <div className={cn("container", s.content)}>
@@ -20,10 +19,7 @@ export function Header({children}) {
         <div className={s.menu}>
        
           {children}
-          {/* <IconButton sx={{ color: "var(--text-secondary-color)" }}>
-            <LoginIcon />
-            <span className={s.login}>Войти</span>
-          </IconButton> */}
+
         </div>
         
       </div>
