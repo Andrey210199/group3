@@ -1,0 +1,12 @@
+.content{
+    display: grid;
+    align-items: center;
+    background-color: transparent;
+    border-radius: 20px;
+    position: relative;
+}
+
+.input{
+    padding-right: 20px;
+    flex: 1;
+}

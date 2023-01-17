@@ -2,17 +2,20 @@ import { Autocomplete, TextField } from "@mui/material";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { MAXADDTAGS } from "../../Constants/Constant";
+import { LIMITMESSAGE, MAXADDTAGS, MAXSINTAG } from "../../Constants/Constant";
 import { NAMEPOSTSSLICE } from "../../Constants/StorageConstants";
 import { addTag } from "../../Storage/Slices/PostsSlile";
 import s from "./index.module.css";
 import "../../index.css";
+import FormInput from "../FormInput/FormInput";
+import Button from "../Buttons/Button/Button";
 export default function Tags({ setInputTags, tags }) {
 
 
     const stateOptions = useSelector(state => state[NAMEPOSTSSLICE].tags);
     const dispatch = useDispatch();
     const [newTag, setNewTag] = useState("");
+    const [message, setMessage] = useState("");
     const [autoCompleteValue, setAutoCompleteValue] = useState([]);
 
     const options = Object.values(stateOptions);
@@ -29,7 +32,7 @@ export default function Tags({ setInputTags, tags }) {
     }
 
     function newOption() {
-        if (autoCompleteValue.length < MAXADDTAGS) {
+        if (newTag.length > 1 && autoCompleteValue.length < MAXADDTAGS) {
             dispatch(addTag(newTag));
             if (testTags(autoCompleteValue, newTag)) {
                 setAutoCompleteValue([...autoCompleteValue, newTag]);
@@ -41,6 +44,16 @@ export default function Tags({ setInputTags, tags }) {
     function handleAutocomplete(_, value) {
         if (autoCompleteValue.length < MAXADDTAGS)
             setAutoCompleteValue(value);
+    }
+
+    function handleTagChange(value) {
+        if (value.length <= MAXSINTAG) {
+            setMessage("");
+            setNewTag(value);
+        }
+        else {
+            setMessage(LIMITMESSAGE);
+        }
     }
 
     useEffect(() => {
@@ -56,7 +69,7 @@ export default function Tags({ setInputTags, tags }) {
             <Autocomplete
                 multiple
                 value={autoCompleteValue}
-                
+
                 onChange={handleAutocomplete}
                 options={options}
                 getOptionLabel={option => option}
@@ -67,7 +80,10 @@ export default function Tags({ setInputTags, tags }) {
                 }
             />
 
-            <input className = {s.new_tag} placeholder="Создать новый тег" value={newTag} onChange={(e) => setNewTag(e.target.value)} /><button className ={`btn ${s.btn_tag}`} type="button" onClick={newOption}>Создать тег</button>
+            <FormInput className={s.new_tag} placeholder="Создать новый тег" val={newTag} change={handleTagChange} clear={() => { setNewTag(""); setMessage("") }} />
+            {message !== "" && <p>{message}</p>}
+
+            <Button className={s.btn_tag} type="button" onClick={newOption}>Создать тег</Button>
         </div>
     )
 }

@@ -31,6 +31,7 @@ export default function App() {
 
   const [query] = useSearchParams(); //удалить
   const page = parseInt(query.get('page') || 1); //удалить
+  const searching = query.get("search"); //удалить
 
   const dispatch = useDispatch();
   const user = getToken();
@@ -40,7 +41,7 @@ export default function App() {
       dispatch(fetchTokenCheck(user))
         .then(() => { //удалить
           dispatch(fetchGetPosts());
-          isSearch ? dispatch(fetchSearch({ page, search }))
+          searching ? dispatch(fetchSearch({ page, searching }))
             : dispatch(fetchGetPagePosts(page));
         })
 
@@ -49,11 +50,11 @@ export default function App() {
       dispatch(fetchGetUser())
         .then(() => { //удалить
           dispatch(fetchGetPosts());
-          isSearch ? dispatch(fetchSearch({ page, search }))
+          searching ? dispatch(fetchSearch({ page, search: searching }))
             : dispatch(fetchGetPagePosts(page));
         });
     }
-  }, [dispatch, user])
+  }, [dispatch, user, searching])
 
   return (
     <>
@@ -62,15 +63,15 @@ export default function App() {
       <EditUser />
 
       {/* Временно */}
- {/*      {user ? <Link to="#" onClick={unAutch}>Выход</Link>
+      {user ? <Link to="#" onClick={unAutch}>Выход</Link>
         : <Link to={"?login=true"}>Вход</Link>}
       <Link to={"?registration=true"}>Регистрация</Link>
-      <Link to={"?userEdit=true"} >Редактирования пользователя</Link> */}
+      <Link to={"?userEdit=true"} >Редактирования пользователя</Link>
 
       <Header />
 
       <main className="container content">
-       
+
         <Routes>
           <Route path="/" element={
             <>
@@ -93,9 +94,9 @@ export default function App() {
 
         </Routes>
 
-        </main>
-     <Footer/> 
+      </main>
+      <Footer />
     </>
-  
+
   );
 }

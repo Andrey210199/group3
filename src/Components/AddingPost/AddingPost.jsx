@@ -17,6 +17,9 @@ import img from "./placeholder.png";
 import s from "./index.module.css";
 
 import Tags from "../Tags/Tags";
+import FormInput from "../FormInput/FormInput";
+import { LIMITMESSAGE, MAXTITLE } from "../../Constants/Constant";
+import Button from "../Buttons/Button/Button";
 
 export default function AddingPost({
   children,
@@ -30,13 +33,21 @@ export default function AddingPost({
   const [text, setText] = useState({ title: "", image: "" });
   const [inputTags, setInputTags] = useState([]);
 
+  const [message, setMessage] = useState("");
+
   function handleSubmit(e) {
     e.preventDefault();
     onSubmit(text, inputTags, editor.getHTML());
   }
 
-  function handleInput(event, type) {
-    setText({ ...text, [type]: event.target.value });
+  function handleInput(value, type) {
+    if ((type == "title" && value.length <= MAXTITLE) || type !== "title") {
+      setMessage("");
+      setText({ ...text, [type]: value });
+    }
+    else {
+      setMessage(LIMITMESSAGE);
+    }
   }
 
 
@@ -49,7 +60,7 @@ export default function AddingPost({
       Highlight.configure({
         multicolor: true,
       }),
-      
+
       TextStyle,
       Color,
       Underline,
@@ -59,8 +70,8 @@ export default function AddingPost({
         placeholder: "Текст вашего поста",
       }),
     ],
-    editorProps:{
-      attributes:{
+    editorProps: {
+      attributes: {
         class: s.post_text
       }
     }
@@ -160,39 +171,49 @@ export default function AddingPost({
             src={text.image === "" ? img : text.image}
             alt="Превью"
           />
-          <input
-            className={cn(s.input, s.img__text)}
-            type="text"
-            value={text.image}
-            onChange={(e) => handleInput(e, "image")}
-            placeholder="Введите ссылку на картинку поста"
-            required
-          />
+          <div className={s.img__text}>
+            <FormInput
+              className={s.input}
+              type="text"
+              value={text.image}
+              name="image"
+              change={(e) => handleInput(e, "image")}
+              placeholder="Введите ссылку на картинку поста"
+              required />
+          </div>
+
         </div>
         <div className={s.post__title}>
           <h2 className={s.title}>Заголовок поста</h2>
-          <input
+          <FormInput
             type="text"
+            name="title"
             className={s.input}
-            value={text.title}
-            onChange={(e) => handleInput(e, "title")}
+            val={text.title}
+            change={(e) => handleInput(e, "title")}
             placeholder="Введите заголовок поста"
+            clear={(name) => {
+              setText({ ...text, [name]: "" });
+              setMessage("");
+            }
+            }
             required
           />
+          {message && <p>{message}</p>}
         </div>
 
-        
+
         <div className={s.wrapper}>
-        <MenuBar editor={editor} />
-        <EditorContent editor={editor} />
+          <MenuBar editor={editor} />
+          <EditorContent editor={editor} />
         </div>
 
         <Tags setInputTags={setInputTags} tags={tags} />
-        <button className={`btn ${s.btn_publish}`}>Опубликовать</button>
+        <Button className={s.btn_publish}>Опубликовать</Button>
       </form>
     ) : (
       <form className={s.form} onSubmit={handleSubmit}>
-        
+
 
         <div className={s.post_image}>
           <img
@@ -203,22 +224,22 @@ export default function AddingPost({
           />
         </div>
 
-       
-          <h2 className={s.header__title}>{postTitle}</h2>
-       
-          
-   
+
+        <h2 className={s.header__title}>{postTitle}</h2>
+
+
+
         <EditorContent editor={editor} />
         <div className={s.post_tags}>
-            {tags &&
-              tags.map((tag) => (
-                <a href="/#" key={tag} className={s.tag}>
-                  <TagIcon fontSize="small" />
-                  {tag}
-                </a>
-              ))}
-          </div>
-          {children && children}
+          {tags &&
+            tags.map((tag) => (
+              <a href="/#" key={tag} className={s.tag}>
+                <TagIcon fontSize="small" />
+                {tag}
+              </a>
+            ))}
+        </div>
+        {children && children}
       </form>
     )
   );

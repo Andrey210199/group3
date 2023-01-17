@@ -7,6 +7,7 @@ import { Logo } from "../Logo/logo";
 import { UserInfo } from "../UserInfo/user-info";
 import { NAMEUSERSLICE } from "../../Constants/StorageConstants";
 import { useSelector } from "react-redux";
+import Search from "../Search/Search";
 
 export function Header() {
   const currentUser = useSelector(state => state[NAMEUSERSLICE].data);
@@ -15,6 +16,7 @@ export function Header() {
       
         <div  className={cn( "container", s.content)}>
          <Logo/>
+         <Search/>
           <div className={s.menu}>
            {currentUser&&<UserInfo/>} 
             {/* <IconButton sx={{color:"var(--text-secondary-color)"}}>

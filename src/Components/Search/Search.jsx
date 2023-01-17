@@ -22,13 +22,14 @@ export default function Search() {
     function handleClear() {
         dispatch(fetchGetPagePosts(1))
         .then(()=>{
+            navigate("/")
             dispatch(setSearch(""));
         })
     }
 
     function handleSubmit(e) {
         e.preventDefault();
-        navigate("/");
+        navigate(`/?search=${inputText}`);
         dispatch(fetchSearch({ page: 1, search: inputText }))
     }
 

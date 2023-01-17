@@ -40,30 +40,35 @@ export default function Authorization({ title, onSubmit, oneBtn, twoBtn, find, o
         }
     }
 
+    function handleClear(name) {
+        reset({ [name]: "" });
+
+    }
+
 
     return (
         url.get(find) &&
-       // <ProtectedComponent isProtected={false}>
-            <Modal>
+        // <ProtectedComponent isProtected={false}>
+        <Modal>
 
-                <form onSubmit={handleSubmit(handleFormSubmit)}>
-                    <h2>{title}</h2>
-                    {find === URLREGISTRATION && <FormInput {...name} placeholder="Введите nickname" />}
-                    {(errors?.name && <p>{errors.name.message}</p>) || (errorName && <p>{errorName}</p>)}
+            <form onSubmit={handleSubmit(handleFormSubmit)}>
+                <h2>{title}</h2>
+                {find === URLREGISTRATION && <FormInput {...name} clear={handleClear} placeholder="Введите nickname" />}
+                {(errors?.name && <p>{errors.name.message}</p>) || (errorName && <p>{errorName}</p>)}
 
-                    <FormInput {...email} placeholder="Введите email" />
-                    {errors?.email && <p>{errors.email.message}</p>}
+                <FormInput {...email} clear={handleClear} placeholder="Введите email" />
+                {errors?.email && <p>{errors.email.message}</p>}
 
-                    <FormInput {...password} type="password" placeholder="Введите пароль" />
-                    {errors?.password && <p>{errors.password.message}</p>}
+                <FormInput {...password} clear={handleClear} type="password" placeholder="Введите пароль" />
+                {errors?.password && <p>{errors.password.message}</p>}
 
-                    <ButtonForm type="submit">{oneBtn}</ButtonForm>
-                    <ButtonForm onClick={onClick}>{twoBtn}</ButtonForm>
+                <ButtonForm type="submit">{oneBtn}</ButtonForm>
+                <ButtonForm onClick={onClick}>{twoBtn}</ButtonForm>
 
-                </form>
+            </form>
 
-            </Modal>
-      //  </ProtectedComponent>
+        </Modal>
+        //  </ProtectedComponent>
 
     );
 }
