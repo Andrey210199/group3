@@ -22,21 +22,19 @@ import {
   NAMEUSERSLICE,
 } from "../../Constants/StorageConstants";
 import { Header } from "../Header/header";
-import { Container } from "@mui/material";
+
 import { Footer } from "../Footer/footer";
-import LogoutIcon from "@mui/icons-material/Logout";
-import LoginIcon from "@mui/icons-material/Login";
+
 
 import PaginationCard from "../PaginationCard/PaginationCard";
 import EditUser from "../Form/EditUser/EditUser";
-import Search from "../Search/Search";
+
 import Login from "../Form/Login/Login";
 import Registration from "../Form/Registration/Registration";
 import { getToken } from "../../Utilites/Cookie";
 import s from "./index.module.css";
-import cn from "classnames";
-import edit from "./img/edit.png";
-import { UserInfo } from "../UserInfo/user-info";
+
+import HeaderMenu from "../HeaderMenu/HeaderMenu";
 
 export default function App() {
   const statePosts = useSelector((state) => state[NAMEPOSTSSLICE]);
@@ -48,7 +46,7 @@ export default function App() {
 
   const dispatch = useDispatch();
   const user = getToken();
-  const currentUser = useSelector((state) => state[NAMEUSERSLICE].data);
+
 
   useEffect(() => {
     if (user) {
@@ -77,47 +75,7 @@ export default function App() {
       <EditUser />
 
       <Header>
-
-      {!!currentUser && 
-          <>
-          <UserInfo />
-          <Link
-            className={s.link }
-            to={"?userEdit=true"}
-            title=" Редактирование пользователя"
-          >
-            <span className={s.editUser}>Изменить</span>
-          </Link>
-          </>
-          
-          }
-    
-        {/* Временно */}
-
-
-
-          {user ? (
-            <Link className={cn(s.link, s.login_link)} to="#" onClick={unAutch}>
-              <span className={s.login}>
-                <LogoutIcon />
-                Выйти
-              </span>
-            </Link>
-          ) : (
-            <Link className={cn(s.link, s.login_link)} to={"?login=true"}>
-              <span className={s.login}>
-                <LoginIcon />
-                Войти
-              </span>
-            </Link>
-          )}
-          <Link className={cn(s.link, s.registr_link)} to={"?registration=true"}>
-            <span className={s.registration}>Регистрация</span>
-          </Link>
-          <Link to="/add_post" className={cn(s.link, s.add_link)} >
-            <span className={s.add_post}>Создать пост</span>
-          </Link>
-        
+          <HeaderMenu user={user}/>      
        
     
       </Header>

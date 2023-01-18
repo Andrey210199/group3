@@ -11,12 +11,3 @@
 
 
 }
-.menu{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas: "avatar login"
-                        "avatar registration"
-                        "edit add" ;
-  align-items: center;
-  gap: 5px 10px;
-}

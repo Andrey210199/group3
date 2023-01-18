@@ -24,10 +24,11 @@ code {
 	width: 95%;
 	margin: 0 auto;
   flex: 1 0 auto;	
+  position: relative;
 }
 
 .content {
-	padding: 60px 0;
+	padding: 70px 0;
 
 }
 

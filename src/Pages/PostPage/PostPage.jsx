@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import AddComment from "../../Components/AddComment/AddComment";
 import AvatarInfo from "../../Components/AvatarInfo/AvatarInfo";
+import ButtonBack from "../../Components/Buttons/ButtonBack/ButtonBack";
 import ButtonEdit from "../../Components/Buttons/ButtonEdit/ButtonEdit";
 import ButtonLike from "../../Components/Buttons/ButtonLike/ButtonLike";
 import CommentList from "../../Components/CommentList/CommentList";
@@ -42,7 +43,7 @@ export default function PostPage() {
             {
                 isLoading ? <></> :
                     <>
-
+                        <ButtonBack/>
 
                         <AvatarInfo created={created} author={author} s={s} />    
                         <Post isEditor={isEditor} postId={postId} isEnable={setIsEditor}>                            
