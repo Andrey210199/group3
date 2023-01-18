@@ -1,0 +1,16 @@
+.search{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: wheat;
+    max-width: 300px;
+}
+
+.search__content{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.search__img{
+    width: 100%;
+}
