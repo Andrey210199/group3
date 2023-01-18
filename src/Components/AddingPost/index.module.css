@@ -67,7 +67,7 @@
   border-radius: 10px;
   padding: 10px;
   background-color: var(--bg-main-color-light);
-  width: 95%;
+  padding-right: 30px;
 }
 .img__text {
   width: 400px;

@@ -15,6 +15,7 @@ import { fetchSetRewiew } from "../../Storage/Slices/SinglePostSlice";
 import MenuBarComment from "../MenuBarComment/MenuBarComment";
 import s from "./index.module.css";
 import "../../index.css";
+import Button from "../Buttons/Button/Button";
 
 export default function AddComment({ enable = false, content }) {
 
@@ -89,8 +90,7 @@ export default function AddComment({ enable = false, content }) {
                         <br />
                         {editor?.storage.characterCount.words()} Слов
                     </div>
-
-                    <button className="btn">Отправить</button>
+                    <Button>Отправить</Button>
                 </>}
 
         </form>

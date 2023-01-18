@@ -1,23 +1,37 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { forwardRef } from "react";
-import s from "./index.module.css";
+import ButtonClear from "../Buttons/ButtonClear/ButtonClear";
+import cn from "classnames";
 
-const FormInput = forwardRef(({ value="", ...props }, ref) => {
-    
-    const [text, setText] = useState(value);
+import cs from "./index.module.css";
 
-    useEffect(()=>{
-        setText(value);
-    }, [value])
+const FormInput = forwardRef(({ val = "", clear, change, ...props }, ref) => {
+
+    const [text, setText] = useState("");
+
+    useEffect(() => {
+        val && setText(val);
+        props.value && setText(props.value);
+    }, [val, props.value])
 
 
     function handleChange(e) {
         setText(e.target.value);
+        change && change(e.target.value);
+    }
+
+    function handleClear() {
+        clear && clear(props.name);
+        setText("");
     }
 
     return (
-        <input className={s.input} {...props} value={text} onChange={handleChange} ref={ref} />
+        <div className={cs.content}>
+            <input  className={s.input} {...props} value={val ? val : text} onChange={handleChange} ref={ref} />
+            <ButtonClear onClick={handleClear} />
+
+        </div>
     )
 })
 

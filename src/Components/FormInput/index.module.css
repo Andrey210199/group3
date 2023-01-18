@@ -15,5 +15,12 @@
 .input:focus{
     border: none;
     outline: 2px solid var(--text-secondary-color);
-
 }
+.content{
+    display: grid;
+    align-items: center;
+    background-color: transparent;
+    border-radius: 20px;
+    position: relative;
+}
+

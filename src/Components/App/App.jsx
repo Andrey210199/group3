@@ -43,7 +43,8 @@ export default function App() {
   const { data: posts, isSearch, search } = statePosts;
 
   const [query] = useSearchParams(); //удалить
-  const page = parseInt(query.get("page") || 1); //удалить
+  const page = parseInt(query.get('page') || 1); //удалить
+  const searching = query.get("search"); //удалить
 
   const dispatch = useDispatch();
   const user = getToken();
@@ -51,23 +52,23 @@ export default function App() {
 
   useEffect(() => {
     if (user) {
-      dispatch(fetchTokenCheck(user)).then(() => {
-        //удалить
-        dispatch(fetchGetPosts());
-        isSearch
-          ? dispatch(fetchSearch({ page, search }))
-          : dispatch(fetchGetPagePosts(page));
-      });
-    } else {
-      dispatch(fetchGetUser()).then(() => {
-        //удалить
-        dispatch(fetchGetPosts());
-        isSearch
-          ? dispatch(fetchSearch({ page, search }))
-          : dispatch(fetchGetPagePosts(page));
-      });
+      dispatch(fetchTokenCheck(user))
+        .then(() => { //удалить
+          dispatch(fetchGetPosts());
+          searching ? dispatch(fetchSearch({ page, searching }))
+            : dispatch(fetchGetPagePosts(page));
+        })
+
     }
-  }, [dispatch, user]);
+    else {
+      dispatch(fetchGetUser())
+        .then(() => { //удалить
+          dispatch(fetchGetPosts());
+          searching ? dispatch(fetchSearch({ page, search: searching }))
+            : dispatch(fetchGetPagePosts(page));
+        });
+    }
+  }, [dispatch, user, searching])
 
   return (
     <>
@@ -119,6 +120,7 @@ export default function App() {
       </Header>
 
       <main className="container content">
+
         <Routes>
           <Route
             path="/"

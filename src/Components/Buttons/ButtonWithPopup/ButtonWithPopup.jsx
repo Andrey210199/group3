@@ -3,6 +3,7 @@ import { useState } from "react";
 import Modal from "../../Modal/Modal";
 import s from "./index.module.css";
 import "../../../index.css"
+import FormInput from "../../FormInput/FormInput";
 
 
 
@@ -27,12 +28,12 @@ export default function ButtonWithPopup({ event, text }) {
   return (
     <span className={s.content}>
 
-<button className="menu_button" onClick={positionCalc}>{text}</button>
+      <button className="menu_button" onClick={positionCalc}>{text}</button>
 
       {active &&
         createPortal(<Modal active={active} setActive={setActive} style={{ position: "fixed", left: position?.x, top: position?.y }}>
           <div>
-            <input value={value} type="text" onChange={(e) => setValue(e.target.value)} />
+            <FormInput value={value} type="text" clear={() => setValue("")} change={(value) => setValue(value)} />
             <button onClick={(e) => { installLink(e); setActive(false) }}>Ok</button>
             <button onClick={() => { setActive(false); setValue("") }}>Cancel</button>
           </div>

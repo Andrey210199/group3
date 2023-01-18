@@ -6,33 +6,35 @@ import PaginationCard from "../PaginationCard/PaginationCard";
 import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { fetchGetPagePosts, fetchGetPosts, fetchSearch } from "../../Storage/Slices/PostsSlile";
+import { NotFound } from "../NotFound/not-found";
 
 const PostList = ({ posts }) => {
 
-   // const userLoad = useSelector(state => state[NAMEUSERSLICE].loading);
+    // const userLoad = useSelector(state => state[NAMEUSERSLICE].loading);
     const state = useSelector(state => state[NAMEPOSTSSLICE]);
     const { loading, isSearch, search } = state;
 
-/*     const dispatch = useDispatch();
-    const [query] = useSearchParams();
-    const page = parseInt(query.get('page') || 1);
-
-    useEffect(() => {
-        if (!userLoad) {
-            dispatch(fetchGetPosts());
-            isSearch ? dispatch(fetchSearch({ page, search }))
-                : dispatch(fetchGetPagePosts(page));
-        }
-    }, [dispatch, page, isSearch, userLoad]) */
+    /*     const dispatch = useDispatch();
+        const [query] = useSearchParams();
+        const page = parseInt(query.get('page') || 1);
+    
+        useEffect(() => {
+            if (!userLoad) {
+                dispatch(fetchGetPosts());
+                isSearch ? dispatch(fetchSearch({ page, search }))
+                    : dispatch(fetchGetPagePosts(page));
+            }
+        }, [dispatch, page, isSearch, userLoad]) */
 
     return (
         <>
             <div className={s.posts}>
                 {loading ? <></>
-                    : posts?.map(item => (
-                        <PostCard key={item._id} {...item} />
-                    )
-                    )
+                    : posts?.length === 0 ? <NotFound />
+                        : posts?.map(item => (
+                            <PostCard key={item._id} {...item} />
+                        )
+                        )
                 }
             </div>
             {/* {!loading && <PaginationCard page={page} />} */}

@@ -118,6 +118,7 @@ export const fetchSearch = createAsyncThunk(
     async function ({ page, search }, { rejectWithValue, fulfillWithValue, getState, extra: api }) {
 
         try {
+            console.log(search)
             const { [NAMEUSERSLICE]: user } = getState();
             const data = await api.getPaginate({ pageNumber: page, limit: POSTLIMIT, titleSearch: search });
             return fulfillWithValue({ data, user });

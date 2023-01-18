@@ -75,7 +75,7 @@ export const fetchRegistration = createAsyncThunk(
 
         try {
 
-            const data = await api.register(userData);
+            const data = await api.register({...userData, group: "group-7"});
             return fulfillWithValue(data);
 
         } catch (error) {
