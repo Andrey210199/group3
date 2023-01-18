@@ -10,6 +10,8 @@ const initialState = {
     favorites: [],
     tags: {},
     search: "",
+    dataSearch: null,
+    isSearchLoading: true,
     isSearch: false
 }
 
@@ -115,13 +117,27 @@ export const fetchChangeLike = createAsyncThunk(
 export const fetchSearch = createAsyncThunk(
     `${NAMEPOSTSSLICE}/fetchSearch`,
 
-    async function ({ page, search }, { rejectWithValue, fulfillWithValue, getState, extra: api }) {
+    async function ({ page = 1, search, limit = POSTLIMIT }, { rejectWithValue, fulfillWithValue, getState, extra: api }) {
 
         try {
-            console.log(search)
             const { [NAMEUSERSLICE]: user } = getState();
-            const data = await api.getPaginate({ pageNumber: page, limit: POSTLIMIT, titleSearch: search });
+            const data = await api.getPaginate({ pageNumber: page, limit, titleSearch: search });
             return fulfillWithValue({ data, user });
+
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
+
+export const fetchMiniSearch = createAsyncThunk(
+    `${NAMEPOSTSSLICE}/fetchMiniSearch`,
+
+    async function ({ page = 1, search, limit = 5 }, { rejectWithValue, fulfillWithValue, extra: api }) {
+
+        try {
+            const data = await api.getPaginate({ pageNumber: page, limit, titleSearch: search });
+            return fulfillWithValue(data);
 
         } catch (error) {
             return rejectWithValue(error);
@@ -152,6 +168,11 @@ const postsSlice = createSlice({
                 state.error = null;
                 state.favorites = null;
                 state.loading = true;
+            })
+            .addCase(fetchMiniSearch.pending, state => {
+                state.dataSearch = null;
+                state.error = null;
+                state.isSearchLoading = true;
             })
             .addCase(fetchGetPosts.fulfilled, (state, action) => {
                 state.postsObject = action.payload;
@@ -191,6 +212,11 @@ const postsSlice = createSlice({
                 state.favorites = dataLiked(state, user.data._id);
                 state.isSearch = true;
                 state.loading = false;
+            })
+            .addCase(fetchMiniSearch.fulfilled, (state, action) => {
+                state.dataSearch = action.payload;
+                state.isSearch = true;
+                state.isSearchLoading = false;
             })
             .addCase(fetchChangeLike.fulfilled, (state, action) => {
                 const { data, liked } = action.payload;

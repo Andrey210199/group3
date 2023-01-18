@@ -18,7 +18,6 @@ export default function PaginationCard({ page }) {
     }
 
     function handleClike(e, value) {
-        console.log(query.get("search"))
         if (value !== page) {
             searching ? dispatch(fetchSearch({ page: value, search: searching }))
                 : dispatch(fetchGetPagePosts(value))
