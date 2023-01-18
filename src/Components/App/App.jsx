@@ -114,8 +114,11 @@ export default function App() {
           <Link className={cn(s.link, s.registr_link)} to={"?registration=true"}>
             <span className={s.registration}>Регистрация</span>
           </Link>
+          <Link to="/add_post" className={cn(s.link, s.add_link)} >
+            <span className={s.add_post}>Создать пост</span>
+          </Link>
         
-   
+       
     
       </Header>
 

@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 import ButtonClear from "../Buttons/ButtonClear/ButtonClear";
 import cn from "classnames";
 
-import cs from "./index.module.css";
+import s from "./index.module.css";
 
 const FormInput = forwardRef(({ val = "", clear, change, ...props }, ref) => {
 
@@ -27,7 +27,7 @@ const FormInput = forwardRef(({ val = "", clear, change, ...props }, ref) => {
     }
 
     return (
-        <div className={cs.content}>
+        <div className={s.content}>
             <input  className={s.input} {...props} value={val ? val : text} onChange={handleChange} ref={ref} />
             <ButtonClear onClick={handleClear} />
 

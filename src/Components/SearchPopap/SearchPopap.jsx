@@ -25,7 +25,7 @@ export default function SearchPopap({ query, active, onClose, position }) {
 
     return (
         (posts && active) &&
-        <div ref={ref} className={s.search} style={{ ...position }}>
+        <div ref={ref} className={s.search}>
 
             {posts?.map((post) => <Link onClick={searchClear} key={post._id} to={`/post/${post._id}`} className={s.search__content}>
                 <img className={s.search__img} src={post.image} alt={post.title} />
@@ -33,7 +33,7 @@ export default function SearchPopap({ query, active, onClose, position }) {
                     <h4 className={s.search__title}>
                         {post.title}
                     </h4>
-                    <p>{post.author.name}</p>
+                    <p className={s.search__author}>{post.author.name}</p>
 
                 </div>
             </Link>)}

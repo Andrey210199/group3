@@ -45,3 +45,11 @@
   .registration{
     font-size: 14px;
   }
+
+  .add_link{
+    grid-area: add;
+    
+  }
+  /* .add_post{
+    font-size: 14px;
+  } */

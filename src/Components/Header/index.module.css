@@ -2,18 +2,21 @@
 .header {
   background-color: var(--bg-secondary-color);
   color: var(--text-secondary-color);
+
 }
 .content{
   display: flex;
   justify-content: space-between;
   align-items: center;  
+
+
 }
 .menu{
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "avatar login"
-                        "edit registration";
+                        "avatar registration"
+                        "edit add" ;
   align-items: center;
-  justify-content: start;
   gap: 5px 10px;
 }

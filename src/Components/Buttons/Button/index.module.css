@@ -9,4 +9,5 @@
     border: solid 2px;
     border: 2px solid var(--text-secondary-color);
     margin: 10px;
+    cursor: pointer;
 }

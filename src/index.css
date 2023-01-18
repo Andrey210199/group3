@@ -23,17 +23,14 @@ code {
 	padding-right: 16px;
 	width: 95%;
 	margin: 0 auto;
-
+  flex: 1 0 auto;	
 }
 
 .content {
 	padding: 60px 0;
 
 }
-.MuiContainer-root {
-  flex: 1 0 auto;	
 
-}
 
 .ProseMirror p.is-editor-empty:first-child::before{
   color: #adb5bd;

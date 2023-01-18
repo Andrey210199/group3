@@ -4,8 +4,6 @@
 
     background-color: var(--bg-secondary-color) ;
     margin: 10px auto;
-
-    width: 25%;
     padding: 5px;
     border-radius: 20px;
     border: 2px solid var( --text-secondary-color-light);
@@ -41,7 +39,7 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 9px;
    
   }
   .btn:hover{
@@ -50,10 +48,6 @@
   .btns {
     position: absolute;
     right: 10px;
-  }
-
-  .btn__search {
-    padding-right: 10px;
   }
   
   .content {
