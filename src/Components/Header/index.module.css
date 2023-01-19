@@ -3,21 +3,11 @@
   background-color: var(--bg-secondary-color);
   color: var(--text-secondary-color);
 
-
-
 }
 .content{
   display: flex;
   justify-content: space-between;
-  align-items: center;
-}
+  align-items: center;  
 
-.login {
-  padding-left: 10px;
-  font-size: 20px;
 
-}
-.menu{
-  display: flex;
-  gap: 50px;
 }

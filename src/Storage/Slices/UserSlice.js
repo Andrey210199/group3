@@ -8,7 +8,8 @@ import { isError } from "../../Utilites/StoreFunction";
 const initialState = {
     ...STATEINITIAL,
     isAutch: false,
-    allUsers: null
+    allUsers: null,
+    logined: false
 }
 
 export const fetchGetUser = createAsyncThunk(
@@ -74,7 +75,7 @@ export const fetchRegistration = createAsyncThunk(
 
         try {
 
-            const data = await api.register(userData);
+            const data = await api.register({...userData, group: "group-7"});
             return fulfillWithValue(data);
 
         } catch (error) {

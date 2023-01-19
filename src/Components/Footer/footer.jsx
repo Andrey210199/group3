@@ -1,6 +1,6 @@
-import { Container } from "@mui/material";
-
+import { Container} from "@mui/material";
 import s from "./index.module.css";
+
 
 export function Footer() {
   return (

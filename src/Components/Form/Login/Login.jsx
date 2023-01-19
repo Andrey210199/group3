@@ -23,7 +23,7 @@ export default function Login() {
     }
 
     return (
-        <Authorization title={"Вход"} oneBtn="Вход" twoBtn="Регистрация"
+        <Authorization title={"Вход"} oneBtn="Войти" twoBtn="Регистрация"
             find={URLLOGIN} onClick={handleClick} onSubmit={handleSubmit} />
     );
 }

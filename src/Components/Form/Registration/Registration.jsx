@@ -21,6 +21,6 @@ export default function Registration() {
 
     return (
         <Authorization title="Регистрация" oneBtn="Зарегистрироваться"
-            twoBtn="Вход" find={URLREGISTRATION} onClick={handleClick} onSubmit={handleformSubmit} />
+            twoBtn="Войти" find={URLREGISTRATION} onClick={handleClick} onSubmit={handleformSubmit} />
     )
 }
