@@ -1,24 +1,22 @@
-
 import "../../../index.css";
 import s from "./index.module.css";
 import cn from "classnames";
+import ButtonMenu from "../../Buttons/ButtonMenu/ButtonMenu";
 
 export default function Lists({ editor }) {
     return (
         <>
-            <button
+            <ButtonMenu
                 onClick={() => editor.chain().focus().toggleBulletList().run()}
-                className={cn("menu_button", s.unorder, editor.isActive('bulletList') ? 'elem_active' : '')}
+                className={cn(s.unorder, editor.isActive('bulletList') ? 'elem_active' : '')}
                 title="Маркированный список">
-               
-            </button>
+            </ButtonMenu>
 
-            <button
+            <ButtonMenu
                 onClick={() => editor.chain().focus().toggleOrderedList().run()}
-                className={cn("menu_button", s.order, editor.isActive('orderedList') ? 'elem_active' : '')}
+                className={cn(s.order, editor.isActive('orderedList') ? 'elem_active' : '')}
                 title="Нумерованный список">
-                
-            </button>
+            </ButtonMenu>
         </>
     )
 }

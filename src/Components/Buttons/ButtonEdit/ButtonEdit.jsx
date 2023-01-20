@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { NAMEUSERSLICE } from "../../../Constants/StorageConstants";
 import { getToken } from "../../../Utilites/Cookie";
+import Button from "../Button/Button";
 import s from "./index.module.css"
 
 export default function ButtonEdit({ author, isEnable }) {
@@ -15,7 +16,7 @@ export default function ButtonEdit({ author, isEnable }) {
     }
 
     return (
-       /* getToken() &&  */ currentUser?._id === author?._id &&
-        <button className={s.btn_edit} onClick={hangleClick}>Редактировать</button>
+        getToken() && currentUser?._id === author?._id &&
+        <Button className={s.btn_edit} onClick={hangleClick} btnClass={false}>Редактировать</Button>
     )
 }

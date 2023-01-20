@@ -14,12 +14,7 @@ export default function MenuBar({ editor }) {
   const [color, setColor] = useState("#000000");
 
   function changeLink(value) {
-    return editor
-      .chain()
-      .focus()
-      .extendMarkRange("link")
-      .toggleLink({ href: value })
-      .run();
+    return editor.chain().focus().extendMarkRange("link").toggleLink({ href: value }).run();
   }
 
   function changeImg(value) {
@@ -39,11 +34,8 @@ export default function MenuBar({ editor }) {
       />
       <div className={s.menu_bar} onClick={(e) => e.preventDefault()}>
         <Headers editor={editor} />
-
         <Lists editor={editor} />
-
         <Blockquote editor={editor} />
-
         <Aligns editor={editor} />
         <Colors editor={editor} color={color} />
         <TextStyles editor={editor} />

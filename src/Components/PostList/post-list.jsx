@@ -14,28 +14,29 @@ import {
   fetchSearch,
 } from "../../Storage/Slices/PostsSlile";
 import { NotFound } from "../NotFound/not-found";
+import { Spinner } from "../Spinner/spinner";
 
-const PostList = ({ posts }) => {
-  // const userLoad = useSelector(state => state[NAMEUSERSLICE].loading);
+export default function PostList({ posts }) {
+  const userLoad = useSelector(state => state[NAMEUSERSLICE].loading);
   const state = useSelector((state) => state[NAMEPOSTSSLICE]);
   const { loading, isSearch, search } = state;
 
-  /*     const dispatch = useDispatch();
-        const [query] = useSearchParams();
-        const page = parseInt(query.get('page') || 1);
-    
-        useEffect(() => {
-            if (!userLoad) {
-                dispatch(fetchGetPosts());
-                isSearch ? dispatch(fetchSearch({ page, search }))
-                    : dispatch(fetchGetPagePosts(page));
-            }
-        }, [dispatch, page, isSearch, userLoad]) */
+  const dispatch = useDispatch();
+  const [query] = useSearchParams();
+  const page = parseInt(query.get('page') || 1);
+
+  useEffect(() => {
+    if (!userLoad) {
+      dispatch(fetchGetPosts());
+      isSearch ? dispatch(fetchSearch({ page, search }))
+        : dispatch(fetchGetPagePosts(page));
+    }
+  }, [dispatch, page, isSearch, userLoad])
 
   return (
     <>
       {loading ? (
-        <></>
+        <Spinner />
       ) : posts?.length === 0 ? (
         <NotFound title="Страница не найдена" buttonText="На главную" />
       ) : (
@@ -46,9 +47,7 @@ const PostList = ({ posts }) => {
         </div>
       )}
 
-      {/* {!loading && <PaginationCard page={page} />} */}
+      {!loading && <PaginationCard page={page} />}
     </>
   );
 };
-
-export default PostList;

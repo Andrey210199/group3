@@ -7,9 +7,7 @@ import { isError } from "../../Utilites/StoreFunction";
 
 const initialState = {
     ...STATEINITIAL,
-    isAutch: false,
-    allUsers: null,
-    logined: false
+    isAutch: false
 }
 
 export const fetchGetUser = createAsyncThunk(
@@ -75,7 +73,7 @@ export const fetchRegistration = createAsyncThunk(
 
         try {
 
-            const data = await api.register({...userData, group: "group-7"});
+            const data = await api.register({ ...userData, group: "group-7" });
             return fulfillWithValue(data);
 
         } catch (error) {
@@ -124,18 +122,23 @@ export function unAutch() {
 const userSlice = createSlice({
     name: NAMEUSERSLICE,
     initialState,
+    reducers: {
+        Autch: (state) => {
+            state.isAutch = false;
+        }
+    },
     extraReducers: builder => {
 
         builder.addCase(fetchGetUser.pending, state => {
             state.data = null;
-            state.allUsers = null;
             state.loading = true;
+            state.isAutch = false;
             state.error = null;
         })
             .addCase(fetchTokenCheck.pending, state => {
                 state.data = null;
-                state.allUsers = null;
                 state.loading = true;
+                state.isAutch = false;
                 state.error = null;
             })
             .addCase(fetchGetUser.fulfilled, (state, action) => {
@@ -144,10 +147,11 @@ const userSlice = createSlice({
             })
             .addCase(fetchTokenCheck.fulfilled, (state, action) => {
                 state.data = action.payload;
+                state.isAutch = true;
                 state.loading = false;
             })
             .addCase(fetchUserAutch.fulfilled, (state, action) => {
-                state.data = action.payload;
+                state.data = action.payload.data;
                 state.isAutch = true;
             })
             .addCase(fetchUpdatAvatar.fulfilled, (state, action) => {
@@ -160,5 +164,5 @@ const userSlice = createSlice({
 
     }
 });
-
+export const { Autch } = userSlice.actions;
 export default userSlice.reducer;

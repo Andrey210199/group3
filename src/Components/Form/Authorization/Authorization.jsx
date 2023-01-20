@@ -49,8 +49,8 @@ export default function Authorization({ title, onSubmit, oneBtn, twoBtn, find, o
 
     return (
         url.get(find) &&
-        // <ProtectedComponent isProtected={false}>
-        <Modal>
+        <ProtectedComponent isProtected={false}>
+            <Modal>
 
                 <form className={s.form} onSubmit={handleSubmit(handleFormSubmit)}>
                     <h2 className={s.title}>{title}</h2>
@@ -63,15 +63,15 @@ export default function Authorization({ title, onSubmit, oneBtn, twoBtn, find, o
                     <FormInput {...password} type="password" placeholder="Введите пароль" />
                     {errors?.password && <p className={s.error}>{errors.password.message}</p>}
                     <div className={s.btns}>
-                    
+
                         <ButtonForm type="submit">{oneBtn}</ButtonForm>
                         <ButtonForm onClick={onClick}>{twoBtn}</ButtonForm>
                     </div>
 
-            </form>
+                </form>
 
-        </Modal>
-        //  </ProtectedComponent>
+            </Modal>
+        </ProtectedComponent>
 
     );
 }

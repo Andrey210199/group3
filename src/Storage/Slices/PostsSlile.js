@@ -82,11 +82,11 @@ export const fetchChengePost = createAsyncThunk(
 export const fetchDeletePost = createAsyncThunk(
     `${NAMEPOSTSSLICE}/fetchDeletePost`,
 
-    async function (post, { rejectWithValue, fulfillWithValue, extra: api }) {
+    async function (postId, { rejectWithValue, fulfillWithValue, extra: api }) {
 
         try {
 
-            const data = await api.actionPosts({ method: "DELETE", postId: post._id });
+            const data = await api.actionPosts({ method: "DELETE", postId });
             return fulfillWithValue(data);
 
         } catch (error) {
@@ -98,13 +98,13 @@ export const fetchDeletePost = createAsyncThunk(
 export const fetchChangeLike = createAsyncThunk(
     `${NAMEPOSTSSLICE}/fetchChangeLike`,
 
-    async function (post, { rejectWithValue, fulfillWithValue, getState, extra: api }) {
+    async function ({ id, likes }, { rejectWithValue, fulfillWithValue, getState, extra: api }) {
 
         try {
 
             const { [NAMEUSERSLICE]: user } = getState();
-            const liked = isLiked(post.likes, user.data._id);
-            const data = await api.changeLike(post._id, liked);
+            const liked = isLiked(likes, user.data._id);
+            const data = await api.changeLike(id, liked);
             return fulfillWithValue({ data, liked });
 
         } catch (error) {
@@ -161,6 +161,7 @@ const postsSlice = createSlice({
             state.postsObject = null;
             state.error = null;
             state.favorites = null;
+            state.tags = {};
             state.loading = true;
         })
             .addCase(fetchSearch.pending, state => {
@@ -220,7 +221,7 @@ const postsSlice = createSlice({
             })
             .addCase(fetchChangeLike.fulfilled, (state, action) => {
                 const { data, liked } = action.payload;
-                changePosts(state, data)
+                changePosts(state, data);
                 changeLike({ state, data, liked });
 
             })

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { NAMEPOSTSSLICE } from "../../Constants/StorageConstants";
-import { fetchGetPagePosts, fetchMiniSearch, fetchSearch, miniSearch, search, setSearch } from "../../Storage/Slices/PostsSlile";
+import { fetchGetPagePosts, fetchMiniSearch, fetchSearch, setSearch } from "../../Storage/Slices/PostsSlile";
 import cn from "classnames";
 
 import { ReactComponent as ClearIcon } from "./img/clear.svg";
@@ -12,6 +12,7 @@ import { useSearchParams } from "react-router-dom";
 import { useDebounce } from "../../Hooks/useDebounce";
 import { useCallback, useEffect, useState } from "react";
 import SearchPopap from "../SearchPopap/SearchPopap";
+import Button from "../Buttons/Button/Button";
 
 export default function Search() {
 
@@ -20,26 +21,9 @@ export default function Search() {
     const navigate = useNavigate();
     const [query] = useSearchParams();
     const [active, setActive] = useState(false);
-
-    const [position, setPosition] = useState();
-
     const inputSearch = useDebounce(inputText, 1000);
 
-    const debounce = useCallback((inputSearch) => {
-        dispatch(fetchMiniSearch({ search: inputSearch }));
-
-    }, [dispatch]);
-
-    useEffect(() => {
-        if (inputSearch) {
-            debounce(inputSearch);
-        }
-    }, [inputSearch, debounce])
-
-
     function handleInput(e) {
-        const parent = e.target.parentNode.getBoundingClientRect();
-        setPosition({ top: parent.height +3 });
         setActive(true);
         dispatch(setSearch(e.target.value));
     }
@@ -59,9 +43,22 @@ export default function Search() {
         dispatch(fetchSearch({ page: 1, search: inputText }));
     }
 
+    const debounce = useCallback((inputSearch) => {
+        dispatch(fetchMiniSearch({ search: inputSearch }));
+
+    }, [dispatch]);
+
     const onClose = useCallback(() => {
         setActive(false);
-    }, [active]);
+    }, [setActive]);
+
+    useEffect(() => {
+        if (inputSearch) {
+            debounce(inputSearch);
+        }
+    }, [inputSearch, debounce])
+
+
 
     return (
         <div className={s.content}>
@@ -70,15 +67,15 @@ export default function Search() {
 
                 {inputText !== "" &&
                     <div className={s.btns}>
-                        <button type="button" className={cn(s.btn, s.btn__clear)} onClick={handleClear}><ClearIcon className={s.icon} /></button>
-                        <button type="submit" className={cn(s.btn, s.btn__search)}><SearchIcon className={s.icon} /></button>
+                        <Button type="button" className={cn(s.btn, s.btn__clear)} onClick={handleClear} btnClass={false}><ClearIcon className={s.icon} /></Button>
+                        <Button type="submit" className={cn(s.btn, s.btn__search)} btnClass={false}><SearchIcon className={s.icon} /></Button>
                     </div>
 
                 }
 
             </form>
 
-            <SearchPopap query={handleSubmit} active={active} onClose={onClose} position={position} />
+            <SearchPopap query={handleSubmit} active={active} onClose={onClose} />
         </div>
     )
 }

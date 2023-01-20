@@ -1,14 +1,11 @@
 import s from "./index.module.css";
-import "../../../index.css";
-import cn from "classnames";
+import ButtonMenu from "../../Buttons/ButtonMenu/ButtonMenu";
 
 export default function HorizontalRule({ editor }) {
     return (
-        <button onClick={() => editor.chain().focus().setHorizontalRule().run()}
-        className={cn("menu_button", s.line)}
-        title="Горизонталная линия"
-        >
-       
-        </button>
+        <ButtonMenu onClick={() => editor.chain().focus().setHorizontalRule().run()}
+            className={s.line}
+            title="Горизонталная линия">
+        </ButtonMenu>
     )
 }

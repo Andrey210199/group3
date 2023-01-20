@@ -27,7 +27,7 @@ export function dataFilter(state, data) {
 }
 
 export function changePosts(state, data) {
-    state.data = state.data.map(post => post._id === data._id ? data : post);
+    state.data = state.data?.map(post => post._id === data._id ? data : post);
 }
 
 export function deleteComment(state, comments) {

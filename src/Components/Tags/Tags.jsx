@@ -4,9 +4,8 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LIMITMESSAGE, MAXADDTAGS, MAXSINTAG } from "../../Constants/Constant";
 import { NAMEPOSTSSLICE } from "../../Constants/StorageConstants";
-import { addTag } from "../../Storage/Slices/PostsSlile";
+import { addTag, fetchGetPosts } from "../../Storage/Slices/PostsSlile";
 import s from "./index.module.css";
-import cn from "classnames";
 import "../../index.css";
 import FormInput from "../FormInput/FormInput";
 import Button from "../Buttons/Button/Button";
@@ -58,6 +57,12 @@ export default function Tags({ setInputTags, tags }) {
     }
 
     useEffect(() => {
+        if (JSON.stringify(stateOptions) === "{}") {
+            dispatch(fetchGetPosts());
+        }
+    }, [dispatch, fetchGetPosts])
+
+    useEffect(() => {
         tags && setAutoCompleteValue(tags);
     }, [tags])
 
@@ -84,8 +89,8 @@ export default function Tags({ setInputTags, tags }) {
             <FormInput className={s.new_tag} placeholder="Создать новый тег" val={newTag} change={handleTagChange} clear={() => { setNewTag(""); setMessage("") }} />
             {message !== "" && <p>{message}</p>}
 
-            <Button className={cn("btn", s.btn_tag)} type="button" onClick={newOption}>Создать тег</Button>
-            
+            <Button className={s.btn_tag} type="button" onClick={newOption}>Создать тег</Button>
+
         </div>
     )
 }
