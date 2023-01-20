@@ -42,7 +42,7 @@ export default function Search() {
         e.preventDefault();
         onClose();
         navigate(`/?${URLSEARCH}=${inputText}`);
-        dispatch(fetchSearch({ page: 1, search: inputText }));
+        dispatch(fetchSearch({ search: inputText }));
     }
 
     const debounce = useCallback((inputSearch) => {
