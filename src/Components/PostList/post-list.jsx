@@ -3,15 +3,14 @@ import PostCard from "../PostCard/post-card";
 import { useDispatch, useSelector } from "react-redux";
 import {
   NAMEPOSTSSLICE,
-  NAMEUSERSLICE,
+  NAMEUSERSLICE
 } from "../../Constants/StorageConstants";
 import PaginationCard from "../PaginationCard/PaginationCard";
 import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import {
   fetchGetPagePosts,
-  fetchGetPosts,
-  fetchSearch,
+  fetchSearch
 } from "../../Storage/Slices/PostsSlile";
 import { NotFound } from "../NotFound/not-found";
 import { Spinner } from "../Spinner/spinner";
@@ -27,7 +26,6 @@ export default function PostList({ posts }) {
 
   useEffect(() => {
     if (!userLoad) {
-      dispatch(fetchGetPosts());
       isSearch ? dispatch(fetchSearch({ page, search }))
         : dispatch(fetchGetPagePosts(page));
     }

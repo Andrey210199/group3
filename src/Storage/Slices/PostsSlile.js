@@ -5,7 +5,6 @@ import { isLiked } from "../../Utilites/total";
 
 const initialState = {
     ...STATEINITIAL,
-    postsObject: null,
     total: null,
     favorites: [],
     tags: {},
@@ -158,7 +157,6 @@ const postsSlice = createSlice({
     },
     extraReducers: builder => {
         builder.addCase(fetchGetPosts.pending, state => {
-            state.postsObject = null;
             state.error = null;
             state.favorites = null;
             state.tags = {};
@@ -176,9 +174,8 @@ const postsSlice = createSlice({
                 state.isSearchLoading = true;
             })
             .addCase(fetchGetPosts.fulfilled, (state, action) => {
-                state.postsObject = action.payload;
                 state.loading = false;
-                state.postsObject.map(post => {
+                action.payload.map(post => {
 
                     post.tags.map(tag => {
                         return state.tags = { ...state.tags, [tag]: tag };
@@ -216,7 +213,6 @@ const postsSlice = createSlice({
             })
             .addCase(fetchMiniSearch.fulfilled, (state, action) => {
                 state.dataSearch = action.payload;
-                state.isSearch = true;
                 state.isSearchLoading = false;
             })
             .addCase(fetchChangeLike.fulfilled, (state, action) => {

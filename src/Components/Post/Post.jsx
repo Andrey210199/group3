@@ -59,7 +59,6 @@ export default function Post({ postId }) {
 
             {isCommentLoading ? <Spinner /> :
                 <div className={s.comments}>
-
                     <CommentList>
                          {getToken() ?<AddComment enable />: <p>Комментарии могут оставлять только зарегистрированные пользователи.</p>}
                     </CommentList>

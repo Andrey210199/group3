@@ -41,7 +41,7 @@ export default function AddingPost({
   }
 
   function handleInput(value, type) {
-    if ((type == "title" && value.length <= MAXTITLE) || type !== "title") {
+    if ((type === "title" && value.length <= MAXTITLE) || type !== "title") {
       setMessage("");
       setText({ ...text, [type]: value });
     }

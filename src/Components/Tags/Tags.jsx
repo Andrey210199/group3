@@ -57,10 +57,8 @@ export default function Tags({ setInputTags, tags }) {
     }
 
     useEffect(() => {
-        if (JSON.stringify(stateOptions) === "{}") {
             dispatch(fetchGetPosts());
-        }
-    }, [dispatch, fetchGetPosts])
+    }, [dispatch])
 
     useEffect(() => {
         tags && setAutoCompleteValue(tags);

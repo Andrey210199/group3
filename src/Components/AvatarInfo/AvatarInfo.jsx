@@ -16,9 +16,9 @@ export default function AvatarInfo({author ={}, created, s={}, sx }) {
     }
 
     return (
-        <div className={s.about_author}>
+        <div className={s.author}>
 
-            <Avatar sx={sx} className={s.img} src={avatar} alt="creater avatar" loading="lazy" decoding="async">{avatar ? "" : firstLetter()}</Avatar>
+            <Avatar sx={sx} className={s.author__img} src={avatar} alt="creater avatar" loading="lazy" decoding="async">{avatar ? "" : firstLetter()}</Avatar>
             <h3 className={s.name}>{name}</h3>
             {created && <p className={s.date}>{dayjs(created).fromNow()}</p>}
         </div>

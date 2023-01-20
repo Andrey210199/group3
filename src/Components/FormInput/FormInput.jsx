@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { forwardRef } from "react";
 import ButtonClear from "../Buttons/ButtonClear/ButtonClear";
-import cn from "classnames";
 
 import s from "./index.module.css";
 

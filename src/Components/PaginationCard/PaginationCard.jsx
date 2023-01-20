@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
 import { NAMEPOSTSSLICE, POSTLIMIT } from "../../Constants/StorageConstants";
 import { fetchGetPagePosts, fetchSearch } from "../../Storage/Slices/PostsSlile";
-import { Spinner } from "../Spinner/spinner";
 import s from "./index.module.css";
 
 
