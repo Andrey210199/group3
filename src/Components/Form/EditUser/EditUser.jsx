@@ -44,22 +44,22 @@ export default function EditUser() {
 
     return (
         url.get(URLEDITUSER) &&
-        //  <ProtectedComponent>
-        <Modal>
+        <ProtectedComponent>
+            <Modal>
 
-            <form className={s.form} onSubmit={handleSubmit(handleFormSubmit)}>
-                <h2 className={s.title}>Изменение данных пользователя</h2>
-                <p className={s.text}>Введите имя пользователя</p>
-                <FormInput type="text" {...name} value={user?.name} placeholder="Введите имя" />
-                {(errors?.name && <p className={s.error}>{errors.name.message}</p>) || (errorName && <p className={s.error}>{errorName}</p>)}
-                <p className={s.text}>Введите url картинки</p>
-                <FormInput type="text" {...avatar} value={user?.avatar} placeholder="Введите url картинки" />
-                {errors?.avatar && <p className={s.error}>{errors.avatar.message}</p>}
+                <form className={s.form} onSubmit={handleSubmit(handleFormSubmit)}>
+                    <h2 className={s.title}>Изменение данных пользователя</h2>
+                    <p className={s.text}>Введите имя пользователя</p>
+                    <FormInput type="text" {...name} value={user?.name} placeholder="Введите имя" />
+                    {(errors?.name && <p className={s.error}>{errors.name.message}</p>) || (errorName && <p className={s.error}>{errorName}</p>)}
+                    <p className={s.text}>Введите url картинки</p>
+                    <FormInput type="text" {...avatar} value={user?.avatar} placeholder="Введите url картинки" />
+                    {errors?.avatar && <p className={s.error}>{errors.avatar.message}</p>}
 
-                <button className={s.btn}>Сохранить</button>
-            </form>
+                    <button className={s.btn}>Сохранить</button>
+                </form>
 
-        </Modal>
-        //  </ProtectedComponent>
+            </Modal>
+        </ProtectedComponent>
     )
 }

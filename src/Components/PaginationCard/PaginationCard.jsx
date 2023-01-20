@@ -9,7 +9,7 @@ import s from "./index.module.css";
 export default function PaginationCard({ page }) {
 
     const postsState = useSelector(state => state[NAMEPOSTSSLICE]);
-    const { loading, total: count, isSearch, search } = postsState;
+    const { total: count } = postsState;
     const [query] = useSearchParams();
     const dispatch = useDispatch();
 
@@ -41,20 +41,19 @@ export default function PaginationCard({ page }) {
     }
 
     return (
-        loading ? <></>
-            : pages() > 1 && <Pagination
-                className={s.wrapper}
-                onChange={handleClike}
-                page={page}
-                count={pages()}
-                renderItem={(item) => (
-                    <PaginationItem
-                        component={Link}
-                        to={getSearch(item)}
-                        {...item}
-                    />
-                )}
-                showFirstButton showLastButton
-            />
+        pages() > 1 && <Pagination
+            className={s.wrapper}
+            onChange={handleClike}
+            page={page}
+            count={pages()}
+            renderItem={(item) => (
+                <PaginationItem
+                    component={Link}
+                    to={getSearch(item)}
+                    {...item}
+                />
+            )}
+            showFirstButton showLastButton
+        />
     );
 }

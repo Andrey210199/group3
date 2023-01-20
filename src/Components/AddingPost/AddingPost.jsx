@@ -20,6 +20,7 @@ import Tags from "../Tags/Tags";
 import FormInput from "../FormInput/FormInput";
 import { LIMITMESSAGE, MAXTITLE } from "../../Constants/Constant";
 import Button from "../Buttons/Button/Button";
+import { getToken } from "../../Utilites/Cookie";
 
 export default function AddingPost({
   children,
@@ -37,11 +38,12 @@ export default function AddingPost({
 
   function handleSubmit(e) {
     e.preventDefault();
+    getToken() &&
     onSubmit(text, inputTags, editor.getHTML());
   }
 
   function handleInput(value, type) {
-    if ((type == "title" && value.length <= MAXTITLE) || type !== "title") {
+    if ((type === "title" && value.length <= MAXTITLE) || type !== "title") {
       setMessage("");
       setText({ ...text, [type]: value });
     }
@@ -86,86 +88,73 @@ export default function AddingPost({
 
   return (
 
-
-    enabled ? (
-      <form className={cn(s.form, s.form_edit)} onSubmit={handleSubmit}>
-        <div className={cn(s.img, s.post_image)}>
-          <h2>Картинка для превью поста</h2>
-          <img
-            className={s.img__image}
-            src={text.image === "" ? img : text.image}
-            alt="Превью"
-          />
-          <div className={s.img__text}>
-            <FormInput
-              className={s.input}
-              type="text"
-              value={text.image}
-              name="image"
-              change={(e) => handleInput(e, "image")}
-              placeholder="Введите ссылку на картинку поста"
-              required />
-          </div>
-
-        </div>
-        <div className={s.post__title}>
-          <h2 className={s.title}>Заголовок поста</h2>
+    <form className={cn(s.form, { [s.form_edit]: enabled })} onSubmit={handleSubmit}>
+      
+      <div className={cn(s.post_image, { [s.img]: enabled })}>
+        {enabled && <h2>Картинка для превью поста</h2>}
+        <img
+          src={text.image === "" ? img : text.image}
+          className={s.img__image}
+          alt={enabled ? "Превью" : "postImage"}
+          decoding="async"
+        />
+        {enabled && <div className={s.img__text}>
           <FormInput
-            type="text"
-            name="title"
             className={s.input}
-            val={text.title}
-            change={(e) => handleInput(e, "title")}
-            placeholder="Введите заголовок поста"
-            clear={(name) => {
-              setText({ ...text, [name]: "" });
-              setMessage("");
-            }
-            }
-            required
-          />
-          {message && <p>{message}</p>}
-        </div>
+            type="text"
+            value={text.image}
+            name="image"
+            change={(e) => handleInput(e, "image")}
+            placeholder="Введите ссылку на картинку поста"
+            required />
+        </div>}
+
+      </div>
+
+      {enabled ? <div className={s.post__title}>
+        <h2 className={s.title}>Заголовок поста</h2>
+        <FormInput
+          type="text"
+          name="title"
+          className={s.input}
+          val={text.title}
+          change={(e) => handleInput(e, "title")}
+          placeholder="Введите заголовок поста"
+          clear={(name) => {
+            setText({ ...text, [name]: "" });
+            setMessage("");
+          }
+          }
+          required
+        />
+        {message && <p>{message}</p>}
+      </div>
+        : <h2 className={s.header__title}>{postTitle}</h2>
+      }
 
 
-        <div className={s.wrapper}>
-          <MenuBar editor={editor} />
-          <EditorContent editor={editor} />
-        </div>
-
-        <Tags setInputTags={setInputTags} tags={tags} />
-        <button className={cn("btn", s.btn_publish)}>Опубликовать</button>
-      </form>
-    ) : (
-      <form className={s.form} onSubmit={handleSubmit}>
-
-
-        <div className={s.post_image}>
-          <img
-            src={postImage}
-            className={s.img__image}
-            alt="postImage"
-            decoding="async"
-          />
-        </div>
-
-
-        <h2 className={s.header__title}>{postTitle}</h2>
-
-
-
+      <div className={s.wrapper}>
+        {enabled && <MenuBar editor={editor} />}
         <EditorContent editor={editor} />
-        <div className={s.post_tags}>
-          {tags &&
-            tags.map((tag) => (
-              <a href="/#" key={tag} className={s.tag}>
-                <TagIcon fontSize="small" />
-                {tag}
-              </a>
-            ))}
-        </div>
-        {children && children}
-      </form>
-    )
+      </div>
+
+      {enabled ? <>
+        <Tags setInputTags={setInputTags} tags={tags} />
+        <Button className={s.btn_publish}>Опубликовать</Button>
+      </>
+        : <>
+          <div className={s.post_tags}>
+            {tags &&
+              tags.map((tag) => (
+                <a href="/#" key={tag} className={s.tag}>
+                  <TagIcon fontSize="small" />
+                  {tag}
+                </a>
+              ))}
+          </div>
+          {children && children}
+        </>
+      }
+    </form>
   );
 }

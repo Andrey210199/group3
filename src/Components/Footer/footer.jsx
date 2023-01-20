@@ -1,8 +1,8 @@
-import { Container} from "@mui/material";
+import { Container } from "@mui/material";
 import s from "./index.module.css";
 
 
-export function Footer() {
+export default function Footer() {
   return (
     <footer className={s.footer}>
       <Container>

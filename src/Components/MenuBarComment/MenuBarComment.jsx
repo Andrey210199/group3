@@ -5,7 +5,7 @@ import Conversion from "../MenuElements/Conversion/Conversion";
 import TextStyles from "../MenuElements/TextStyles/TextStyles";
 import s from "./index.module.css"
 
-export default function MenuBarComment({ editor}) {
+export default function MenuBarComment({ editor }) {
 
     function changeLink(value) {
         return editor.chain().focus().extendMarkRange("link").toggleLink({ href: value }).run();
@@ -14,10 +14,10 @@ export default function MenuBarComment({ editor}) {
     if (!editor) return null
 
     return (
-        <div className = {s.menu_bar_comment} onClick={(e) => e.preventDefault()}>
+        <div className={s.menu_bar_comment} onClick={(e) => e.preventDefault()}>
 
             <TextStyles editor={editor} />
-            <ButtonWithPopup editor={editor}   event={changeLink} text="🔗" />
+            <ButtonWithPopup editor={editor} event={changeLink} text="🔗" />
             <Conversion editor={editor} />
 
         </div>

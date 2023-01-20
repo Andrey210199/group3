@@ -1,4 +1,5 @@
 
+import Button from "../Button/Button";
 import s from "./index.module.css";
 
 export default function ButtonForm({ children, type = "button", onClick }) {
@@ -9,6 +10,6 @@ export default function ButtonForm({ children, type = "button", onClick }) {
     }
 
     return (
-        <button type={type} className={s.btn} onClick={onClick && handleClick}>{children}</button>
+        <Button type={type} className={s.btn} onClick={onClick && handleClick} btnClass={false}>{children}</Button>
     )
 }

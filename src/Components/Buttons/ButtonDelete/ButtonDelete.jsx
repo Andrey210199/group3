@@ -14,7 +14,7 @@ export default function ButtonDelete({ author, onDelete, style }) {
 
     return (
 
-       /* getToken()&& */ currentUser?._id === author?._id &&
+        getToken() && currentUser?._id === author?._id &&
         currentUser?._id === author?._id &&
         <Tooltip title="Delete" onClick={handleClickDel} sx={style}>
             <IconButton>

@@ -1,7 +1,8 @@
-.addComment{
+.addComment {
   margin-top: 30px;
 
 }
+
 .new_comment {
   border-radius: 10px;
   background-color: var(--bg-main-color-light);
@@ -9,26 +10,33 @@
   padding: 10px;
 }
 
-.new_text{
+.new_text {
   min-height: 80px;
-    padding: 10px;
-    border-radius: 10px;
+  padding: 10px;
+  border-radius: 10px;
 }
-.new_text:focus{
+
+.new_text:focus {
   min-height: 80px;
 
 }
-.text_comment{
+
+.text_comment {
   cursor: default;
 }
-.text_comment:focus{
- 
+
+.text_comment:focus {
+
   outline: 0;
-  
+
 }
-.add_comment_title{
+
+.add_comment {
+  background-color: var(--bg-main-color-light);
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.add_comment_title {
   padding-left: 30px;
 }
-/* .editor{
-    height: 200px;
-} */

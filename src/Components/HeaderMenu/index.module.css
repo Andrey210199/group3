@@ -58,3 +58,17 @@
     grid-area: add;
     
   }
+
+  .author {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    max-width: 150px;
+    color: inherit;
+    grid-area: avatar;
+}
+.name{
+    margin: 0;
+    font-size: 14px;
+}

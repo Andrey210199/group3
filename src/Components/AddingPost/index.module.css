@@ -33,7 +33,6 @@
 
 .post_tags {
   display: flex;
-  justify-content: start;
   align-items: center;
   flex-wrap: wrap;
   gap: 15px;
@@ -69,16 +68,20 @@
   background-color: var(--bg-main-color-light);
   padding-right: 30px;
 }
+
 .img__text {
   width: 400px;
 }
+
 .btn_publish {
   align-self: flex-end;
   justify-self: flex-start;
 }
+
 .wrapper {
   position: relative;
 }
+
 @media (max-width: 800px) {
   .form_edit .post_text {
     padding-top: 100px;

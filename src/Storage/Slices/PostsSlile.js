@@ -5,7 +5,6 @@ import { isLiked } from "../../Utilites/total";
 
 const initialState = {
     ...STATEINITIAL,
-    postsObject: null,
     total: null,
     favorites: [],
     tags: {},
@@ -82,11 +81,11 @@ export const fetchChengePost = createAsyncThunk(
 export const fetchDeletePost = createAsyncThunk(
     `${NAMEPOSTSSLICE}/fetchDeletePost`,
 
-    async function (post, { rejectWithValue, fulfillWithValue, extra: api }) {
+    async function (postId, { rejectWithValue, fulfillWithValue, extra: api }) {
 
         try {
 
-            const data = await api.actionPosts({ method: "DELETE", postId: post._id });
+            const data = await api.actionPosts({ method: "DELETE", postId });
             return fulfillWithValue(data);
 
         } catch (error) {
@@ -98,13 +97,13 @@ export const fetchDeletePost = createAsyncThunk(
 export const fetchChangeLike = createAsyncThunk(
     `${NAMEPOSTSSLICE}/fetchChangeLike`,
 
-    async function (post, { rejectWithValue, fulfillWithValue, getState, extra: api }) {
+    async function ({ id, likes }, { rejectWithValue, fulfillWithValue, getState, extra: api }) {
 
         try {
 
             const { [NAMEUSERSLICE]: user } = getState();
-            const liked = isLiked(post.likes, user.data._id);
-            const data = await api.changeLike(post._id, liked);
+            const liked = isLiked(likes, user.data._id);
+            const data = await api.changeLike(id, liked);
             return fulfillWithValue({ data, liked });
 
         } catch (error) {
@@ -158,9 +157,9 @@ const postsSlice = createSlice({
     },
     extraReducers: builder => {
         builder.addCase(fetchGetPosts.pending, state => {
-            state.postsObject = null;
             state.error = null;
             state.favorites = null;
+            state.tags = {};
             state.loading = true;
         })
             .addCase(fetchSearch.pending, state => {
@@ -175,9 +174,8 @@ const postsSlice = createSlice({
                 state.isSearchLoading = true;
             })
             .addCase(fetchGetPosts.fulfilled, (state, action) => {
-                state.postsObject = action.payload;
                 state.loading = false;
-                state.postsObject.map(post => {
+                action.payload.map(post => {
 
                     post.tags.map(tag => {
                         return state.tags = { ...state.tags, [tag]: tag };
@@ -215,12 +213,11 @@ const postsSlice = createSlice({
             })
             .addCase(fetchMiniSearch.fulfilled, (state, action) => {
                 state.dataSearch = action.payload;
-                state.isSearch = true;
                 state.isSearchLoading = false;
             })
             .addCase(fetchChangeLike.fulfilled, (state, action) => {
                 const { data, liked } = action.payload;
-                changePosts(state, data)
+                changePosts(state, data);
                 changeLike({ state, data, liked });
 
             })

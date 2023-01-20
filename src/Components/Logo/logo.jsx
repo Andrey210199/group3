@@ -2,7 +2,7 @@ import logo from "./logo.png";
 import s from "./index.module.css";
 import { Link } from "react-router-dom";
 
-export const Logo = () => {
+export default function Logo() {
 
   return (
     <Link className={s.logo} to="/">

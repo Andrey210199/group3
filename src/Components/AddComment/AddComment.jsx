@@ -1,4 +1,3 @@
-
 import CharacterCount from "@tiptap/extension-character-count";
 import Highlight from "@tiptap/extension-highlight";
 import Link from "@tiptap/extension-link";
@@ -39,12 +38,6 @@ export default function AddComment({ enable = false, content }) {
             }
         },
 
-        editorProps: {
-            attributes: {
-                class: enable && s.editor
-            }
-        },
-
         extensions: [
             StarterKit,
             TextAlign.configure({
@@ -75,11 +68,11 @@ export default function AddComment({ enable = false, content }) {
         <form className={s.addComment} onSubmit={handleSubmit}>
             
             {enable && 
-            <>
+            <div className={s.add_comment}>
             <h3 className={s.add_comment_title}>Добавить комментарий</h3>
             
             <MenuBarComment editor={editor} className={s.comment_menu}  />
-            </>}
+            </div>}
             
             <EditorContent editor={editor} className={s.new_comment}/>
 

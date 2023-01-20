@@ -18,20 +18,21 @@ import {
 } from '../../Storage/Slices/PostsSlile';
 import ButtonLike from '../Buttons/ButtonLike/ButtonLike';
 import ButtonDelete from '../Buttons/ButtonDelete/ButtonDelete';
+import { DELETEHTML } from '../../Constants/Constant';
 
 dayjs.locale('ru');
 
-const PostCard = (props) => {
-  const { _id, author, created_at, image, text, title } = props;
+export default function PostCard({ _id, author, created_at, image, text, title, likes }) {
+
   const dispatch = useDispatch();
 
-  function handleLike(post) {
-    dispatch(fetchChangeLike(post));
+  function handleLike() {
+    dispatch(fetchChangeLike({ id: _id, likes }));
   }
 
   const handleClickDel = () => {
-    if (window.confirm('Вы уверены, что хотите удалить пост?'))
-      dispatch(fetchDeletePost(props));
+    if (window.confirm("Вы уверены, что хотите удалить пост?"))
+      dispatch(fetchDeletePost(_id));
   };
 
   return (
@@ -62,14 +63,12 @@ const PostCard = (props) => {
             {title}
           </Typography>
           <Typography variant="body2" noWrap color="text.secondary">
-            {text.slice(0, 100).replace(/(<([^>]+)>)/g, '')}
+            {text.slice(0, 100).replace(DELETEHTML, '')}
           </Typography>
         </CardContent>
       </Link>
       <CardActions className={s.margin} disableSpacing>
-        <ButtonLike post={props} onLike={handleLike} />
-
-        {/* Роутинг на страницу с Подробной карточкой */}
+        <ButtonLike likes={likes} onLike={handleLike} />
 
         <ButtonDelete
           author={author}
@@ -80,4 +79,3 @@ const PostCard = (props) => {
     </Card>
   );
 };
-export default PostCard;

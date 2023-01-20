@@ -9,7 +9,7 @@ import Modal from "../../Modal/Modal";
 import ProtectedComponent from "../../ProtectedComponent/ProtectedComponent";
 import s from "./index.module.css";
 
-export default function Authorization({ title, onSubmit, oneBtn, twoBtn, find, onClick, children }) {
+export default function Authorization({ title, onSubmit, oneBtn, twoBtn, find, onClick }) {
 
     const [url] = useSearchParams();
     const [errorName, setErrorName] = useState(null);
@@ -49,29 +49,29 @@ export default function Authorization({ title, onSubmit, oneBtn, twoBtn, find, o
 
     return (
         url.get(find) &&
-        // <ProtectedComponent isProtected={false}>
-        <Modal>
+        <ProtectedComponent isProtected={false}>
+            <Modal>
 
                 <form className={s.form} onSubmit={handleSubmit(handleFormSubmit)}>
                     <h2 className={s.title}>{title}</h2>
                     {find === URLREGISTRATION && <FormInput {...name} placeholder="Введите nickname" />}
                     {(errors?.name && <p className={s.error}>{errors.name.message}</p>) || (errorName && <p className={s.error}>{errorName}</p>)}
 
-                    <FormInput {...email} placeholder="Введите email" />
+                    <FormInput clear={handleClear} {...email} placeholder="Введите email" />
                     {errors?.email && <p className={s.error}>{errors.email.message}</p>}
 
-                    <FormInput {...password} type="password" placeholder="Введите пароль" />
+                    <FormInput clear={handleClear} {...password} type="password" placeholder="Введите пароль" />
                     {errors?.password && <p className={s.error}>{errors.password.message}</p>}
                     <div className={s.btns}>
-                    
+
                         <ButtonForm type="submit">{oneBtn}</ButtonForm>
                         <ButtonForm onClick={onClick}>{twoBtn}</ButtonForm>
                     </div>
 
-            </form>
+                </form>
 
-        </Modal>
-        //  </ProtectedComponent>
+            </Modal>
+        </ProtectedComponent>
 
     );
 }

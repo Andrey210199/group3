@@ -3,6 +3,7 @@ import { Navigate, useHref } from "react-router-dom";
 import { URLLOGIN } from "../../Constants/Constant";
 import { NAMEUSERSLICE } from "../../Constants/StorageConstants";
 import { getToken } from "../../Utilites/Cookie";
+import { Spinner } from "../Spinner/spinner";
 
 export default function ProtectedComponent({ isProtected = true, children }) {
 
@@ -14,10 +15,10 @@ export default function ProtectedComponent({ isProtected = true, children }) {
     switch (true) {
 
         case isLoading && isProtected:
-            return <></> //временно
+            return <Spinner />
 
         case isProtected && !user:
-            return <Navigate to={`?${URLLOGIN}=true`} replace />
+            return <Navigate to={`/?${URLLOGIN}=true`} replace />
 
         case isProtected && user:
             return <Navigate to={href} replace />

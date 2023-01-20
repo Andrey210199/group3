@@ -6,18 +6,17 @@ import { getToken } from "../../../Utilites/Cookie";
 import { isLiked } from "../../../Utilites/total";
 
 
-export default function ButtonLike({ post, onLike, iconSize = "medium" }) {
+export default function ButtonLike({ likes, onLike, iconSize = "medium" }) {
 
   const currentUser = useSelector(state => state[NAMEUSERSLICE].data);
-  const { likes } = post;
   const liked = isLiked(likes, currentUser?._id);
 
   function handleLike() {
-    onLike(post);
+    onLike();
   }
 
   return (
-   //  getToken() && 
+    getToken() &&
     <Tooltip title={"Liked"}>
       <IconButton
         aria-label="add to favorites"
