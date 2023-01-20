@@ -1,4 +1,34 @@
+.addComment{
+  margin-top: 30px;
 
-.editor{
-    height: 200px;
 }
+.new_comment {
+  border-radius: 10px;
+  background-color: var(--bg-main-color-light);
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.new_text{
+  min-height: 80px;
+    padding: 10px;
+    border-radius: 10px;
+}
+.new_text:focus{
+  min-height: 80px;
+
+}
+.text_comment{
+  cursor: default;
+}
+.text_comment:focus{
+ 
+  outline: 0;
+  
+}
+.add_comment_title{
+  padding-left: 30px;
+}
+/* .editor{
+    height: 200px;
+} */

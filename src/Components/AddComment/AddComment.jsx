@@ -14,6 +14,8 @@ import { NAMESINGLEPOSTSLICE } from "../../Constants/StorageConstants";
 import { fetchSetRewiew } from "../../Storage/Slices/SinglePostSlice";
 import MenuBarComment from "../MenuBarComment/MenuBarComment";
 import s from "./index.module.css";
+import "../../index.css";
+import Button from "../Buttons/Button/Button";
 
 export default function AddComment({ enable = false, content }) {
 
@@ -28,7 +30,14 @@ export default function AddComment({ enable = false, content }) {
 
     }
 
+
     const editor = useEditor({
+        editorProps:{
+            attributes:{
+                class: enable ? s.new_text : s.text_comment
+
+            }
+        },
 
         editorProps: {
             attributes: {
@@ -64,9 +73,15 @@ export default function AddComment({ enable = false, content }) {
     return (
 
         <form className={s.addComment} onSubmit={handleSubmit}>
-
-            {enable && <MenuBarComment editor={editor} />}
-            <EditorContent editor={editor} />
+            
+            {enable && 
+            <>
+            <h3 className={s.add_comment_title}>Добавить комментарий</h3>
+            
+            <MenuBarComment editor={editor} className={s.comment_menu}  />
+            </>}
+            
+            <EditorContent editor={editor} className={s.new_comment}/>
 
             {enable &&
                 <>
@@ -75,8 +90,7 @@ export default function AddComment({ enable = false, content }) {
                         <br />
                         {editor?.storage.characterCount.words()} Слов
                     </div>
-
-                    <button>Отправить</button>
+                    <Button>Отправить</Button>
                 </>}
 
         </form>

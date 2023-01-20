@@ -1,0 +1,6 @@
+.title {
+    text-align: center;
+    margin: 30px auto;
+    color: var(--text-main-color);
+    font-size: 3em;
+}

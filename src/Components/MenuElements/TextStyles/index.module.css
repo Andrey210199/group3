@@ -1,0 +1,16 @@
+.bold{
+    background-image: url("./img/bold.png");
+}
+.italic{
+    background-image: url("./img/italic.png");
+}
+.strike{
+    background-image: url("./img/strike.png");
+}
+.underline{
+    background-image: url("./img/underline.png");
+}
+.clear{
+    background-image: url("./img/clear.png");
+    background-position: 0;
+}

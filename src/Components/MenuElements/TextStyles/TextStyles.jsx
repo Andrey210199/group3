@@ -1,36 +1,47 @@
 
-export default function TextStyles({ editor }) {
+import cn from "classnames";
+import s from "./index.module.css";
+import "../../../index.css";
+export default function TextStyles({ editor}) {
+ 
     return (
         <>
             <button
                 onClick={() => editor.chain().focus().toggleBold().run()}
+                    title="Жирный"
                 disabled={!editor.can().chain().focus().toggleBold().run()}
-                className={editor.isActive('bold') ? 'is-active' : ''}>
-                bold
+                className={cn("menu_button", s.bold, editor.isActive('bold') ? 'elem_active' : '')}>
+           
             </button>
 
             <button
-                onClick={() => editor.chain().focus().toggleItalic().run()}
+            title="Курсив"
+                onClick={() =>  editor.chain().focus().toggleItalic().run()}
                 disabled={
                     !editor.can().chain().focus().toggleItalic().run()}
-                className={editor.isActive('italic') ? 'is-active' : ''}>
-                italic
+                    className={cn("menu_button", s.italic, editor.isActive('italic') ? 'elem_active' : '')} 
+                >
+ 
             </button>
-
+            <button 
+            title="Подчеркнутый"onClick={() => editor.chain().focus().toggleUnderline().run()}
+                className={cn("menu_button", s.underline, editor.isActive('underline') ? 'elem_active' : '')}>
+              
+            </button>
             <button
+            title="Зачеркнутый"
                 onClick={() => editor.chain().focus().toggleStrike().run()}
                 disabled={!editor.can().chain().focus().toggleStrike().run()}
-                className={editor.isActive('strike') ? 'is-active' : ''}>
-                strike
+                className={cn("menu_button", s.strike, editor.isActive('strike') ? 'elem_active' : '')}>
+              
             </button>
 
-            <button onClick={() => editor.chain().focus().toggleUnderline().run()}
-                className={editor.isActive('underline') ? 'is-active' : ''}>
-                underline
-            </button>
+           
 
-            <button onClick={() => editor.chain().focus().unsetAllMarks().clearNodes().run()}>
-                clear style
+            <button onClick={() => editor.chain().focus().unsetAllMarks().clearNodes().run()}
+                className={cn("menu_button", s.clear)}
+                title="Очистить стили">
+                
             </button>
         </>
     )
