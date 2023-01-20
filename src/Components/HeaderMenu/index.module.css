@@ -1,0 +1,74 @@
+.menu{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "avatar login"
+                          "avatar registration"
+                          "edit add" ;
+    align-items: center;
+    gap: 5px 10px;
+  }
+  .link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;    
+    font-size: 20px;  
+    border-radius: 20px;
+    color:var(--text-secondary-color);
+    height: 1.5em;
+    gap: 5px;
+
+  }
+
+  .link:hover{
+    border: none;
+    outline: 2px solid var(--text-secondary-color);
+
+
+
+  }
+  .login_link{
+    grid-area: login;
+  }
+  .registr_link{
+    grid-area: registration;
+  }
+
+  .login {
+    display: flex;
+    align-items: center;  
+    gap: 10px;
+    margin: 0;
+  }
+.user{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+  .editUser{
+    font-size: 14px;
+    grid-area: edit;
+  }
+  .registration{
+    font-size: 14px;
+  }
+
+  .add_link{
+    grid-area: add;
+    
+  }
+
+  .author {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    max-width: 150px;
+    color: inherit;
+    grid-area: avatar;
+}
+.name{
+    margin: 0;
+    font-size: 14px;
+}

@@ -1,0 +1,18 @@
+.btn{
+    color: var(--text-secondary-color);
+    font-size: 14px;
+    padding: 10px 15px;
+    background-color: inherit;
+    border: none;
+    outline: 1px solid var(--text-secondary-color);
+    border-radius: 15px;
+    margin: 0;
+    cursor: pointer;
+
+}
+
+.btn:active{
+
+    outline: 2px solid var(--text-secondary-color);
+
+}

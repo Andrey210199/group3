@@ -1,0 +1,38 @@
+.menu_bar {
+ 
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 10px 0 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    gap: 5px;
+    background-color: var(--bg-main-color);
+    
+  }
+  .menu_bar > button {
+    height: 24.4px;
+    padding: 2px;
+    cursor: pointer;
+    border: 0;
+  }
+ 
+  .menu_bar > select {
+    margin-left: 50px;
+    cursor: pointer;
+  }
+  .menu_bar img {
+    height: 100%;
+    width: auto;
+  }
+  
+
+  .colors{
+    height: 24.4px;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    cursor: pointer;
+    z-index: 2;
+  }
