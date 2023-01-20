@@ -13,6 +13,7 @@ import { useDebounce } from "../../Hooks/useDebounce";
 import { useCallback, useEffect, useState } from "react";
 import SearchPopap from "../SearchPopap/SearchPopap";
 import Button from "../Buttons/Button/Button";
+import { URLSEARCH } from "../../Constants/Constant";
 
 export default function Search() {
 
@@ -29,7 +30,7 @@ export default function Search() {
     }
 
     function handleClear() {
-        query.get("search") ? dispatch(fetchGetPagePosts(1))
+        query.get(URLSEARCH) ? dispatch(fetchGetPagePosts(1))
             .then(() => {
                 navigate("/")
                 dispatch(setSearch(""));
@@ -39,7 +40,8 @@ export default function Search() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        navigate(`/?search=${inputText}`);
+        onClose();
+        navigate(`/?${URLSEARCH}=${inputText}`);
         dispatch(fetchSearch({ page: 1, search: inputText }));
     }
 

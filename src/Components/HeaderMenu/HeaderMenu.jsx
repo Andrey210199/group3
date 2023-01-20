@@ -1,11 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { NAMEUSERSLICE } from "../../Constants/StorageConstants";
 import s from "./index.module.css";
 import cn from "classnames";
-import { Autch, unAutch } from "../../Storage/Slices/UserSlice";
+import { Autch, editorUnEnable, unAutch } from "../../Storage/Slices/UserSlice";
 import { URLEDITUSER, URLLOGIN, URLREGISTRATION } from "../../Constants/Constant";
 import AvatarInfo from "../AvatarInfo/AvatarInfo";
 
@@ -14,12 +14,11 @@ export default function HeaderMenu() {
   const currentUser = useSelector((state) => state[NAMEUSERSLICE].data);
   const isUser = useSelector((state => state[NAMEUSERSLICE].isAutch));
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   function handleClick() {
     unAutch();
     dispatch(Autch());
-    navigate("/");
+    dispatch(editorUnEnable());
   }
 
   return (

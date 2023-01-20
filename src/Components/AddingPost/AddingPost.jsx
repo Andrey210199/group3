@@ -20,6 +20,7 @@ import Tags from "../Tags/Tags";
 import FormInput from "../FormInput/FormInput";
 import { LIMITMESSAGE, MAXTITLE } from "../../Constants/Constant";
 import Button from "../Buttons/Button/Button";
+import { getToken } from "../../Utilites/Cookie";
 
 export default function AddingPost({
   children,
@@ -37,6 +38,7 @@ export default function AddingPost({
 
   function handleSubmit(e) {
     e.preventDefault();
+    getToken() &&
     onSubmit(text, inputTags, editor.getHTML());
   }
 

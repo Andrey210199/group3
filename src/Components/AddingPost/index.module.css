@@ -33,7 +33,6 @@
 
 .post_tags {
   display: flex;
-  justify-content: start;
   align-items: center;
   flex-wrap: wrap;
   gap: 15px;

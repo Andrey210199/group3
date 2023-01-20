@@ -7,7 +7,8 @@ import { isError } from "../../Utilites/StoreFunction";
 
 const initialState = {
     ...STATEINITIAL,
-    isAutch: false
+    isAutch: false,
+    isEditorEnable: false
 }
 
 export const fetchGetUser = createAsyncThunk(
@@ -123,8 +124,14 @@ const userSlice = createSlice({
     name: NAMEUSERSLICE,
     initialState,
     reducers: {
-        Autch: (state) => {
+        Autch: state => {
             state.isAutch = false;
+        },
+        editorEnable: state => {
+            state.isEditorEnable = true;
+        },
+        editorUnEnable: state => {
+            state.isEditorEnable = false;
         }
     },
     extraReducers: builder => {
@@ -164,5 +171,5 @@ const userSlice = createSlice({
 
     }
 });
-export const { Autch } = userSlice.actions;
+export const { Autch, editorEnable, editorUnEnable } = userSlice.actions;
 export default userSlice.reducer;

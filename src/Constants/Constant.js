@@ -9,6 +9,8 @@ export const COOKIETOKEN = "BB5836E01528186351C071230F452F18D9669F5E";
 export const URLLOGIN = "login";
 export const URLREGISTRATION = "registration";
 export const URLEDITUSER = "userEdit";
+export const URLSEARCH = "search";
+export const URLPAGE = "page";
 
 export const NAMEMASSAGEERROR = "Поле содержит недопустимые символы";
 

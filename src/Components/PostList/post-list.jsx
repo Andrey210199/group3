@@ -14,22 +14,24 @@ import {
 } from "../../Storage/Slices/PostsSlile";
 import { NotFound } from "../NotFound/not-found";
 import { Spinner } from "../Spinner/spinner";
+import { URLPAGE, URLSEARCH } from "../../Constants/Constant";
 
 export default function PostList({ posts }) {
   const userLoad = useSelector(state => state[NAMEUSERSLICE].loading);
-  const state = useSelector((state) => state[NAMEPOSTSSLICE]);
-  const { loading, isSearch, search } = state;
+  const loading = useSelector((state) => state[NAMEPOSTSSLICE].loading);
 
   const dispatch = useDispatch();
   const [query] = useSearchParams();
-  const page = parseInt(query.get('page') || 1);
+  const page = parseInt(query.get(URLPAGE) || 1);
+  const search = query.get(URLSEARCH)
 
   useEffect(() => {
     if (!userLoad) {
-      isSearch ? dispatch(fetchSearch({ page, search }))
+      search ?
+        dispatch(fetchSearch({ page, search }))
         : dispatch(fetchGetPagePosts(page));
     }
-  }, [dispatch, page, isSearch, userLoad])
+  }, [dispatch, page, userLoad, search])
 
   return (
     <>

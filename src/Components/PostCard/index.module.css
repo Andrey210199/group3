@@ -17,7 +17,6 @@
 .margin {
     margin-top: auto;
     display: flex;
-    justify-content: start;
     gap: 20px;
     position: relative
 }

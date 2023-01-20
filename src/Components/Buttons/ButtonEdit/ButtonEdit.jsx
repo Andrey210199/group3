@@ -12,7 +12,7 @@ export default function ButtonEdit({ author, isEnable }) {
 
     function hangleClick() {
         isEnable(!enable);
-        setEneble(!enable);
+        setEneble();
     }
 
     return (

@@ -10,13 +10,13 @@ const FormInput = forwardRef(({ val = "", clear, change, ...props }, ref) => {
     const [text, setText] = useState("");
 
     useEffect(() => {
-        val && setText(val);
+        !val && setText(val);
         props.value && setText(props.value);
     }, [val, props.value])
 
 
     function handleChange(e) {
-        setText(e.target.value);
+        !val && setText(e.target.value);
         change && change(e.target.value);
     }
 
@@ -27,7 +27,7 @@ const FormInput = forwardRef(({ val = "", clear, change, ...props }, ref) => {
 
     return (
         <div className={s.content}>
-            <input  className={s.input} {...props} value={val ? val : text} onChange={handleChange} ref={ref} />
+            <input className={s.input} {...props} value={val ? val : text} onChange={handleChange} ref={ref} />
             <ButtonClear onClick={handleClear} />
 
         </div>
