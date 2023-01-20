@@ -1,19 +1,19 @@
-import s from "./index.module.css";
-import PostCard from "../PostCard/post-card";
-import { useDispatch, useSelector } from "react-redux";
+import s from './index.module.css';
+import PostCard from '../PostCard/post-card';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   NAMEPOSTSSLICE,
   NAMEUSERSLICE,
-} from "../../Constants/StorageConstants";
-import PaginationCard from "../PaginationCard/PaginationCard";
-import { useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
+} from '../../Constants/StorageConstants';
+import PaginationCard from '../PaginationCard/PaginationCard';
+import { useSearchParams } from 'react-router-dom';
+import { useEffect } from 'react';
 import {
   fetchGetPagePosts,
   fetchGetPosts,
   fetchSearch,
-} from "../../Storage/Slices/PostsSlile";
-import { NotFound } from "../NotFound/not-found";
+} from '../../Storage/Slices/PostsSlile';
+import { NotFound } from '../NotFound/not-found';
 
 const PostList = ({ posts }) => {
   // const userLoad = useSelector(state => state[NAMEUSERSLICE].loading);
