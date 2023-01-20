@@ -6,20 +6,21 @@ import {
   CardMedia,
   Avatar,
   Typography,
-} from "@mui/material";
-import s from "./index.module.css";
-import dayjs from "dayjs";
-import "dayjs/locale/ru";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+} from '@mui/material';
+import s from './index.module.css';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import {
   fetchChangeLike,
   fetchDeletePost,
-} from "../../Storage/Slices/PostsSlile";
-import ButtonLike from "../Buttons/ButtonLike/ButtonLike";
-import ButtonDelete from "../Buttons/ButtonDelete/ButtonDelete";
+} from '../../Storage/Slices/PostsSlile';
+import ButtonLike from '../Buttons/ButtonLike/ButtonLike';
+import ButtonDelete from '../Buttons/ButtonDelete/ButtonDelete';
+import { DELETEHTML } from '../../Constants/Constant';
 
-dayjs.locale("ru");
+dayjs.locale('ru');
 
 export default function PostCard({ _id, author, created_at, image, text, title, likes }) {
 
@@ -39,8 +40,8 @@ export default function PostCard({ _id, author, created_at, image, text, title, 
       className={s.card}
       sx={{
         maxWidth: 270,
-        borderRadius: "20px",
-        backgroundColor: "inherit",
+        borderRadius: '20px',
+        backgroundColor: 'inherit',
         boxShadow: 0,
       }}
     >
@@ -53,16 +54,16 @@ export default function PostCard({ _id, author, created_at, image, text, title, 
             </Avatar>
           }
           title={author?.name}
-          subheader={dayjs(created_at).format("dddd, D MMMM YYYY")}
-          sx={{ color: "inherit" }}
+          subheader={dayjs(created_at).format('dddd, D MMMM YYYY')}
+          sx={{ color: 'inherit' }}
         />
 
-        <CardContent sx={{ paddingTop: 0, textAlign: "center" }}>
+        <CardContent sx={{ paddingTop: 0, textAlign: 'center' }}>
           <Typography variant="h6" component="h2" color="text.secondary">
             {title}
           </Typography>
           <Typography variant="body2" noWrap color="text.secondary">
-            {text.slice(0, 100).replace(/(<([^>]+)>)/g, "")}
+            {text.slice(0, 100).replace(DELETEHTML, '')}
           </Typography>
         </CardContent>
       </Link>
@@ -72,7 +73,7 @@ export default function PostCard({ _id, author, created_at, image, text, title, 
         <ButtonDelete
           author={author}
           onDelete={handleClickDel}
-          style={{ position: "absolute", right: "15px" }}
+          style={{ position: 'absolute', right: '15px' }}
         />
       </CardActions>
     </Card>

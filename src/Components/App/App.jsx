@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 
-import PostList from "../PostList/post-list";
-import AddingPostPage from "../../Pages/AddingPostPage/AddingPostPage";
-import PostPage from "../../Pages/PostPage/PostPage";
-import { NotFoundPage } from "../../Pages/NotFoundPage/not-found-page";
+import PostList from '../PostList/post-list';
+import AddingPostPage from '../../Pages/AddingPostPage/AddingPostPage';
+import PostPage from '../../Pages/PostPage/PostPage';
+import { NotFoundPage } from '../../Pages/NotFoundPage/not-found-page';
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchGetUser,
   fetchTokenCheck,
@@ -52,7 +52,6 @@ export default function App() {
       </Header>
 
       <main className="container content">
-
         <Routes>
           <Route
             path="/"
@@ -72,4 +71,3 @@ export default function App() {
     </>
   );
 }
-

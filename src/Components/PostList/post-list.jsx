@@ -1,6 +1,6 @@
-import s from "./index.module.css";
-import PostCard from "../PostCard/post-card";
-import { useDispatch, useSelector } from "react-redux";
+import s from './index.module.css';
+import PostCard from '../PostCard/post-card';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   NAMEPOSTSSLICE,
   NAMEUSERSLICE

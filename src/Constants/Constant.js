@@ -14,6 +14,8 @@ export const URLPAGE = "page";
 
 export const NAMEMASSAGEERROR = "Поле содержит недопустимые символы";
 
+export const DELETEHTML = /(<([^>]+)>)/g;
+
 export const EMAILVALIDATE = {
     required: {
         value: true,
