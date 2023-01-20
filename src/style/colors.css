@@ -1,0 +1,15 @@
+
+
+:root {
+    --bg-main-color: #f2e4e4;
+    --bg-main-color-light: #f5ededc7;
+    --bg-secondary-color:#A69992;
+    --bg-secondary-color-light:#ccbab0;
+    --text-main-color: #0D0D0D;
+    --text-main-color-ligth: #585858;
+    --text-secondary-color: #402312;
+    --text-secondary-color-light: #40231271;
+    --secondary-color: #F2BDD0;
+    --active-color: #8c03035d;
+    --red-color: #8C0303;
+}

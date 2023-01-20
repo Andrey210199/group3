@@ -4,13 +4,13 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 20px auto;
 }
 .title {
   font-weight: 700;
   font-size: 32px;
   line-height: 1.2;
+  text-align: center;
 }
 
 .error404,
