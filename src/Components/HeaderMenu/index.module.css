@@ -2,7 +2,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-areas: "avatar login"
-                          "avatar registration"
                           "edit add" ;
     align-items: center;
     gap: 5px 10px;
@@ -14,6 +13,7 @@
     text-decoration: none;    
     font-size: 20px;  
     border-radius: 20px;
+    padding: 5px;
     color:var(--text-secondary-color);
     height: 1.5em;
     gap: 5px;
@@ -31,7 +31,7 @@
     grid-area: login;
   }
   .registr_link{
-    grid-area: registration;
+    grid-area: add;
   }
 
   .login {
