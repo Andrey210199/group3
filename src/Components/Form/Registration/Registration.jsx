@@ -1,16 +1,27 @@
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { URLLOGIN, URLREGISTRATION } from "../../../Constants/Constant";
+import { NAMEUSERSLICE } from "../../../Constants/StorageConstants";
+import { fetchRegistration } from "../../../Storage/Slices/UserSlice";
 import validateName from "../../../Utilites/ValidateName";
 import Authorization from "../Authorization/Authorization";
 
 export default function Registration() {
 
+    const error = useSelector(state => state[NAMEUSERSLICE].error);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    function handleformSubmit(value) {
+    function handleformSubmit({ value, reset }) {
 
         if (validateName(value.name)) {
-            console.log({ ...value });
+            dispatch(fetchRegistration({ ...value }))
+                .then((ans) => {
+                    if (!ans.error) {
+                        reset();
+                        navigate(-1);
+                    }
+                });
         }
 
     }
@@ -21,6 +32,6 @@ export default function Registration() {
 
     return (
         <Authorization title="Регистрация" oneBtn="Зарегистрироваться"
-            twoBtn="Войти" find={URLREGISTRATION} onClick={handleClick} onSubmit={handleformSubmit} />
+            twoBtn="Войти" find={URLREGISTRATION} onClick={handleClick} onSubmit={handleformSubmit} error={error} />
     )
 }

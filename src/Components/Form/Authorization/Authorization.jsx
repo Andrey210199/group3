@@ -9,7 +9,7 @@ import Modal from "../../Modal/Modal";
 import ProtectedComponent from "../../ProtectedComponent/ProtectedComponent";
 import s from "./index.module.css";
 
-export default function Authorization({ title, onSubmit, oneBtn, twoBtn, find, onClick }) {
+export default function Authorization({ title, onSubmit, oneBtn, twoBtn, find, onClick, error }) {
 
     const [url] = useSearchParams();
     const [errorName, setErrorName] = useState(null);
@@ -62,6 +62,8 @@ export default function Authorization({ title, onSubmit, oneBtn, twoBtn, find, o
 
                     <FormInput clear={handleClear} {...password} type="password" placeholder="Введите пароль" />
                     {errors?.password && <p className={s.error}>{errors.password.message}</p>}
+
+                    {error && <p className={s.error}>{error}</p>}
                     <div className={s.btns}>
 
                         <ButtonForm type="submit">{oneBtn}</ButtonForm>
