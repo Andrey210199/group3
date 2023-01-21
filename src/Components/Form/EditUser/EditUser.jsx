@@ -14,7 +14,9 @@ export default function EditUser() {
 
     const [url] = useSearchParams();
     const navigate = useNavigate();
-    const user = useSelector(state => state[NAMEUSERSLICE].data);
+    const state = useSelector(state => state[NAMEUSERSLICE]);
+    const user = state?.data;
+    const error = state?.error;
     const [errorName, setErrorName] = useState(null);
 
     const dispatch = useDispatch();
@@ -32,10 +34,14 @@ export default function EditUser() {
 
             dispatch(fetchUpdateUser(data.name))
                 .then(() => {
-                    dispatch(fetchUpdatAvatar(data.avatar));
+                    dispatch(fetchUpdatAvatar(data.avatar))
+                        .then((ans) => {
+                            if (!ans.error) {
+                                reset();
+                                navigate(-1);
+                            }
+                        });
                 });
-            reset();
-            navigate(-1);
         }
         else {
             setErrorName(NAMEMASSAGEERROR);
@@ -55,6 +61,8 @@ export default function EditUser() {
                     <p className={s.text}>Введите url картинки</p>
                     <FormInput type="text" {...avatar} value={user?.avatar} placeholder="Введите url картинки" />
                     {errors?.avatar && <p className={s.error}>{errors.avatar.message}</p>}
+
+                    {error && <p className={s.error}>{error}</p>}
 
                     <button className={s.btn}>Сохранить</button>
                 </form>
