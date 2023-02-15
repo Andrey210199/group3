@@ -1,10 +1,10 @@
 .img__image {
-  width: 400px;
+  width: 100%;
 }
 .form {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   grid-template-rows: auto auto auto auto;
   gap: 20px;
  position: relative;
@@ -27,7 +27,6 @@
 }
 
 .post_image {
-  grid-column: 1/2;
   grid-row: 1/4;
 }
 
