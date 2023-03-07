@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import { URLLOGIN, URLREGISTRATION } from "../../../Constants/Constant";
 import { NAMEUSERSLICE } from "../../../Constants/StorageConstants";
 import { fetchRegistration } from "../../../Storage/Slices/UserSlice";
+import urlParams from "../../../Utilites/UrlParams";
 import validateName from "../../../Utilites/ValidateName";
 import Authorization from "../Authorization/Authorization";
 
@@ -12,7 +13,7 @@ export default function Registration() {
     const error = useSelector(state => state[NAMEUSERSLICE].error);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const url = useSearchParams();
+    const [url, setUrl] = useSearchParams();
 
     function handleformSubmit({ value, reset }) {
 
@@ -28,8 +29,10 @@ export default function Registration() {
 
     }
 
-    function handleClick(e) {
-        navigate(`?${URLLOGIN}=true`, { replace: true });
+    function handleClick() {
+        url.delete(URLREGISTRATION);
+        setUrl(url, {replace: true});
+        navigate(urlParams(url, URLLOGIN), {replace: true});
     }
 
     return (

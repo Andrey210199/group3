@@ -1,7 +1,7 @@
 import Image from "@tiptap/extension-image";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Link from "@tiptap/extension-link";
+import TiptapLink from "@tiptap/extension-link";
 import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
 import TextStyle from "@tiptap/extension-text-style";
@@ -12,6 +12,7 @@ import TagIcon from "@mui/icons-material/Tag";
 import cn from "classnames";
 import { useEffect, useState } from "react";
 import MenuBar from "../MenuBar/MenuBar";
+import { Link } from "react-router-dom";
 
 import img from "./placeholder.png";
 import s from "./index.module.css";
@@ -52,7 +53,6 @@ export default function AddingPost({
     }
   }
 
-
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -72,14 +72,14 @@ export default function AddingPost({
 
         }
       }),
-      Link,
+      TiptapLink,
       Placeholder.configure({
         placeholder: "Текст вашего поста",
       }),
     ],
     editorProps: {
       attributes: {
-        class: s.post_text
+        class: cn(s.post_text, {[s.post_not]: !enabled })
       }
     }
   });
@@ -151,10 +151,10 @@ export default function AddingPost({
           <div className={s.post_tags}>
             {tags &&
               tags.map((tag) => (
-                <a href="/#" key={tag} className={s.tag}>
+                <Link to="#" key={tag} className={s.tag}>
                   <TagIcon fontSize="small" />
                   {tag}
-                </a>
+                </Link>
               ))}
           </div>
           {children && children}

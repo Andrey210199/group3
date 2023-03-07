@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Route, Routes, useHref, useParams, useSearchParams } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import PostList from '../PostList/post-list';
 import AddingPostPage from '../../Pages/AddingPostPage/AddingPostPage';
@@ -27,10 +27,6 @@ import HeaderMenu from "../HeaderMenu/HeaderMenu";
 export default function App() {
   const statePosts = useSelector((state) => state[NAMEPOSTSSLICE]);
   const { data: posts } = statePosts;
-
-  const href = useParams();
-  const [url] = useSearchParams();
-  console.log(url.toString())
 
   const dispatch = useDispatch();
   let user = getToken();
