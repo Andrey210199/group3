@@ -39,7 +39,7 @@ export default function AddingPost({
   function handleSubmit(e) {
     e.preventDefault();
     getToken() &&
-    onSubmit(text, inputTags, editor.getHTML());
+      onSubmit(text, inputTags, editor.getHTML());
   }
 
   function handleInput(value, type) {
@@ -66,7 +66,12 @@ export default function AddingPost({
       TextStyle,
       Color,
       Underline,
-      Image,
+      Image.configure({
+        HTMLAttributes: {
+          class: s.editor__img
+
+        }
+      }),
       Link,
       Placeholder.configure({
         placeholder: "Текст вашего поста",
@@ -89,7 +94,7 @@ export default function AddingPost({
   return (
 
     <form className={cn(s.form, { [s.form_edit]: enabled })} onSubmit={handleSubmit}>
-      
+
       <div className={cn(s.post_image, { [s.img]: enabled })}>
         {enabled && <h2>Картинка для превью поста</h2>}
         <img

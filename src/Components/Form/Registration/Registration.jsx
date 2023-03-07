@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { useSearchParams } from "react-router-dom";
 import { URLLOGIN, URLREGISTRATION } from "../../../Constants/Constant";
 import { NAMEUSERSLICE } from "../../../Constants/StorageConstants";
 import { fetchRegistration } from "../../../Storage/Slices/UserSlice";
@@ -11,6 +12,7 @@ export default function Registration() {
     const error = useSelector(state => state[NAMEUSERSLICE].error);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const url = useSearchParams();
 
     function handleformSubmit({ value, reset }) {
 

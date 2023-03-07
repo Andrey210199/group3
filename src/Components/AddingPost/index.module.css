@@ -81,6 +81,10 @@
   position: relative;
 }
 
+.editor__img{
+  max-width: 100%;
+}
+
 @media (max-width: 800px) {
   .form_edit .post_text {
     padding-top: 100px;
