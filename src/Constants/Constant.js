@@ -3,7 +3,7 @@ export const MAXADDTAGS = 5;
 export const MAXSINTAG = 15;
 export const MAXTITLE = 50;
 export const LIMITMESSAGE = "Достигнуто максимальное количество символов!";
-export const MAXCOMMENTS = 5;
+export const MAXCOMMENTS = 2;
 
 export const COOKIETOKEN = "BB5836E01528186351C071230F452F18D9669F5E";
 

@@ -1,0 +1,27 @@
+.menu {
+  position: sticky;
+  top: 0;
+  display: flex;
+  padding: 5px 0;
+  background-color: var(--bg-main-color);
+  z-index: 1;
+
+  &__bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  &__colors {
+    height: 24.4px;
+    position: absolute;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  &__headers{
+    margin-left: 55px;
+    display: flex;
+  }
+
+}

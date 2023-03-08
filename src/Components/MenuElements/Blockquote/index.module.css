@@ -1,3 +1,4 @@
 .blockquote{
     background-image: url("./blockquote.png");
+    cursor: pointer;
 }

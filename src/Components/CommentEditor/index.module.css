@@ -1,0 +1,26 @@
+.formComment {
+  margin-top: 30px;
+}
+.formComment__header {
+  background-color: var(--bg-main-color-light);
+  padding: 5px;
+  border-radius: 10px;
+  padding-left: 30px;
+  padding-bottom: 10px;
+}
+.formComment__editor {
+  border-radius: 10px;
+  background-color: var(--bg-main-color-light);
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.text {
+  min-height: 80px;
+  padding: 10px;
+  border-radius: 10px;
+}
+.text_active {
+  cursor: default;
+  outline: 0;
+}/*# sourceMappingURL=index.module.css.map */

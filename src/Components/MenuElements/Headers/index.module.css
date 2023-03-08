@@ -1,3 +1,4 @@
 .headers{
     background-color: var(--bg-main-color-light);
+    cursor: pointer;
 }

@@ -12,3 +12,16 @@
     height: 100vh;
     z-index: 1;
 }
+
+.btns{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding-top: 5px;
+}
+
+.btn{
+    padding: 5px;
+    border-radius: 10px;
+}

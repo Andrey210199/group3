@@ -5,6 +5,8 @@ import { MAXCOMMENTS } from "../../Constants/Constant";
 import { NAMESINGLEPOSTSLICE } from "../../Constants/StorageConstants";
 import Comment from "../Comment/Comment";
 
+import s from "./index.module.css";
+
 export default function CommentList({ children }) {
 
     const { comments, data } = useSelector(state => state[NAMESINGLEPOSTSLICE]);
@@ -26,6 +28,7 @@ export default function CommentList({ children }) {
             {children}
             {commentNow && commentNow.map(comment => <Comment key={comment._id} {...comment} postId={data._id} />)}
             {pages() > 1 && <Pagination
+                className={s.pagination}
                 count={pages()}
                 onChange={handleClick}
                 showFirstButton showLastButton />}

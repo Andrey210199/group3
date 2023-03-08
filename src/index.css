@@ -41,7 +41,7 @@ code {
   pointer-events: none;
 }
 .ProseMirror .is-editor-empty{
-  height: 60px;
+  height: 100%;
   padding: 10px;
 
 }

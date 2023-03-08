@@ -1,0 +1,109 @@
+.form {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-rows: auto auto auto auto;
+  gap: 20px;
+  position: relative;
+
+  &_edit {
+    padding-top: 70px;
+  }
+
+  &__editor {
+    min-height: 50%;
+    padding: 0 5px;
+  }
+
+  &__imgContainer {
+    grid-row: 1/4;
+  }
+
+  &__text {
+    text-align: center;
+  }
+
+  &__tags {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  &__tag {
+    text-decoration: none;
+    color: var(--bg-main-color);
+    background-color: var(--bg-secondary-color);
+    padding: 5px 12px;
+    border-radius: 15px;
+    cursor: default;
+    margin: 0;
+    display: flex;
+    overflow: hidden;
+    max-width: 100%;
+    max-height: 1em;
+  }
+}
+
+.img {
+  width: 100%;
+}
+
+.title {
+  margin: 0;
+  margin-block: 0;
+  font-size: 2em;
+  text-align: center;
+  margin-bottom: 10px;
+
+  &_edit {
+    font-size: 1.4em;
+  }
+}
+
+.text {
+
+  cursor: default;
+  outline: 0;
+
+  &_enabled {
+    padding: 0 10px;
+    min-height: 280px;
+  }
+}
+
+.wrapper {
+  position: relative;
+  height: 400px;
+  overflow-y: auto;
+}
+
+.title_tag {
+  background-color: var(--red-color);
+}
+
+.btn_publish {
+  align-self: flex-end;
+  justify-self: flex-start;
+}
+
+
+.input {
+  border-radius: 10px;
+  padding: 10px;
+  background-color: var(--bg-main-color-light);
+  padding-right: 30px;
+}
+
+@media screen and (max-width: 800px) {
+
+  .form___imgContainer {
+    grid-row: 2/4;
+  }
+
+  .wrapper {
+    height: 100%;
+    overflow-y: hidden;
+  }
+}

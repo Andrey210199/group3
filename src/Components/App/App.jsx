@@ -12,9 +12,9 @@ import {
   fetchTokenCheck,
 } from "../../Storage/Slices/UserSlice";
 import { NAMEPOSTSSLICE } from "../../Constants/StorageConstants";
-import Header from "../Header/header";
+import Header from "../Header/Header";
 
-import Footer from "../Footer/footer";
+import Footer from "../Footer/Footer";
 
 import EditUser from "../Form/EditUser/EditUser";
 

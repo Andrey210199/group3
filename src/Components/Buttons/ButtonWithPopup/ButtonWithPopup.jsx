@@ -33,11 +33,13 @@ export default function ButtonWithPopup({ event, text }) {
       <ButtonMenu onClick={positionCalc}>{text}</ButtonMenu>
 
       {active &&
-        createPortal(<Modal active={active} setActive={setActive} style={{ position: "fixed", left: position?.x, top: position?.y }}>
+        createPortal(<Modal active={active} setActive={setActive} style={{ position: "absolute", left: position?.x, top: position?.y }}>
           <div>
             <FormInput value={value} type="text" clear={() => setValue("")} change={(value) => setValue(value)} />
-            <Button onClick={(e) => { installLink(e); setActive(false) }} btnClass={false}>Ok</Button>
-            <Button onClick={() => { setActive(false); setValue("") }} btnClass={false}>Cancel</Button>
+            <div className={s.btns}>
+              <Button onClick={(e) => { installLink(e); setActive(false) }} className={s.btn} btnClass={false}>Ok</Button>
+              <Button onClick={() => { setActive(false); setValue("") }} className={s.btn} btnClass={false}>Cancel</Button>
+            </div>
           </div>
 
         </Modal>, document.body)}

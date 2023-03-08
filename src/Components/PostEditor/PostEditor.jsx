@@ -8,9 +8,11 @@ import TextStyle from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
 import Underline from "@tiptap/extension-underline";
 import Placeholder from "@tiptap/extension-placeholder";
+
 import TagIcon from "@mui/icons-material/Tag";
 import cn from "classnames";
 import { useEffect, useState } from "react";
+
 import MenuBar from "../MenuBar/MenuBar";
 import { Link } from "react-router-dom";
 
@@ -23,7 +25,7 @@ import { LIMITMESSAGE, MAXTITLE } from "../../Constants/Constant";
 import Button from "../Buttons/Button/Button";
 import { getToken } from "../../Utilites/Cookie";
 
-export default function AddingPost({
+export default function PostEditor({
   children,
   image: postImage,
   title: postTitle,
@@ -79,7 +81,7 @@ export default function AddingPost({
     ],
     editorProps: {
       attributes: {
-        class: cn(s.post_text, {[s.post_not]: !enabled })
+        class: cn(s.text_enabled, { [s.text]: !enabled })
       }
     }
   });
@@ -95,29 +97,8 @@ export default function AddingPost({
 
     <form className={cn(s.form, { [s.form_edit]: enabled })} onSubmit={handleSubmit}>
 
-      <div className={cn(s.post_image, { [s.img]: enabled })}>
-        {enabled && <h2>Картинка для превью поста</h2>}
-        <img
-          src={text.image === "" ? img : text.image}
-          className={s.img__image}
-          alt={enabled ? "Превью" : "postImage"}
-          decoding="async"
-        />
-        {enabled && <div className={s.img__text}>
-          <FormInput
-            className={s.input}
-            type="text"
-            value={text.image}
-            name="image"
-            change={(e) => handleInput(e, "image")}
-            placeholder="Введите ссылку на картинку поста"
-            required />
-        </div>}
-
-      </div>
-
-      {enabled ? <div className={s.post__title}>
-        <h2 className={s.title}>Заголовок поста</h2>
+      {enabled ? <div className={s.postContainer}>
+        <h2 className={cn(s.title, s.title_edit)}>Заголовок поста</h2>
         <FormInput
           type="text"
           name="title"
@@ -134,13 +115,34 @@ export default function AddingPost({
         />
         {message && <p>{message}</p>}
       </div>
-        : <h2 className={s.header__title}>{postTitle}</h2>
+        : <h2 className={s.title}>{postTitle}</h2>
       }
+
+      <div className={s.form__imgContainer}>
+        {enabled && <h2 className={cn(s.title, s.title_edit)}>Картинка для превью поста</h2>}
+        <img
+          src={text.image === "" ? img : text.image}
+          className={s.img}
+          alt={enabled ? "Превью" : "postImage"}
+          decoding="async"
+        />
+        {enabled && <div className={s.img__text}>
+          <FormInput
+            className={s.input}
+            type="text"
+            value={text.image}
+            name="image"
+            change={(e) => handleInput(e, "image")}
+            placeholder="Введите ссылку на картинку поста"
+            required />
+        </div>}
+
+      </div>
 
 
       <div className={s.wrapper}>
         {enabled && <MenuBar editor={editor} />}
-        <EditorContent editor={editor} />
+        <EditorContent editor={editor} className={s.form__editor} />
       </div>
 
       {enabled ? <>
@@ -148,10 +150,10 @@ export default function AddingPost({
         <Button className={s.btn_publish}>Опубликовать</Button>
       </>
         : <>
-          <div className={s.post_tags}>
+          <div className={s.form__tags}>
             {tags &&
               tags.map((tag) => (
-                <Link to="#" key={tag} className={s.tag}>
+                <Link to="#" key={tag} className={s.form__tag}>
                   <TagIcon fontSize="small" />
                   {tag}
                 </Link>

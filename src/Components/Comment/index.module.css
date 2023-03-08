@@ -5,16 +5,15 @@
     display: flex;
     flex-wrap: wrap;
     position: relative;
-
 }
-.author{
-display: flex;
-gap: 20px;
-align-items: center;
 
+.author {
+    display: flex;
+    gap: 20px;
+    align-items: center;
 }
-.comment__content{
+
+.comment__content {
     width: 100%;
     margin: 0;
-
 }

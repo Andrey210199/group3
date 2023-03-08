@@ -1,7 +1,7 @@
 
 import { useDispatch } from "react-redux";
 import { fetchDeleteRewiew } from "../../Storage/Slices/SinglePostSlice";
-import AddComment from "../AddComment/AddComment";
+import CommentEditor from "../CommentEditor/CommentEditor";
 import AvatarInfo from "../AvatarInfo/AvatarInfo";
 import ButtonDelete from "../Buttons/ButtonDelete/ButtonDelete";
 
@@ -21,7 +21,7 @@ export default function Comment({ author, created_at, text: comment, _id: id, po
             <AvatarInfo created={created_at} author={author} s={s} />
 
             <div className={s.comment__content}>
-                <AddComment content={comment} />
+                <CommentEditor content={comment} />
             </div>
             
             <ButtonDelete author={author} onDelete={handleClickDel} style={{position: "absolute",  top: "15px", right: "20px"}}/>

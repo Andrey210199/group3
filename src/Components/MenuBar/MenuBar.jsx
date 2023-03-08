@@ -25,15 +25,17 @@ export default function MenuBar({ editor }) {
     return null;
   }
   return (
-    <>
+    <div className={s.menu}>
       <input
-        className={s.colors}
+        className={s.menu__colors}
         type="color"
         onInput={(e) => setColor(e.target.value)}
         value={color}
       />
-      <div className={s.menu_bar} onClick={(e) => e.preventDefault()}>
-        <Headers editor={editor} />
+      <div className={s.menu__bar} onClick={(e) => e.preventDefault()}>
+        <div className={s.menu__headers}>
+          <Headers editor={editor} />
+        </div>
         <Lists editor={editor} />
         <Blockquote editor={editor} />
         <Aligns editor={editor} />
@@ -45,6 +47,6 @@ export default function MenuBar({ editor }) {
 
         <Conversion editor={editor} />
       </div>
-    </>
+    </div>
   );
 }

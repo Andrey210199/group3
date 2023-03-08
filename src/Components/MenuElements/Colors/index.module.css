@@ -1,6 +1,8 @@
 .color_text{
  background-image: url("./img/color.png");
+ cursor: pointer;
 }
 .highlight{
     background-image: url("./img/highlight.png");
+    cursor: pointer;
 }

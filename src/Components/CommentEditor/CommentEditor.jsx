@@ -4,19 +4,22 @@ import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
-import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { EditorContent, useEditor } from "@tiptap/react";
+
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { MAXCHARACTERS } from "../../Constants/Constant";
 import { NAMESINGLEPOSTSLICE } from "../../Constants/StorageConstants";
 import { fetchSetRewiew } from "../../Storage/Slices/SinglePostSlice";
 import MenuBarComment from "../MenuBarComment/MenuBarComment";
-import s from "./index.module.css";
-import "../../index.css";
 import Button from "../Buttons/Button/Button";
 
-export default function AddComment({ enable = false, content }) {
+import s from "./index.module.css";
+
+
+export default function CommentEditor({ enable = false, content }) {
 
     const { _id: postId } = useSelector(state => state[NAMESINGLEPOSTSLICE].data);
     const limit = MAXCHARACTERS;
@@ -29,11 +32,10 @@ export default function AddComment({ enable = false, content }) {
 
     }
 
-
     const editor = useEditor({
-        editorProps:{
-            attributes:{
-                class: enable ? s.new_text : s.text_comment
+        editorProps: {
+            attributes: {
+                class: enable ? s.text : s.text_active
 
             }
         },
@@ -65,20 +67,21 @@ export default function AddComment({ enable = false, content }) {
 
     return (
 
-        <form className={s.addComment} onSubmit={handleSubmit}>
-            
-            {enable && 
-            <div className={s.add_comment}>
-            <h3 className={s.add_comment_title}>Добавить комментарий</h3>
-            
-            <MenuBarComment editor={editor} className={s.comment_menu}  />
-            </div>}
-            
-            <EditorContent editor={editor} className={s.new_comment}/>
+        <form className={s.formComment} onSubmit={handleSubmit}>
+
+            {enable &&
+                <div className={s.formComment__header}>
+
+                    <h3 className={s.formComment__title}>Добавить комментарий</h3>
+                    <MenuBarComment editor={editor} className={s.formComment__menu} />
+
+                </div>}
+
+            <EditorContent editor={editor} className={s.formComment__editor} />
 
             {enable &&
                 <>
-                    <div className="character-count">
+                    <div className={s.character_count}>
                         {editor?.storage.characterCount.characters()}/{limit} Символов
                         <br />
                         {editor?.storage.characterCount.words()} Слов

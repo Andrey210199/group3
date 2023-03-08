@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import AddingPost from "../../Components/AddingPost/AddingPost";
+import PostEditor from "../../Components/PostEditor/PostEditor";
 import ButtonBack from "../../Components/Buttons/ButtonBack/ButtonBack";
 import ProtectedComponent from "../../Components/ProtectedComponent/ProtectedComponent";
 import { fetchAddPost } from "../../Storage/Slices/PostsSlile";
@@ -23,7 +23,7 @@ export default function AddingPostPage() {
             <ButtonBack/>
                 <h1 className={s.title}>Добавления поста</h1>
 
-                <AddingPost handleSubmit={handleSubmit} enabled={true} />
+                <PostEditor handleSubmit={handleSubmit} enabled={true} />
             </>
         </ProtectedComponent>
     )
