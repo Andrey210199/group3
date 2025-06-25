@@ -1,10 +1,14 @@
 import { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 import PostList from '../PostList/post-list';
 import AddingPostPage from '../../Pages/AddingPostPage/AddingPostPage';
 import PostPage from '../../Pages/PostPage/PostPage';
 import { NotFoundPage } from '../../Pages/NotFoundPage/not-found-page';
+
+import urlParams from "../../Utilites/UrlParams";
+import { URLLOGIN } from "../../Constants/Constant";
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -28,15 +32,20 @@ export default function App() {
   const statePosts = useSelector((state) => state[NAMEPOSTSSLICE]);
   const { data: posts } = statePosts;
 
+      const navigate = useNavigate();
+      const [url, setUrl] = useSearchParams();
+
   const dispatch = useDispatch();
   let user = getToken();
 
   useEffect(() => {
     if (user) {
       dispatch(fetchTokenCheck(user));
-
     }
     else {
+      if(url == 0)
+        navigate(urlParams(url, URLLOGIN));
+
       dispatch(fetchGetUser());
     }
   }, [dispatch, user])

@@ -6,21 +6,19 @@
   height: 100%;
   margin: 20px auto;
 }
-.title {
+.notFound__title {
   font-weight: 700;
   font-size: 32px;
   line-height: 1.2;
   text-align: center;
 }
-
-.error404,
-.rabbit {
+.notFound__img {
   width: 180px;
   height: 180px;
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
-
-.btn {
+.notFound__btn {
   padding: 10px 18px;
   font-size: 16px;
   font-weight: 700;
@@ -29,6 +27,9 @@
   text-decoration: none;
   display: inline-block;
   border: solid 2px;
-  border-color: rgba(168, 209, 229);
   margin: 10px;
+  color: currentColor;
 }
+.notFound__btn:hover {
+  background-color: var(--bg-secondary-color);
+}/*# sourceMappingURL=index.module.css.map */

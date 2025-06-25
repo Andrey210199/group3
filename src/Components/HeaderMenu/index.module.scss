@@ -1,7 +1,9 @@
 .menu {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-areas: "avatar login" "avatar registration" "edit add";
+  grid-template-areas: "avatar login"
+    "avatar registration"
+    "edit add";
   align-items: center;
   gap: 5px 10px;
 }
@@ -16,23 +18,29 @@
   color: var(--text-secondary-color);
   height: 1.5em;
   gap: 5px;
-}
-.link__editUser {
-  font-size: 14px;
-  grid-area: edit;
-}
-.link__login {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0;
-}
-.link__registration {
-  font-size: 14px;
-}
-.link:hover {
-  border: none;
-  outline: 2px solid var(--text-secondary-color);
+
+  &__editUser {
+    font-size: 14px;
+    grid-area: edit;
+  }
+
+  &__login{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+  }
+
+  &__registration{
+    font-size: 14px;
+  }
+
+  &:hover {
+    border: none;
+    outline: 2px solid var(--text-secondary-color);
+
+  }
+
 }
 
 .login {
@@ -45,4 +53,5 @@
 
 .add {
   grid-area: add;
-}/*# sourceMappingURL=index.module.css.map */
+
+}

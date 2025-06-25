@@ -12,7 +12,7 @@ import {
   fetchGetPagePosts,
   fetchSearch
 } from "../../Storage/Slices/PostsSlile";
-import { NotFound } from "../NotFound/not-found";
+import { NotFound } from "../NotFound/NotFound";
 import { Spinner } from "../Spinner/spinner";
 import { URLPAGE, URLSEARCH } from "../../Constants/Constant";
 

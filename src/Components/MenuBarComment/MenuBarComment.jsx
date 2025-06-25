@@ -14,7 +14,7 @@ export default function MenuBarComment({ editor }) {
     if (!editor) return null
 
     return (
-        <div className={s.menu_bar_comment} onClick={(e) => e.preventDefault()}>
+        <div className={s.commentMenu} onClick={(e) => e.preventDefault()}>
 
             <TextStyles editor={editor} />
             <ButtonWithPopup editor={editor} event={changeLink} text="🔗" />

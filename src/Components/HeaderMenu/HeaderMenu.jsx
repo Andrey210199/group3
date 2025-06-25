@@ -43,19 +43,19 @@ export default function HeaderMenu() {
 
       {isUser && currentUser &&
         <>
-          <AvatarInfo s={s} author={currentUser} sx={{ width: 56, height: 56 }} />
+          <AvatarInfo author={currentUser} sx={{ width: 56, height: 56 }} />
           <Link
             className={s.link}
             to={urlParams(url, URLEDITUSER)}
             title=" Редактирование пользователя"
           >
-            <span className={s.editUser}>Изменить</span>
+            <span className={s.link__editUser}>Изменить</span>
           </Link>
         </>
       }
 
-      <Link className={cn(s.link, s.login_link)} to={auth(isUser, url)} onClick={isUser ? handleClick : ""}>
-        <span className={s.login}>
+      <Link className={cn(s.link, s.login)} to={auth(isUser, url)} onClick={isUser ? handleClick : ""}>
+        <span className={s.link__login}>
           {isUser ?
             <><LogoutIcon />Выйти</>
             :
@@ -64,13 +64,13 @@ export default function HeaderMenu() {
         </span>
       </Link>
 
-      {!isUser && <Link className={cn(s.link, s.registr_link)} to={urlParams(url, URLREGISTRATION)} >
-        <span className={s.registration}>Регистрация</span>
+      {!isUser && <Link className={cn(s.link, s.registr)} to={urlParams(url, URLREGISTRATION)} >
+        <span className={s.link__registration}>Регистрация</span>
       </Link>}
 
       {
-        isUser && <Link to="/add_post" className={cn(s.link, s.add_link)} >
-          <span className={s.add_post}>Создать пост</span>
+        isUser && <Link to="/add_post" className={cn(s.link, s.add)} >
+          <span className={s.link__add}>Создать пост</span>
         </Link>
       }
 

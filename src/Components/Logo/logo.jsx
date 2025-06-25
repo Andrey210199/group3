@@ -6,8 +6,8 @@ export default function Logo() {
 
   return (
     <Link className={s.logo} to="/">
-      <img src={logo} alt="logo" className={s.logo_img} />
-      <span className={s.logo_text}>Posts</span>
+      <img src={logo} alt="logo" className={s.logo__img} />
+      <span className={s.logo__text}>Posts</span>
     </Link>
   )
 
