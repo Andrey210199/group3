@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { NAMEPOSTSSLICE, NAMEUSERSLICE, POSTLIMIT, STATEINITIAL } from "../../Constants/StorageConstants";
-import { changeLike, changePosts, dataLiked, dataPush, isError } from "../../Utilites/StoreFunction";
+import { changeLike, changePosts, dataLiked, isError } from "../../Utilites/StoreFunction";
 import { isLiked } from "../../Utilites/total";
 
 const initialState = {
@@ -199,9 +199,6 @@ const postsSlice = createSlice({
             })
             .addCase(fetchChengePost.fulfilled, (state, action) => {
                 changePosts(state, action.payload);
-            })
-            .addCase(fetchAddPost.fulfilled, (state, action) => {
-                dataPush(state, action.payload.data);
             })
             .addCase(fetchSearch.fulfilled, (state, action) => {
                 const { data, user } = action.payload;

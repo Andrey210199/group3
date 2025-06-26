@@ -1,32 +1,30 @@
 import { Pagination } from "@mui/material";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
 import { MAXCOMMENTS } from "../../Constants/Constant";
-import { NAMESINGLEPOSTSLICE } from "../../Constants/StorageConstants";
 import Comment from "../Comment/Comment";
 
 import s from "./index.module.css";
 
-export default function CommentList({ children }) {
+export default function CommentList({commentNow, setCommentNow, num, setNum, comments, data, children }) {
 
-    const { comments, data } = useSelector(state => state[NAMESINGLEPOSTSLICE]);
-    const [commentNow, setCommentNow] = useState(comments?.slice(0, MAXCOMMENTS));
-
-
-    function pages() {
-        return Math.ceil(comments.length / MAXCOMMENTS);
-    }
-
-    function handleClick(_, num) {
+    useEffect(()=> {
         const end = MAXCOMMENTS * num;
         const start = end - MAXCOMMENTS;
         setCommentNow(comments.slice(start, end));
+    }, [num, comments, setCommentNow]);
+
+    function pages() {
+        return Math.ceil(comments.length / MAXCOMMENTS);  
+    }
+
+    function handleClick(_, numN) {
+        setNum(numN);  
     }
 
     return (
         <>
             {children}
-            {commentNow && commentNow.map(comment => <Comment key={comment._id} {...comment} postId={data._id} />)}
+            {commentNow && commentNow.map(comment => <Comment pages = {pages} setNum = {setNum} key={comment._id} {...comment} postId={data._id} />)}
             {pages() > 1 && <Pagination
                 className={s.pagination}
                 count={pages()}

@@ -34,15 +34,12 @@ export function deleteComment(state, comments) {
 
     const newComments = [];
     state.comments.filter(comment => {
-
         comments.forEach(element => {
-
             if (comment._id === element._id) {
-                console.log(element._id)
-                return newComments.push(comment)
+               return newComments.push(comment);
             }
         });
-        return newComments;
+        return newComments
     });
 
     return newComments;

@@ -26,7 +26,7 @@ class Api {
     }
 
     #OnToken() {
-        return { ...this.#headers, Authorization: getToken() ? getToken() : this.#headers.Authorization }
+        return { ...this.#headers, Authorization: getToken() }
     }
 
     #RequestSwitch = (method = "GET", data) => {

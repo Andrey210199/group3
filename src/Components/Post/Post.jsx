@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 
 import { NAMESINGLEPOSTSLICE, NAMEUSERSLICE } from "../../Constants/StorageConstants";
 import { fetchChengePost } from "../../Storage/Slices/PostsSlile";
@@ -13,6 +14,7 @@ import { Spinner } from "../../Components/Spinner/spinner";
 import { fetchChangeLike } from "../../Storage/Slices/PostsSlile";
 import { setProductState } from "../../Storage/Slices/SinglePostSlice";
 import { getToken } from "../../Utilites/Cookie";
+import { MAXCOMMENTS } from "../../Constants/Constant";
 
 import s from "./index.module.css";
 import { editorEnable, editorUnEnable } from "../../Storage/Slices/UserSlice";
@@ -24,6 +26,11 @@ export default function Post({ postId }) {
     const isCommentLoading = useSelector(state => state[NAMESINGLEPOSTSLICE].commentsLoading);
     const isEnable = useSelector(state => state[NAMEUSERSLICE].isEditorEnable);
     const post = useSelector(state => state[NAMESINGLEPOSTSLICE].data);
+
+    const { comments, data } = useSelector(state => state[NAMESINGLEPOSTSLICE]);
+    const [commentNow, setCommentNow] = useState(comments?.slice(0, MAXCOMMENTS));
+    const [num, setNum] = useState(1);
+
     const { image, tags, title, text, _id: id, likes, author, created_at: created } = post;
     const dispatch = useDispatch();
 
@@ -63,7 +70,7 @@ export default function Post({ postId }) {
 
             {isCommentLoading ? <Spinner /> :
                 <div className={s.comments}>
-                    <CommentList>
+                    <CommentList commentNow = {commentNow} setCommentNow = {setCommentNow} num = {num} setNum = {setNum} comments = {comments} data = {data}>
                          {getToken() ?<CommentEditor enable />: <p className={s.comments__message}>Комментарии могут оставлять только зарегистрированные пользователи.</p>}
                     </CommentList>
                 </div>}

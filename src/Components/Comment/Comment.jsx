@@ -7,12 +7,14 @@ import ButtonDelete from "../Buttons/ButtonDelete/ButtonDelete";
 
 import s from "./index.module.css";
 
-export default function Comment({ author, created_at, text: comment, _id: id, postId }) {
+export default function Comment({pages, num, setNum, author, created_at, text: comment, _id: id, postId }) {
 
     const dispatch = useDispatch();
 
     function handleClickDel() {
         dispatch(fetchDeleteRewiew({ postId, commentId: id }));
+        setNum(1);
+        pages();
     }
 
     return (

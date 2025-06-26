@@ -33,7 +33,7 @@ export default function App() {
   const { data: posts } = statePosts;
 
       const navigate = useNavigate();
-      const [url, setUrl] = useSearchParams();
+      const [url] = useSearchParams();
 
   const dispatch = useDispatch();
   let user = getToken();
@@ -45,8 +45,6 @@ export default function App() {
     else {
       if(url == 0)
         navigate(urlParams(url, URLLOGIN));
-
-      dispatch(fetchGetUser());
     }
   }, [dispatch, user])
 
